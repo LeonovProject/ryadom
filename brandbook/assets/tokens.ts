@@ -1,0 +1,129 @@
+// Shared values for React and React Native. Load font faces per platform.
+export const brand = {
+  "color": {
+    "brand": {
+      "primary": "#D92D3A",
+      "hover": "#BB2230",
+      "pressed": "#9F1C28",
+      "tint": "#FFF1F2",
+      "onTint": "#9F1C28"
+    },
+    "surface": {
+      "base": "#FFFFFF",
+      "subtle": "#F6F7F9"
+    },
+    "text": {
+      "primary": "#17191D",
+      "secondary": "#5C616A",
+      "inverse": "#FFFFFF"
+    },
+    "border": {
+      "subtle": "#DDE0E5",
+      "control": "#858B95"
+    },
+    "info": {
+      "foreground": "#2457C5",
+      "background": "#EEF3FF"
+    },
+    "status": {
+      "error": "#A61B29",
+      "success": "#236341",
+      "warning": "#805600"
+    },
+    "focus": "#2457C5",
+    "statusBackground": {
+      "neutral": "#F6F7F9",
+      "info": "#EEF3FF",
+      "success": "#EDF6F0",
+      "warning": "#FFF7E7",
+      "error": "#FFF1F2"
+    }
+  },
+  "space": {
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "6": 24,
+    "8": 32,
+    "12": 48,
+    "16": 64
+  },
+  "radius": {
+    "control": 12,
+    "card": 16,
+    "dialog": 24,
+    "pill": 999
+  },
+  "size": {
+    "control": 48,
+    "icon": 24,
+    "contentMax": 1200
+  },
+  "font": {
+    "body": "Open Sans",
+    "heading": "Montserrat",
+    "weights": {
+      "regular": 400,
+      "semibold": 600,
+      "bold": 700
+    }
+  },
+  "motion": {
+    "fast": 120,
+    "normal": 180,
+    "slow": 240
+  },
+  "breakpoint": {
+    "compact": 600,
+    "wide": 1024
+  },
+  "type": {
+    "web": {
+      "display": {
+        "fontSize": 48,
+        "lineHeight": 56
+      },
+      "pageTitle": {
+        "fontSize": 32,
+        "lineHeight": 40
+      },
+      "sectionTitle": {
+        "fontSize": 24,
+        "lineHeight": 32
+      }
+    },
+    "native": {
+      "display": {
+        "fontSize": 32,
+        "lineHeight": 40
+      },
+      "pageTitle": {
+        "fontSize": 28,
+        "lineHeight": 36
+      },
+      "sectionTitle": {
+        "fontSize": 22,
+        "lineHeight": 30
+      }
+    },
+    "shared": {
+      "cardTitle": {
+        "fontSize": 18,
+        "lineHeight": 26
+      },
+      "body": {
+        "fontSize": 16,
+        "lineHeight": 24
+      },
+      "caption": {
+        "fontSize": 14,
+        "lineHeight": 20
+      },
+      "button": {
+        "fontSize": 16,
+        "lineHeight": 24
+      }
+    }
+  }
+} as const;

@@ -1,0 +1,52 @@
+{
+  "organization": {
+    "draft": {
+      "label": "Заявка не отправлена",
+      "tone": "neutral"
+    },
+    "pending": {
+      "label": "На проверке",
+      "tone": "info"
+    },
+    "approved": {
+      "label": "Допущена к публикации",
+      "tone": "success"
+    },
+    "needsInformation": {
+      "label": "Нужны уточнения",
+      "tone": "warning"
+    },
+    "rejected": {
+      "label": "Допуск не предоставлен",
+      "tone": "error"
+    }
+  },
+  "publication": {
+    "draft": {
+      "label": "Черновик",
+      "tone": "neutral"
+    },
+    "published": {
+      "label": "Опубликовано",
+      "tone": "success"
+    },
+    "unpublished": {
+      "label": "Снято с публикации",
+      "tone": "neutral"
+    }
+  },
+  "participation": {
+    "pending": {
+      "label": "Заявка отправлена",
+      "tone": "info"
+    },
+    "confirmed": {
+      "label": "Ты участвуешь",
+      "tone": "success"
+    },
+    "rejected": {
+      "label": "Заявка отклонена",
+      "tone": "error"
+    }
+  }
+}

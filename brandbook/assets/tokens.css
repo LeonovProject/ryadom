@@ -1,0 +1,76 @@
+/* Рядом 1.1. Load Montserrat 600/700 and Open Sans 400/600/700 separately. */
+:root {
+  --color-brand-primary: #D92D3A;
+  --color-brand-hover: #BB2230;
+  --color-brand-pressed: #9F1C28;
+  --color-brand-tint: #FFF1F2;
+  --color-brand-onTint: #9F1C28;
+  --color-surface-base: #FFFFFF;
+  --color-surface-subtle: #F6F7F9;
+  --color-text-primary: #17191D;
+  --color-text-secondary: #5C616A;
+  --color-text-inverse: #FFFFFF;
+  --color-border-subtle: #DDE0E5;
+  --color-border-control: #858B95;
+  --color-info-foreground: #2457C5;
+  --color-info-background: #EEF3FF;
+  --color-status-error: #A61B29;
+  --color-status-success: #236341;
+  --color-status-warning: #805600;
+  --color-focus: #2457C5;
+  --color-statusBackground-neutral: #F6F7F9;
+  --color-statusBackground-info: #EEF3FF;
+  --color-statusBackground-success: #EDF6F0;
+  --color-statusBackground-warning: #FFF7E7;
+  --color-statusBackground-error: #FFF1F2;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-control: 12px;
+  --radius-card: 16px;
+  --radius-dialog: 24px;
+  --radius-pill: 999px;
+  --size-control: 48px;
+  --size-icon: 24px;
+  --size-contentMax: 1200px;
+  --font-body: "Open Sans";
+  --font-heading: "Montserrat";
+  --font-weights-regular: 400;
+  --font-weights-semibold: 600;
+  --font-weights-bold: 700;
+  --motion-fast: 120ms;
+  --motion-normal: 180ms;
+  --motion-slow: 240ms;
+  --breakpoint-compact: 600px;
+  --breakpoint-wide: 1024px;
+  --type-web-display-fontSize: 48px;
+  --type-web-display-lineHeight: 56px;
+  --type-web-pageTitle-fontSize: 32px;
+  --type-web-pageTitle-lineHeight: 40px;
+  --type-web-sectionTitle-fontSize: 24px;
+  --type-web-sectionTitle-lineHeight: 32px;
+  --type-native-display-fontSize: 32px;
+  --type-native-display-lineHeight: 40px;
+  --type-native-pageTitle-fontSize: 28px;
+  --type-native-pageTitle-lineHeight: 36px;
+  --type-native-sectionTitle-fontSize: 22px;
+  --type-native-sectionTitle-lineHeight: 30px;
+  --type-shared-cardTitle-fontSize: 18px;
+  --type-shared-cardTitle-lineHeight: 26px;
+  --type-shared-body-fontSize: 16px;
+  --type-shared-body-lineHeight: 24px;
+  --type-shared-caption-fontSize: 14px;
+  --type-shared-caption-lineHeight: 20px;
+  --type-shared-button-fontSize: 16px;
+  --type-shared-button-lineHeight: 24px;
+}
+
+.ryadom-focus:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .ryadom-motion { transition: none; animation: none; }
+}
