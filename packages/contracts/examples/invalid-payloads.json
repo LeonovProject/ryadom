@@ -1,0 +1,635 @@
+[
+  {
+    "name": "noAdminRoleInRegistration",
+    "schema": "RegisterInput",
+    "value": {
+      "displayName": "Пользователь",
+      "systemRole": "ADMIN",
+      "email": "new@example.test",
+      "password": "Ryadom-Alex-2026!",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "organizerVariantsCannotMix",
+    "schema": "OrganizerInput",
+    "value": {
+      "type": "PERSONAL",
+      "organizationId": "00000003-0000-4000-8000-000000000001"
+    }
+  },
+  {
+    "name": "activityIdAndNameCannotMix",
+    "schema": "ActivityInput",
+    "value": {
+      "id": "00000007-0000-4000-8000-000000000001",
+      "name": "Другой спорт"
+    }
+  },
+  {
+    "name": "rejectionRequiresReason",
+    "schema": "OrganizationDecisionInput",
+    "value": {
+      "decision": "REJECT"
+    }
+  },
+  {
+    "name": "approvalRejectsReason",
+    "schema": "OrganizationDecisionInput",
+    "value": {
+      "decision": "APPROVE",
+      "reason": "лишнее поле"
+    }
+  },
+  {
+    "name": "hiddenBodyMustNotLeak",
+    "schema": "PublicMessage",
+    "value": {
+      "id": "00000005-0000-4000-8000-000000000001",
+      "eventId": "00000002-0000-4000-8000-000000000001",
+      "author": {
+        "id": "00000001-0000-4000-8000-000000000001",
+        "displayName": "Алексей",
+        "avatarUrl": "/api/v1/accounts/00000001-0000-4000-8000-000000000001/avatar?revision=2",
+        "isBlocked": false
+      },
+      "authorIsOrganizer": false,
+      "createdAt": "2026-11-01T09:00:00Z",
+      "status": "HIDDEN",
+      "body": "Скрытый исходный текст"
+    }
+  },
+  {
+    "name": "unpublishedLocationMustNotLeak",
+    "schema": "UnavailableEventDetail",
+    "value": {
+      "id": "00000002-0000-4000-8000-000000000001",
+      "title": "Первое знакомство с петанком",
+      "publicationStatus": "UNPUBLISHED",
+      "myParticipation": {
+        "id": "00000004-0000-4000-8000-000000000001",
+        "eventId": "00000002-0000-4000-8000-000000000001",
+        "accountId": "00000001-0000-4000-8000-000000000001",
+        "status": "PENDING",
+        "createdAt": "2026-11-01T09:00:00Z",
+        "decidedAt": null
+      },
+      "unpublishReason": null,
+      "canJoin": false,
+      "locationText": "Закрытый адрес"
+    }
+  },
+  {
+    "name": "clientCannotSetParticipationStatus",
+    "schema": "ParticipationDecisionInput",
+    "value": {
+      "decision": "ACCEPT",
+      "status": "CONFIRMED"
+    }
+  },
+  {
+    "name": "publicProfileCannotLeakSystemRole",
+    "schema": "PublicAccount",
+    "value": {
+      "id": "00000001-0000-4000-8000-000000000001",
+      "displayName": "Алексей",
+      "systemRole": "USER",
+      "avatarUrl": "/api/v1/accounts/00000001-0000-4000-8000-000000000001/avatar?revision=2",
+      "isBlocked": false
+    }
+  },
+  {
+    "name": "publicOrganizationCannotLeakApplication",
+    "schema": "PublicOrganization",
+    "value": {
+      "id": "00000003-0000-4000-8000-000000000001",
+      "name": "Клуб «Темп»",
+      "description": "Открытые тренировки и встречи.",
+      "sportInterests": "Бег, петанк",
+      "createdAt": "2026-11-01T09:00:00Z",
+      "application": {
+        "id": "00000006-0000-4000-8000-000000000001",
+        "organizationId": "00000003-0000-4000-8000-000000000001",
+        "status": "PENDING",
+        "createdAt": "2026-11-01T09:00:00Z",
+        "reviewedAt": null,
+        "reviewedBy": null,
+        "rejectionReason": null
+      },
+      "ownerIsBlocked": false
+    }
+  },
+  {
+    "name": "eventCannotStartWithoutOrganizer",
+    "schema": "CreateEventInput",
+    "value": {
+      "activityType": {
+        "name": "Петанк"
+      },
+      "title": "Первое знакомство с петанком",
+      "description": "Покажем правила и сыграем вместе.",
+      "startsAt": "2026-11-07T05:00:00Z",
+      "timezone": "Asia/Krasnoyarsk",
+      "city": "Красноярск",
+      "locationText": "У входа в парк",
+      "conditions": "Можно без опыта, инвентарь предоставим.",
+      "joinMode": "APPROVAL"
+    }
+  },
+  {
+    "name": "unavailableSummaryCannotLeakCover",
+    "schema": "EventSummary",
+    "value": {
+      "id": "00000002-0000-4000-8000-000000000001",
+      "title": "Первое знакомство с петанком",
+      "publicationStatus": "UNPUBLISHED",
+      "coverUrl": "/api/v1/events/00000002-0000-4000-8000-000000000001/cover"
+    }
+  },
+  {
+    "name": "missingDecisionCapability",
+    "schema": "EventCapabilities",
+    "value": {
+      "canJoin": false,
+      "joinBlockedReason": "AUTH_REQUIRED",
+      "canManageParticipants": false,
+      "canPostMessage": false,
+      "canSetCover": false
+    }
+  },
+  {
+    "name": "activityRejectionRequiresReason",
+    "schema": "ActivityTypeDecisionInput",
+    "value": {
+      "decision": "REJECT",
+      "expectedName": "Петанк"
+    }
+  },
+  {
+    "name": "activityApprovalRejectsReason",
+    "schema": "ActivityTypeDecisionInput",
+    "value": {
+      "decision": "APPROVE",
+      "expectedName": "Петанк",
+      "reason": "Лишнее поле"
+    }
+  },
+  {
+    "name": "activityRejectionRejectsRename",
+    "schema": "ActivityTypeDecisionInput",
+    "value": {
+      "decision": "REJECT",
+      "expectedName": "Петанк",
+      "reason": "Не включаем этот вариант в общий справочник.",
+      "name": "Бег"
+    }
+  },
+  {
+    "name": "activityRenameRequiresExpectedName",
+    "schema": "RenameActivityTypeInput",
+    "value": {
+      "name": "Петанк"
+    }
+  },
+  {
+    "name": "publicActivityCannotLeakReview",
+    "schema": "ActivityType",
+    "value": {
+      "id": "00000007-0000-4000-8000-000000000001",
+      "name": "Петанк",
+      "catalogStatus": "PENDING"
+    }
+  },
+  {
+    "name": "clientCannotApproveNewActivity",
+    "schema": "NewActivityInput",
+    "value": {
+      "name": "Петанк",
+      "catalogStatus": "APPROVED"
+    }
+  },
+  {
+    "name": "moderationNeedsRevision",
+    "schema": "MessageModerationInput",
+    "value": {}
+  },
+  {
+    "name": "moderationRejectsReason",
+    "schema": "MessageModerationInput",
+    "value": {
+      "expectedRevision": 0,
+      "reason": "лишнее"
+    }
+  },
+  {
+    "name": "moderationRejectsNegativeRevision",
+    "schema": "MessageModerationInput",
+    "value": {
+      "expectedRevision": -1
+    }
+  },
+  {
+    "name": "dismissNeedsReportsRevision",
+    "schema": "ReportDismissInput",
+    "value": {}
+  },
+  {
+    "name": "dismissRejectsReason",
+    "schema": "ReportDismissInput",
+    "value": {
+      "expectedReportsRevision": 1,
+      "reason": "лишнее"
+    }
+  },
+  {
+    "name": "reportCannotExposeReporter",
+    "schema": "Report",
+    "value": {
+      "id": "00000008-0000-4000-8000-000000000002",
+      "target": {
+        "type": "MESSAGE",
+        "id": "00000005-0000-4000-8000-000000000001"
+      },
+      "status": "OPEN",
+      "createdAt": "2026-11-02T08:00:00Z",
+      "reviewedAt": null,
+      "reporterAccountId": "00000001-0000-4000-8000-000000000001"
+    }
+  },
+  {
+    "name": "reportTargetUnknownType",
+    "schema": "ReportTarget",
+    "value": {
+      "type": "ACCOUNT",
+      "id": "00000005-0000-4000-8000-000000000001"
+    }
+  },
+  {
+    "name": "hiddenMessageCannotExposeModeration",
+    "schema": "HiddenMessage",
+    "value": {
+      "id": "00000005-0000-4000-8000-000000000001",
+      "eventId": "00000002-0000-4000-8000-000000000001",
+      "author": {
+        "id": "00000001-0000-4000-8000-000000000001",
+        "displayName": "Алексей",
+        "avatarUrl": "/api/v1/accounts/00000001-0000-4000-8000-000000000001/avatar?revision=2",
+        "isBlocked": false
+      },
+      "authorIsOrganizer": false,
+      "createdAt": "2026-11-01T09:00:00Z",
+      "status": "HIDDEN",
+      "moderationRevision": 1
+    }
+  },
+  {
+    "name": "avatarUploadRequiresRevision",
+    "schema": "AvatarUploadInput",
+    "value": {
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><circle cx=\"40\" cy=\"40\" r=\"36\" fill=\"#D92D3A\"/></svg>"
+    }
+  },
+  {
+    "name": "avatarRejectsCatalogId",
+    "schema": "AvatarUploadInput",
+    "value": {
+      "avatarId": "avatar-01",
+      "expectedRevision": 0
+    }
+  },
+  {
+    "name": "avatarClientCannotApprove",
+    "schema": "AvatarUploadInput",
+    "value": {
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><circle cx=\"40\" cy=\"40\" r=\"36\" fill=\"#D92D3A\"/></svg>",
+      "expectedRevision": 0,
+      "status": "APPROVED"
+    }
+  },
+  {
+    "name": "avatarModerationRequiresRevision",
+    "schema": "AvatarModerationInput",
+    "value": {
+      "decision": "APPROVE"
+    }
+  },
+  {
+    "name": "avatarModerationRejectsReason",
+    "schema": "AvatarModerationInput",
+    "value": {
+      "decision": "HIDE",
+      "expectedRevision": 1,
+      "reason": "лишнее"
+    }
+  },
+  {
+    "name": "avatarRevisionCannotBeNegative",
+    "schema": "AvatarRevisionInput",
+    "value": {
+      "expectedRevision": -1
+    }
+  },
+  {
+    "name": "publicAccountCannotLeakAvatarStatus",
+    "schema": "PublicAccount",
+    "value": {
+      "id": "00000001-0000-4000-8000-000000000001",
+      "displayName": "Алексей",
+      "avatarUrl": "/api/v1/accounts/00000001-0000-4000-8000-000000000001/avatar?revision=2",
+      "avatarStatus": "PENDING",
+      "isBlocked": false
+    }
+  },
+  {
+    "name": "avatarStateCannotLeakRawSvg",
+    "schema": "AvatarState",
+    "value": {
+      "accountId": "00000001-0000-4000-8000-000000000001",
+      "status": "PENDING",
+      "revision": 1,
+      "uploadedAt": "2026-11-02T08:00:00Z",
+      "updatedAt": "2026-11-02T08:00:00Z",
+      "reviewedAt": null,
+      "previewUrl": "/api/v1/me/avatar/image?revision=1",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\"><circle cx=\"40\" cy=\"40\" r=\"36\" fill=\"#D92D3A\"/></svg>",
+      "source": "CUSTOM",
+      "presetId": null
+    }
+  },
+  {
+    "name": "presetSelectionRequiresRevision",
+    "schema": "PresetAvatarInput",
+    "value": {
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "presetSelectionRejectsCustomSvg",
+    "schema": "PresetAvatarInput",
+    "value": {
+      "presetId": "ryadom-companion",
+      "expectedRevision": 0,
+      "svg": "<svg/>"
+    }
+  },
+  {
+    "name": "presetSelectionRejectsExternalUrl",
+    "schema": "PresetAvatarInput",
+    "value": {
+      "presetId": "https://example.com/avatar.svg",
+      "expectedRevision": 0
+    }
+  },
+  {
+    "name": "avatarStateRequiresSource",
+    "schema": "AvatarState",
+    "value": {
+      "accountId": "00000001-0000-4000-8000-000000000001",
+      "status": "APPROVED",
+      "revision": 1,
+      "uploadedAt": null,
+      "updatedAt": "2026-11-02T08:00:00Z",
+      "reviewedAt": null,
+      "previewUrl": "/assets/avatars/presets/ryadom-companion.svg",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "presetCatalogRejectsExternalImage",
+    "schema": "AvatarPreset",
+    "value": {
+      "id": "ryadom-companion",
+      "label": "Спутник",
+      "imageUrl": "https://example.com/avatar.svg"
+    }
+  },
+  {
+    "name": "registrationRejectsCustomSvg",
+    "schema": "RegisterInput",
+    "value": {
+      "displayName": "Алексей",
+      "svg": "<svg/>",
+      "email": "new@example.test",
+      "password": "Ryadom-Alex-2026!",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "registrationRejectsAvatarUrl",
+    "schema": "RegisterInput",
+    "value": {
+      "displayName": "Алексей",
+      "avatarUrl": "https://example.com/avatar.svg",
+      "email": "new@example.test",
+      "password": "Ryadom-Alex-2026!",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "registrationRejectsEmptyPresetId",
+    "schema": "RegisterInput",
+    "value": {
+      "displayName": "Алексей",
+      "presetId": "",
+      "email": "new@example.test",
+      "password": "Ryadom-Alex-2026!"
+    }
+  },
+  {
+    "name": "registrationRequiresNameWithAvatar",
+    "schema": "RegisterInput",
+    "value": {
+      "presetId": "ryadom-companion",
+      "email": "new@example.test",
+      "password": "Ryadom-Alex-2026!"
+    }
+  },
+  {
+    "name": "registrationRequiresPreset",
+    "schema": "RegisterInput",
+    "value": {
+      "displayName": "Алексей",
+      "email": "new@example.test",
+      "password": "Ryadom-Alex-2026!"
+    }
+  },
+  {
+    "name": "registrationRejectsNullPreset",
+    "schema": "RegisterInput",
+    "value": {
+      "displayName": "Алексей",
+      "presetId": null,
+      "email": "new@example.test",
+      "password": "Ryadom-Alex-2026!"
+    }
+  },
+  {
+    "name": "resetRequiresExactConfirmation",
+    "schema": "DemoResetInput",
+    "value": {
+      "expectedGeneration": "00000009-0000-4000-8000-000000000001",
+      "expectedSeedVersion": "demo-v1",
+      "resetId": "0000000a-0000-4000-8000-000000000001",
+      "confirmation": "да"
+    }
+  },
+  {
+    "name": "resetRequiresGeneration",
+    "schema": "DemoResetInput",
+    "value": {
+      "expectedSeedVersion": "demo-v1",
+      "resetId": "0000000a-0000-4000-8000-000000000001",
+      "confirmation": "СБРОСИТЬ"
+    }
+  },
+  {
+    "name": "resetRequiresRequestId",
+    "schema": "DemoResetInput",
+    "value": {
+      "expectedGeneration": "00000009-0000-4000-8000-000000000001",
+      "expectedSeedVersion": "demo-v1",
+      "confirmation": "СБРОСИТЬ"
+    }
+  },
+  {
+    "name": "resetRejectsArbitrarySql",
+    "schema": "DemoResetInput",
+    "value": {
+      "expectedGeneration": "00000009-0000-4000-8000-000000000001",
+      "expectedSeedVersion": "demo-v1",
+      "resetId": "0000000a-0000-4000-8000-000000000001",
+      "confirmation": "СБРОСИТЬ",
+      "sql": "DELETE FROM accounts"
+    }
+  },
+  {
+    "name": "myParticipationPageRequiresReferenceTime",
+    "schema": "MyParticipationPage",
+    "value": {
+      "items": [],
+      "nextCursor": null
+    }
+  },
+  {
+    "name": "myParticipationPageRejectsUnzonedReferenceTime",
+    "schema": "MyParticipationPage",
+    "value": {
+      "items": [],
+      "nextCursor": null,
+      "referenceTime": "2026-11-01T09:00:00"
+    }
+  },
+  {
+    "name": "registerRequiresEmail",
+    "schema": "RegisterInput",
+    "value": {
+      "password": "Ryadom-Alex-2026!",
+      "displayName": "Алексей",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "registerRequiresPassword",
+    "schema": "RegisterInput",
+    "value": {
+      "email": "new@example.test",
+      "displayName": "Алексей",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "registerRejectsShortPassword",
+    "schema": "RegisterInput",
+    "value": {
+      "email": "new@example.test",
+      "password": "aaaaaaaaaaaaaa",
+      "displayName": "Алексей",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "registerRejectsLongPassword",
+    "schema": "RegisterInput",
+    "value": {
+      "email": "new@example.test",
+      "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "displayName": "Алексей",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "registerRejectsNonEmail",
+    "schema": "RegisterInput",
+    "value": {
+      "email": "not-email",
+      "password": "Ryadom-Alex-2026!",
+      "displayName": "Алексей",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "registerRejectsEmailWhitespace",
+    "schema": "RegisterInput",
+    "value": {
+      "email": " alex@example.test ",
+      "password": "Ryadom-Alex-2026!",
+      "displayName": "Алексей",
+      "presetId": "ryadom-companion"
+    }
+  },
+  {
+    "name": "registerRejectsClientBlockStatus",
+    "schema": "RegisterInput",
+    "value": {
+      "email": "new@example.test",
+      "password": "Ryadom-Alex-2026!",
+      "displayName": "Алексей",
+      "presetId": "ryadom-companion",
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "name": "loginRejectsDemoKey",
+    "schema": "LoginInput",
+    "value": {
+      "email": "alex@example.test",
+      "password": "Ryadom-Alex-2026!",
+      "demoKey": "marina"
+    }
+  },
+  {
+    "name": "publicAccountCannotLeakEmail",
+    "schema": "PublicAccount",
+    "value": {
+      "id": "00000001-0000-4000-8000-000000000001",
+      "displayName": "Алексей",
+      "avatarUrl": null,
+      "isBlocked": false,
+      "email": "alex@example.test"
+    }
+  },
+  {
+    "name": "accountModerationRequiresRevision",
+    "schema": "AccountStatusInput",
+    "value": {
+      "status": "BLOCKED"
+    }
+  },
+  {
+    "name": "accountModerationRejectsZeroRevision",
+    "schema": "AccountStatusInput",
+    "value": {
+      "status": "BLOCKED",
+      "expectedRevision": 0
+    }
+  },
+  {
+    "name": "accountModerationRejectsRoleChange",
+    "schema": "AccountStatusInput",
+    "value": {
+      "status": "BLOCKED",
+      "expectedRevision": 1,
+      "systemRole": "USER"
+    }
+  }
+]

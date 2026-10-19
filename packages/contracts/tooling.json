@@ -1,0 +1,10 @@
+{
+  "contractVersion": "0.13.0",
+  "openapi": "3.0.3",
+  "oapi-codegen": "v2.4.1",
+  "oapi-codegen-runtime": "v1.1.1",
+  "chi": "v5.2.1",
+  "openapi-typescript": "7.6.1",
+  "typescriptSmokeCheck": "5.9.3",
+  "pythonRequirements": "../../scripts/requirements-contracts.txt"
+}
