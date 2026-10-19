@@ -81,6 +81,7 @@ def check_links():
     files = [ROOT / "README.md", ROOT / "AGENTS.md", ROOT / "CONTEXT.md"]
     files += sorted((ROOT / "docs").rglob("*.md"))
     files += sorted((ROOT / "brandbook").rglob("*.md"))
+    files += sorted((ROOT / "design").rglob("*.md"))
     for file in files:
         content = file.read_text(encoding="utf-8")
         for raw in re.findall(r"!?\[[^\]]*\]\(([^)]+)\)", content):
