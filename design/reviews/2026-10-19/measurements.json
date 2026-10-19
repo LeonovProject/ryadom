@@ -1,0 +1,556 @@
+[
+  {
+    "label": "home-1280",
+    "h1": "Есть планы.Найдётсякомпания.",
+    "overflow": [],
+    "path": "#/",
+    "scrollWidth": 1280,
+    "width": 1280
+  },
+  {
+    "label": "event-1280",
+    "h1": "Бежим вдоль Енисея",
+    "overflow": [],
+    "path": "#/events/run",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "person-1280",
+    "h1": "Анна Лебедева",
+    "overflow": [],
+    "path": "#/people/anna",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "organization-1280",
+    "h1": "Темп",
+    "overflow": [
+      {
+        "cls": null,
+        "left": 936,
+        "right": 1322,
+        "tag": "g",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 936,
+        "right": 1322,
+        "tag": "path",
+        "text": ""
+      }
+    ],
+    "path": "#/organizations/temp",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "login-1280",
+    "h1": "Вход в Рядом",
+    "overflow": [],
+    "path": "#/login",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "register-1280",
+    "h1": "Регистрация",
+    "overflow": [],
+    "path": "#/register",
+    "scrollWidth": 1280,
+    "width": 1280
+  },
+  {
+    "label": "me-1280",
+    "h1": "Анна Лебедева",
+    "overflow": [],
+    "path": "#/me",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "my-organizations-1280",
+    "h1": "Мои организации",
+    "overflow": [],
+    "path": "#/me/organizations",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "organization-cabinet-1280",
+    "h1": "Шахматный кружок «Ход»",
+    "overflow": [],
+    "path": "#/me/organizations/rook",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "my-events-1280",
+    "h1": "Мои встречи",
+    "overflow": [],
+    "path": "#/me/events",
+    "scrollWidth": 1280,
+    "width": 1280
+  },
+  {
+    "label": "manage-1280",
+    "h1": "Теннис без спешки",
+    "overflow": [],
+    "path": "#/events/tennis/manage",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "new-organization-1280",
+    "h1": "Профиль организации",
+    "overflow": [],
+    "path": "#/organizations/new",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "create-1280",
+    "h1": "Новая встреча",
+    "overflow": [],
+    "path": "#/events/new",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "admin-organizations-1280",
+    "h1": "Организации",
+    "overflow": [],
+    "path": "#/admin/organizations",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "admin-organization-1280",
+    "h1": "Шахматный кружок «Ход»",
+    "overflow": [],
+    "path": "#/admin/organizations/rook",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "admin-events-1280",
+    "h1": "Встречи",
+    "overflow": [],
+    "path": "#/admin/events",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "admin-event-1280",
+    "h1": "Теннис без спешки",
+    "overflow": [],
+    "path": "#/admin/events/tennis",
+    "scrollWidth": 1265,
+    "width": 1280
+  },
+  {
+    "label": "admin-organizations-390",
+    "h1": "Организации",
+    "overflow": [],
+    "path": "#/admin/organizations",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "admin-organization-390",
+    "h1": "Шахматный кружок «Ход»",
+    "overflow": [],
+    "path": "#/admin/organizations/rook",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "admin-events-390",
+    "h1": "Встречи",
+    "overflow": [],
+    "path": "#/admin/events",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "admin-event-390",
+    "h1": "Теннис без спешки",
+    "overflow": [],
+    "path": "#/admin/events/tennis",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "admin-organization-320-before",
+    "h1": "Шахматный кружок «Ход»",
+    "overflow": [],
+    "path": "#/admin/organizations/rook",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "admin-events-320",
+    "clientWidth": 305,
+    "h1": "Встречи",
+    "overflow": [],
+    "path": "#/admin/events",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "home-390",
+    "h1": "Есть планы.Найдётсякомпания.",
+    "overflow": [],
+    "path": "#/",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "catalog-390",
+    "h1": "Найди свои планы",
+    "overflow": [
+      {
+        "cls": null,
+        "left": 124,
+        "right": 478,
+        "tag": "g",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 124,
+        "right": 478,
+        "tag": "path",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 124,
+        "right": 478,
+        "tag": "g",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 124,
+        "right": 478,
+        "tag": "path",
+        "text": ""
+      }
+    ],
+    "path": "#/events",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "event-390",
+    "h1": "Бежим вдоль Енисея",
+    "overflow": [
+      {
+        "cls": null,
+        "left": 52,
+        "right": 437,
+        "tag": "g",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 86,
+        "right": 437,
+        "tag": "path",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 52,
+        "right": 437,
+        "tag": "path",
+        "text": ""
+      }
+    ],
+    "path": "#/events/run",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "person-390",
+    "h1": "Анна Лебедева",
+    "overflow": [],
+    "path": "#/people/anna",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "organization-390",
+    "h1": "Темп",
+    "overflow": [
+      {
+        "cls": null,
+        "left": 124,
+        "right": 478,
+        "tag": "g",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 124,
+        "right": 478,
+        "tag": "path",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 124,
+        "right": 478,
+        "tag": "g",
+        "text": ""
+      },
+      {
+        "cls": null,
+        "left": 124,
+        "right": 478,
+        "tag": "path",
+        "text": ""
+      }
+    ],
+    "path": "#/organizations/temp",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "login-390",
+    "h1": "Вход в Рядом",
+    "overflow": [],
+    "path": "#/login",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "register-390",
+    "h1": "Регистрация",
+    "overflow": [],
+    "path": "#/register",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "me-390",
+    "h1": "Анна Лебедева",
+    "overflow": [],
+    "path": "#/me",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "my-events-390",
+    "h1": "Мои встречи",
+    "overflow": [],
+    "path": "#/me/events",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "my-organizations-390",
+    "h1": "Мои организации",
+    "overflow": [],
+    "path": "#/me/organizations",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "organization-cabinet-390",
+    "h1": "Шахматный кружок «Ход»",
+    "overflow": [],
+    "path": "#/me/organizations/rook",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "manage-390",
+    "h1": "Теннис без спешки",
+    "overflow": [],
+    "path": "#/events/tennis/manage",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "new-organization-390",
+    "h1": "Профиль организации",
+    "overflow": [],
+    "path": "#/organizations/new",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "create-390",
+    "h1": "Новая встреча",
+    "overflow": [],
+    "path": "#/events/new",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "home-320",
+    "clientWidth": 305,
+    "h1": "Есть планы.Найдётсякомпания.",
+    "overflow": [],
+    "path": "#/",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "catalog-320",
+    "clientWidth": 305,
+    "h1": "Найди свои планы",
+    "overflow": [],
+    "path": "#/events",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "event-320",
+    "clientWidth": 305,
+    "h1": "Бежим вдоль Енисея",
+    "overflow": [],
+    "path": "#/events/run",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "manage-320",
+    "clientWidth": 305,
+    "h1": "Теннис без спешки",
+    "overflow": [],
+    "path": "#/events/tennis/manage",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "create-320",
+    "clientWidth": 305,
+    "h1": "Новая встреча",
+    "overflow": [],
+    "path": "#/events/new",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "new-organization-320",
+    "clientWidth": 305,
+    "h1": "Профиль организации",
+    "overflow": [],
+    "path": "#/organizations/new",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "organization-cabinet-320",
+    "clientWidth": 305,
+    "h1": "Шахматный кружок «Ход»",
+    "overflow": [],
+    "path": "#/me/organizations/rook",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "home-768",
+    "clientWidth": 753,
+    "h1": "Есть планы.Найдётсякомпания.",
+    "overflow": [],
+    "path": "#/",
+    "scrollWidth": 753,
+    "width": 768
+  },
+  {
+    "label": "catalog-768",
+    "clientWidth": 753,
+    "h1": "Найди свои планы",
+    "overflow": [],
+    "path": "#/events",
+    "scrollWidth": 753,
+    "width": 768
+  },
+  {
+    "label": "event-768",
+    "clientWidth": 753,
+    "h1": "Бежим вдоль Енисея",
+    "overflow": [],
+    "path": "#/events/run",
+    "scrollWidth": 753,
+    "width": 768
+  },
+  {
+    "label": "create-768",
+    "clientWidth": 753,
+    "h1": "Новая встреча",
+    "overflow": [],
+    "path": "#/events/new",
+    "scrollWidth": 753,
+    "width": 768
+  },
+  {
+    "label": "create-step2-390",
+    "clientWidth": 375,
+    "h1": "Новая встреча",
+    "overflow": [],
+    "path": "#/events/new",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "create-step3-390",
+    "clientWidth": 375,
+    "h1": "Новая встреча",
+    "overflow": [],
+    "path": "#/events/new",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "admin-organization-320",
+    "clientWidth": 305,
+    "h1": "Шахматный кружок «Ход»",
+    "overflow": [],
+    "path": "#/admin/organizations/rook",
+    "scrollWidth": 305,
+    "width": 320
+  },
+  {
+    "label": "admin-organizations-768",
+    "clientWidth": 753,
+    "h1": "Организации",
+    "overflow": [],
+    "path": "#/admin/organizations",
+    "scrollWidth": 753,
+    "width": 768
+  },
+  {
+    "label": "admin-event-768",
+    "clientWidth": 753,
+    "h1": "Теннис без спешки",
+    "overflow": [],
+    "path": "#/admin/events/tennis",
+    "scrollWidth": 753,
+    "width": 768
+  },
+  {
+    "label": "unpublished-participant-390",
+    "clientWidth": 375,
+    "h1": "Теннис без спешки",
+    "overflow": [],
+    "path": "#/events/tennis",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "catalog-1280",
+    "clientWidth": 1265,
+    "h1": "Найди свои планы",
+    "overflow": [],
+    "path": "#/events",
+    "scrollWidth": 1265,
+    "width": 1280
+  }
+]
