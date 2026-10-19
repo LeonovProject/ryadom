@@ -1,0 +1,24 @@
+{
+  "imported_on": "2026-10-19",
+  "authority": "User supplied primary source PDFs; original PDFs prevail over the Markdown conversion.",
+  "sources": [
+    {
+      "id": "assignment",
+      "original_filename": "Постановка.pdf",
+      "pdf": "docs/references/official/assignment.pdf",
+      "markdown": "docs/requirements/assignment.md",
+      "sha256": "c5bdb51c6a8826d9ce557dd30b4ef5d63ab1e224d46a1724e823de81932399e6",
+      "page_count": 10,
+      "page_anchor_prefix": "A"
+    },
+    {
+      "id": "evaluation-criteria",
+      "original_filename": "Критерии_оценки.pdf",
+      "pdf": "docs/references/official/evaluation-criteria.pdf",
+      "markdown": "docs/requirements/evaluation-criteria.md",
+      "sha256": "301081ec45b23593f5bcfe2248aa80173d0bc104b45d678bc22e712b454da2fd",
+      "page_count": 6,
+      "page_anchor_prefix": "C"
+    }
+  ]
+}

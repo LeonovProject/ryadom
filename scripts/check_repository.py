@@ -2,6 +2,7 @@
 """Check checked-in documents and shared assets without third-party packages."""
 
 from pathlib import Path
+import hashlib
 import json
 import re
 import sys
@@ -92,14 +93,42 @@ def check_links():
             require((file.parent / path).exists(), f"Broken link in {file.relative_to(ROOT)}: {target}")
 
 
+def check_requirements():
+    manifest = json.loads((ROOT / "docs/requirements/sources.json").read_text(encoding="utf-8"))
+    sources = manifest["sources"]
+    require({source["id"] for source in sources} == {"assignment", "evaluation-criteria"},
+            "Both primary sources must be present")
+    require(len(sources) == 2, "Duplicate primary source")
+    for source in sources:
+        pdf = (ROOT / source["pdf"]).read_bytes()
+        require(hashlib.sha256(pdf).hexdigest() == source["sha256"],
+                f"Primary PDF differs from imported original: {source['pdf']}")
+        require(pdf.startswith(b"%PDF-"), f"Invalid primary PDF: {source['pdf']}")
+        markdown = (ROOT / source["markdown"]).read_text(encoding="utf-8")
+        prefix = source["page_anchor_prefix"]
+        anchors = re.findall(rf"^## ({prefix}-P\d{{2}}) ", markdown, re.M)
+        expected = [f"{prefix}-P{page:02d}" for page in range(1, source["page_count"] + 1)]
+        require(anchors == expected, f"Missing or duplicate source page: {source['markdown']}")
+
+    criteria = (ROOT / "docs/requirements/evaluation-criteria.md").read_text(encoding="utf-8")
+    rows = re.findall(r"^### (R\d\.\d) [^\n]+\n\n\*\*Баллы: от 0 до (\d+)\.\*\*", criteria, re.M)
+    expected_rows = [f"R{group}.{item}" for group, count in enumerate((3, 4, 2, 3, 7, 7), 1)
+                     for item in range(1, count + 1)]
+    require([name for name, _ in rows] == expected_rows, "Criteria rows are missing or out of order")
+    for group, total in enumerate((10, 25, 6, 6, 28, 23), 1):
+        actual = sum(int(score) for name, score in rows if name.startswith(f"R{group}."))
+        require(actual == total, f"Criteria section {group}: expected {total}, got {actual}")
+
+
 def main():
     try:
         check_brandbook()
+        check_requirements()
         check_links()
     except (ValueError, OSError, KeyError, ET.ParseError, BadZipFile) as exc:
         print(f"FAIL: {exc}", file=sys.stderr)
         return 1
-    print("OK: brandbook, shared assets, archive and documentation links")
+    print("OK: brandbook, shared assets, archive, primary sources, criteria and documentation links")
     return 0
 
 
