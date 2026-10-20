@@ -5,7 +5,7 @@
   "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "BE-P1 b689651 and FE-P1 fccce11 integrated with real shared S1/S2 acceptance. Continue backend BE-P2 and frontend FE-P2 from the exact integration SHA; preserve backend uncommitted participation work and existing branch history.",
+  "assignmentMode": "BE-P2 8680600 and FE-P2 e423568 integrated; real joint HTTPS/browser S3/S4/S5, API moderation and persistence accepted. Continue BE-P3/FE-P3 from the containing integration commit; preserve branch history.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -126,16 +126,21 @@
     },
     "BE-07": {
       "ownerRole": "BACKEND",
-      "status": "IN_PROGRESS",
-      "scope": "Uncommitted participation work observed only in backend worktree; not included in shared P1 integration or accepted as complete."
+      "status": "COMPLETED",
+      "scope": "Verified author sources match. Combined production Docker images passed real HTTPS/browser participation, both decisions, discussion, public moderation effects and same-volume persistence. Administrative UI FE-11 and full QA/DELIVERY remain pending.",
+      "verificationReport": "docs/development/integration/2026-10-20/p2/README.md"
     },
     "BE-08": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p2/README.md",
+      "scope": "Verified author sources match. Combined production Docker images passed real HTTPS/browser participation, both decisions, discussion, public moderation effects and same-volume persistence. Administrative UI FE-11 and full QA/DELIVERY remain pending."
     },
     "BE-09": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p2/README.md",
+      "scope": "Verified author sources match. Combined production Docker images passed real HTTPS/browser participation, both decisions, discussion, public moderation effects and same-volume persistence. Administrative UI FE-11 and full QA/DELIVERY remain pending."
     },
     "BE-10": {
       "ownerRole": "BACKEND",
@@ -187,15 +192,21 @@
     },
     "FE-08": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p2/README.md",
+      "scope": "Verified author sources match. Combined production Docker images passed real HTTPS/browser participation, both decisions, discussion, public moderation effects and same-volume persistence. Administrative UI FE-11 and full QA/DELIVERY remain pending."
     },
     "FE-09": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p2/README.md",
+      "scope": "Verified author sources match. Combined production Docker images passed real HTTPS/browser participation, both decisions, discussion, public moderation effects and same-volume persistence. Administrative UI FE-11 and full QA/DELIVERY remain pending."
     },
     "FE-10": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p2/README.md",
+      "scope": "Verified author sources match. Combined production Docker images passed real HTTPS/browser participation, both decisions, discussion, public moderation effects and same-volume persistence. Administrative UI FE-11 and full QA/DELIVERY remain pending."
     },
     "FE-11": {
       "ownerRole": "FRONTEND",
@@ -267,8 +278,8 @@
     }
   },
   "nextAssignments": [
-    "BE-07",
-    "FE-08"
+    "BE-10",
+    "FE-11"
   ],
   "firstIntegration": {
     "foundation": [
@@ -295,9 +306,9 @@
   },
   "integration": {
     "date": "2026-10-20",
-    "backendCommit": "b689651",
-    "frontendCommit": "fccce11",
-    "report": "docs/development/integration/2026-10-20/p1/README.md",
+    "backendCommit": "8680600",
+    "frontendCommit": "e423568",
+    "report": "docs/development/integration/2026-10-20/p2/README.md",
     "realBusinessOperations": [
       "login",
       "register",
@@ -317,9 +328,20 @@
       "submitOrganization",
       "adminListOrganizations",
       "adminGetOrganization",
-      "adminDecideOrganization"
+      "adminDecideOrganization",
+      "joinEvent",
+      "decideParticipation",
+      "listMyParticipations",
+      "listEventParticipations",
+      "listMessages",
+      "createMessage",
+      "adminListMessages",
+      "adminHideMessage",
+      "adminListEvents",
+      "adminGetEvent",
+      "adminUnpublishEvent"
     ],
-    "frontendScope": "FE-01 through FE-07 accepted locally; participation/discussion and remaining administrative/media paths still pending."
+    "frontendScope": "FE-01 through FE-10 accepted locally; administrative event/message screens FE-11 and later media/report/account/reset paths remain pending."
   },
   "continuation": {
     "report": "docs/development/handoff/continuation-2026-10-20.md",
@@ -340,7 +362,7 @@
     ],
     "contractChanged": false,
     "deploymentPerformed": false,
-    "latestReport": "docs/development/integration/2026-10-20/p1/README.md"
+    "latestReport": "docs/development/integration/2026-10-20/p2/README.md"
   },
   "workPackets": {
     "policy": "docs/development/handoff/work-packets.md",
@@ -406,7 +428,9 @@
           "S6",
           "A2",
           "A3"
-        ]
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "docs/development/integration/2026-10-20/p2/README.md"
       },
       "FE-P1": {
         "ownerRoles": [
@@ -471,9 +495,81 @@
         "runtimeDependencies": [
           "BE-07",
           "BE-08"
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "docs/development/integration/2026-10-20/p2/README.md"
+      },
+      "BE-P3": {
+        "ownerRoles": [
+          "BACKEND",
+          "DATABASE"
+        ],
+        "tasks": [
+          "BE-10",
+          "BE-11",
+          "BE-12"
+        ],
+        "requiresPackets": [
+          "BE-P2"
+        ],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "apps/api/internal/modules/activitytypes/",
+          "apps/api/internal/modules/reports/",
+          "apps/api/internal/modules/moderation/",
+          "apps/api/internal/modules/events/",
+          "apps/api/internal/modules/discussion/",
+          "apps/api/internal/modules/admin/demoreset/",
+          "apps/api/internal/modules/auth/",
+          "apps/api/internal/platform/transaction/",
+          "apps/api/db/queries/",
+          "apps/api/db/seed/",
+          "apps/api/internal/db/",
+          "apps/api/cmd/api/main.go"
+        ],
+        "acceptance": [
+          "Activity type decisions/rename/concurrency",
+          "Event/message reports and message restoration with revisions",
+          "Atomic demo reset only in disposable database; no reset of shared preview"
+        ]
+      },
+      "FE-P3": {
+        "ownerRoles": [
+          "FRONTEND"
+        ],
+        "tasks": [
+          "FE-11",
+          "FE-12",
+          "FE-13"
+        ],
+        "requiresPackets": [
+          "FE-P2"
+        ],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "apps/web/src/features/admin/events/",
+          "apps/web/src/features/admin/activitytypes/",
+          "apps/web/src/features/reports/",
+          "apps/web/src/features/events/detail/",
+          "apps/web/src/features/discussion/",
+          "apps/web/src/app/App.tsx",
+          "apps/web/src/app/AppShell.tsx",
+          "apps/web/src/app/routes.ts",
+          "apps/web/src/shared/api/"
+        ],
+        "runtimeDependencies": [
+          "BE-08",
+          "BE-09",
+          "BE-10",
+          "BE-11"
+        ],
+        "acceptance": [
+          "A2/A3/S6 administrative UI on accepted BE-08/09",
+          "Activity type review after BE-10",
+          "Reports/restoration after BE-11; fixtures alone do not complete FE-12/13"
         ]
       }
     },
-    "latestIntegrationReport": "docs/development/integration/2026-10-20/p1/README.md"
+    "latestIntegrationReport": "docs/development/integration/2026-10-20/p2/README.md"
   }
 }

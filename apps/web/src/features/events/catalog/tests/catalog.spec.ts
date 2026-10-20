@@ -32,7 +32,7 @@ test('guest home reads real API lists, searches without forcing a city and links
   expect(requests.at(-1)?.searchParams.get('from')).toBeTruthy();
 });
 
-test('signed-in home has a personal slot without inventing participations', async ({ page }) => {
+test('signed-in home reads personal plans independently from the public catalog', async ({ page }) => {
   const requests: string[] = [];
   page.on('request', (request) => requests.push(new URL(request.url()).pathname));
   await page.route('**/api/v1/me', (route) => fulfillCase(route, 'getMeSuccess'));
@@ -41,7 +41,8 @@ test('signed-in home has a personal slot without inventing participations', asyn
   await expect(page.getByRole('link', { name: 'Все мои встречи', exact: true })).toHaveAttribute('href', '/me/events');
   await expect(page.getByRole('heading', { name: 'Найти новую встречу' })).toBeVisible();
   await expect(page.getByRole('article')).toHaveCount(1);
-  expect(requests.some((path) => path.includes('participations'))).toBe(false);
+  await expect(page.getByText('Пока нет предстоящих подтверждённых встреч.', { exact: false })).toBeVisible();
+  expect(requests.some((path) => path.includes('participations'))).toBe(true);
   await expect(page.getByText('У тебя пока нет встреч')).toHaveCount(0);
 });
 

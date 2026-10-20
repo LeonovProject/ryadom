@@ -54,6 +54,9 @@ export function AppShell() {
         <RouteFocus />
         <Outlet />
       </main>
+      <nav className={styles.mobileNav} aria-label="Быстрые переходы">
+        <NavLink to="/" end>Главная</NavLink><NavLink to="/events">Встречи</NavLink><NavLink to="/me/events">Мои встречи</NavLink><NavLink to="/me" end>Профиль</NavLink>
+      </nav>
       <footer className={styles.footer}>
         <div className={`${styles.container} ${styles.footerInner}`}>
           <p>Рядом — компания для спорта.</p>

@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => { await guestFixtures(page); });
 test('unimplemented routes remain explicit placeholders; unknown URLs get 404', async ({ page }) => {
   const requests: string[] = [];
   page.on('request', (request) => { if (new URL(request.url()).pathname.startsWith('/api/v1/')) requests.push(request.url()); });
-  for (const route of screenRoutes.filter((route) => !['/', '/events', '/events/new', '/login', '/register', '/me', '/events/:eventId', '/people/:accountId', '/organizations/:organizationId', '/organizations/new', '/me/organizations', '/me/organizations/:organizationId', '/admin/organizations', '/admin/organizations/:organizationId'].includes(route.path))) {
+  for (const route of screenRoutes.filter((route) => !['/', '/events', '/events/new', '/login', '/register', '/me', '/me/events', '/events/:eventId/manage', '/events/:eventId', '/people/:accountId', '/organizations/:organizationId', '/organizations/new', '/me/organizations', '/me/organizations/:organizationId', '/admin/organizations', '/admin/organizations/:organizationId'].includes(route.path))) {
     await page.goto(route.path.replace(/:[^/]+/g, 'example'));
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.title);
     await expect(page.getByRole('heading', { name: 'Раздел готовится' })).toBeVisible();
@@ -32,9 +32,9 @@ for (const width of [320, 390, 768, 1280]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(await page.evaluate(() => document.fonts.check('400 16px "Open Sans"') && document.fonts.check('700 32px Montserrat'))).toBe(true);
     if (width <= 600) {
-      await expect(page.getByRole('navigation')).toBeHidden();
+      await expect(page.getByRole('navigation', { name: 'Основная навигация', exact: true })).toBeHidden();
       await page.getByRole('button', { name: 'Меню', exact: true }).click();
-      await expect(page.getByRole('navigation')).toBeVisible();
+      await expect(page.getByRole('navigation', { name: 'Основная навигация', exact: true })).toBeVisible();
       await page.screenshot({ path: `.artifacts/fe-01/menu-${width}.png` });
       await page.getByRole('link', { name: 'Найти встречу', exact: true }).focus();
       await page.keyboard.press('Escape');

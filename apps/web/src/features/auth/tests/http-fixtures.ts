@@ -39,6 +39,8 @@ export async function guestFixtures(page: Page) {
     if (organization) page.items[0].organizer = { type: 'ORGANIZATION', organization: { id: organization, name: 'Клуб «Темп»' }, ownerIsBlocked: false };
     return fulfillCase(route, 'listEventsSuccess', { responseBody: page });
   });
+  await page.route('**/api/v1/events/*/messages?*', (route) => fulfillCase(route, 'messagesNewestEmpty'));
+  await page.route('**/api/v1/me/participations?*', (route) => fulfillCase(route, 'myUpcomingEmptyStillHasReferenceTime'));
   await page.route('**/api/v1/events/*', (route) => {
     const id = new URL(route.request().url()).pathname.split('/').at(-1)!;
     const event = httpCase('getEventSuccess').responseBody as components['schemas']['PublishedEventDetail'];

@@ -1,0 +1,71 @@
+import { expect, test } from '@playwright/test';
+import type { components } from '../../../shared/api/client';
+import { fulfillCase, guestFixtures, httpCase, meFixture } from '../../auth/tests/http-fixtures';
+const id = '00000002-0000-4000-8000-000000000001';
+const path = `/events/${id}`;
+const published = () => httpCase('getEventSuccess').responseBody as components['schemas']['PublishedEventDetail'];
+test.beforeEach(async ({ page }) => {
+  await guestFixtures(page);
+  await page.route(`**/api/v1/events/${id}/messages?*`, (route) => fulfillCase(route, new URL(route.request().url()).searchParams.has('cursor') ? 'messagesNewestNextLoadsEarlier' : 'messagesNewestFirst'));
+});
+test('newest-first read renders ascending, hides moderated text and prepends earlier messages', async ({ page }) => {
+  const queries: URL[] = [];
+  page.on('request', (request) => { if (request.url().includes('/messages?')) queries.push(new URL(request.url())); });
+  await page.goto(path);
+  const discussion = page.getByRole('region', { name: 'Обсуждение встречи', exact: true });
+  await expect(discussion.locator('[data-message-id]')).toHaveCount(3);
+  await expect(discussion.locator('[data-message-id]').first()).toContainText('Нужен ли свой инвентарь?');
+  await expect(discussion.getByText('Сообщение скрыто модератором.', { exact: true })).toBeVisible();
+  await discussion.getByRole('button', { name: 'Ранние сообщения', exact: true }).click();
+  await expect(discussion.locator('[data-message-id]')).toHaveCount(4);
+  await expect(discussion.locator('[data-message-id]').first()).toContainText('Встречаемся у входа?');
+  expect(queries.every((url) => url.searchParams.get('order') === 'NEWEST_FIRST')).toBe(true);
+  await discussion.getByRole('button', { name: 'Обновить обсуждение', exact: true }).click();
+  await expect(discussion.locator('[data-message-id]')).toHaveCount(3);
+  expect(queries.at(-1)?.searchParams.has('cursor')).toBe(false);
+});
+test('one explicit message POST, then a fresh tail without old cursors', async ({ page }) => {
+  const me = { ...meFixture(), sessionExpiresAt: '2099-01-01T00:00:00Z' }; let posts = 0;
+  await page.route('**/api/v1/me', (route) => fulfillCase(route, 'getMeSuccess', { responseBody: me }));
+  await page.route(`**/api/v1/events/${id}`, (route) => fulfillCase(route, 'getEventSuccess', { responseBody: { ...published(), capabilities: { ...published().capabilities, canPostMessage: true } } }));
+  await page.route(`**/api/v1/events/${id}/messages`, (route) => {
+    posts++; expect(route.request().postDataJSON()).toEqual({ body: '<b>Можно без опыта?</b>' });
+    return fulfillCase(route, 'createMessageSuccess', { responseBody: { ...(httpCase('createMessageSuccess').responseBody as components['schemas']['VisibleMessage']), author: me.account } });
+  });
+  await page.goto(path);
+  await page.getByLabel('Твой вопрос или ответ', { exact: true }).fill('<b>Можно без опыта?</b>');
+  await page.getByRole('button', { name: 'Отправить сообщение', exact: true }).click();
+  await expect(page.getByText('Сообщение сохранено сервером.', { exact: true })).toBeVisible();
+  await expect(page.getByLabel('Твой вопрос или ответ', { exact: true })).toHaveValue('');
+  expect(posts).toBe(1);
+});
+test('unknown message result retains text and never unlocks POST after rereading', async ({ page }) => {
+  let posts = 0;
+  await page.route('**/api/v1/me', (route) => fulfillCase(route, 'getMeSuccess', { responseBody: { ...meFixture(), sessionExpiresAt: '2099-01-01T00:00:00Z' } }));
+  await page.route(`**/api/v1/events/${id}`, (route) => fulfillCase(route, 'getEventSuccess', { responseBody: { ...published(), capabilities: { ...published().capabilities, canPostMessage: true } } }));
+  await page.route(`**/api/v1/events/${id}/messages`, (route) => { posts++; return route.abort(); });
+  await page.goto(path);
+  await page.getByLabel('Твой вопрос или ответ', { exact: true }).fill('Сохранённый вопрос');
+  await page.getByRole('button', { name: 'Отправить сообщение', exact: true }).click();
+  await expect(page.getByText(/Результат отправки неизвестен/)).toBeVisible();
+  await page.getByRole('button', { name: 'Проверить последние сообщения', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Отправить сообщение', exact: true })).toBeDisabled();
+  await expect(page.getByLabel('Твой вопрос или ответ', { exact: true })).toHaveValue('Сохранённый вопрос');
+  expect(posts).toBe(1);
+});
+test('guest question survives login without automatic posting', async ({ page }) => {
+  let loggedIn = false, posts = 0;
+  const me = { ...meFixture(), sessionExpiresAt: '2099-01-01T00:00:00Z' };
+  await page.route('**/api/v1/me', (route) => fulfillCase(route, loggedIn ? 'getMeSuccess' : 'authenticationRequired', loggedIn ? { responseBody: me } : undefined));
+  await page.route('**/api/v1/auth/login', (route) => { loggedIn = true; return fulfillCase(route, 'loginSuccess', { responseBody: me }); });
+  await page.route(`**/api/v1/events/${id}`, (route) => fulfillCase(route, 'getEventSuccess', { responseBody: { ...published(), capabilities: { ...published().capabilities, canPostMessage: loggedIn } } }));
+  await page.route(`**/api/v1/events/${id}/messages`, (route) => { posts++; return route.abort(); });
+  await page.goto(path);
+  await page.getByLabel('Твой вопрос или ответ', { exact: true }).fill('Гостевой вопрос');
+  await page.getByRole('link', { name: 'Войти и вернуться к вопросу', exact: true }).click();
+  await page.getByLabel(/^Email/).fill(me.email); await page.getByLabel(/^Пароль/).fill('valid-password-fixture');
+  await page.getByRole('button', { name: 'Войти', exact: true }).click();
+  await expect(page).toHaveURL(path);
+  await expect(page.getByLabel('Твой вопрос или ответ', { exact: true })).toHaveValue('Гостевой вопрос');
+  expect(posts).toBe(0);
+});

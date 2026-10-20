@@ -40,7 +40,7 @@ test('published detail shows local time, content, organizer and confirmed count 
   await expect(page.getByText('Подтверждённых участников:', { exact: false })).toContainText('2');
   await expect(page.getByRole('link', { name: 'Открыть профиль', exact: true })).toHaveAttribute('href', '/people/00000001-0000-4000-8000-000000000002');
   await expect(page.getByRole('button', { name: 'Присоединиться' })).toHaveCount(0);
-  await expect(page.getByRole('textbox')).toHaveCount(0);
+  await expect(page.getByLabel('Твой вопрос или ответ', { exact: true })).toBeVisible();
   expect(methods.every((method) => method === 'GET')).toBe(true);
 });
 

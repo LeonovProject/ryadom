@@ -1,0 +1,13 @@
+.page, .stack { display: grid; gap: var(--space-4); min-width: 0; }
+.page { gap: var(--space-6); }
+.card { display: grid; gap: var(--space-3); padding: var(--space-6); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-card); min-width: 0; overflow-wrap: anywhere; }
+.card h3 { font-size: var(--type-shared-cardTitle-fontSize); }
+.card time, .muted { color: var(--color-text-secondary); }
+.card p { white-space: pre-wrap; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.row, .tabs { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+.tabs a { min-height: var(--size-control); display: inline-flex; align-items: center; padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-pill); color: var(--color-text-primary); text-decoration: none; }
+.tabs a[aria-current=page] { background: var(--color-brand-tint); border-color: var(--color-brand-primary); color: var(--color-brand-onTint); font-weight: 700; }
+.notice { padding: var(--space-4); border-radius: var(--radius-control); background: var(--color-surface-subtle); overflow-wrap: anywhere; }
+.compact { display: grid; gap: var(--space-2); padding: var(--space-4); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-control); overflow-wrap: anywhere; }
+@media (max-width: 600px) { .grid { grid-template-columns: minmax(0, 1fr); } .card { padding: var(--space-4); } }
