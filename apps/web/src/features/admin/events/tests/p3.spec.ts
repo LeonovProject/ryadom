@@ -34,3 +34,28 @@ test('USER never starts administrative reads', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Нет доступа к разделу', exact: true })).toBeVisible();
   expect(reads).toBe(0);
 });
+
+test('activity rename conflict keeps input and never substitutes expectedName automatically', async ({ page }) => {
+  await admin(page); const activity = httpCase('adminGetActivityTypeSuccess').responseBody as components['schemas']['AdminActivityType'];
+  await page.route('**/api/v1/admin/activity-types?*', (route) => fulfillCase(route, 'adminListActivityTypesSuccess'));
+  await page.route(`**/api/v1/admin/activity-types/${activity.id}`, async (route) => {
+    if (route.request().method() === 'PATCH') { expect(route.request().postDataJSON()).toEqual({ name: 'Новое имя', expectedName: activity.name }); return route.fulfill({ status: 409, contentType: 'application/json', body: JSON.stringify({ error: { code: 'ACTIVITY_TYPE_CHANGED', message: 'Changed', requestId: 'test', fieldErrors: {} } }) }); }
+    return fulfillCase(route, 'adminGetActivityTypeSuccess');
+  });
+  await page.goto(`/admin/activity-types?id=${activity.id}`);
+  await page.getByLabel('Имя направления', { exact: true }).fill('Новое имя');
+  await page.getByRole('button', { name: 'Исправить имя', exact: true }).click();
+  await expect(page.getByText(/Сведения изменились. Перечитай текущую версию/)).toBeVisible();
+  await expect(page.getByLabel('Имя направления', { exact: true })).toHaveValue('Новое имя');
+  await expect(page.getByRole('button', { name: 'Исправить имя', exact: true })).toBeDisabled();
+});
+test('activity approval sends expectedName and the corrected name together', async ({ page }) => {
+  await admin(page); const activity = httpCase('adminGetActivityTypeSuccess').responseBody as components['schemas']['AdminActivityType']; let approved = false;
+  await page.route('**/api/v1/admin/activity-types?*', (route) => fulfillCase(route, 'adminListActivityTypesSuccess'));
+  await page.route(`**/api/v1/admin/activity-types/${activity.id}`, (route) => fulfillCase(route, 'adminGetActivityTypeSuccess', { responseBody: approved ? { ...activity, name: 'Новое имя', catalogStatus: 'APPROVED', canDecide: false } : activity }));
+  await page.route(`**/api/v1/admin/activity-types/${activity.id}/decision`, (route) => { expect(route.request().postDataJSON()).toEqual({ decision: 'APPROVE', name: 'Новое имя', expectedName: activity.name }); approved = true; return fulfillCase(route, 'adminDecideActivityTypeSuccess', { responseBody: { ...activity, name: 'Новое имя', catalogStatus: 'APPROVED', canDecide: false } }); });
+  await page.goto(`/admin/activity-types?id=${activity.id}`); await page.getByLabel('Имя направления', { exact: true }).fill('Новое имя');
+  await page.getByRole('button', { name: 'Одобрить направление', exact: true }).click();
+  await expect(page.getByText('Сервер подтвердил изменение направления.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Одобрить направление', exact: true })).toHaveCount(0);
+});
