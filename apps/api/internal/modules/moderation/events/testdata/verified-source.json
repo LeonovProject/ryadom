@@ -1,0 +1,14 @@
+{
+  "baseCommit": "1a00a81fd9e48eb68ea7494287cb0fa07c5a98f5",
+  "card": "BE-09",
+  "files": {
+    "apps/api/cmd/api/main.go": "b996dfc7446b8cc0049fbcc57000d64b3ad94af5e0cd7c46d472951a52cd6989",
+    "apps/api/db/queries/moderation_events.sql": "14869db67072ac847cb6a18348084d9d00624ba950dbce85ed1621a986226325",
+    "apps/api/internal/db/moderation_events.sql.go": "f1ed8e21ca2fdd623c68ced3198bd5a07710ea1ccbf0e03f185d13dab7e8cd00",
+    "apps/api/internal/modules/events/admin.go": "e55c4f1320cadb4e067050e2507cc2218069f254211f9fe6353e00167dc2a499",
+    "apps/api/internal/modules/events/admin_test.go": "29edcc46cc3870e94b0269d3878274bb5613dac955e710432d12484f9f832aeb",
+    "apps/api/internal/modules/events/integration_test.go": "caff26894c9bf79d50fb0e5619625de62cf5c4d6a708c89f9f15a257190a23cc",
+    "apps/api/internal/modules/moderation/events/events.go": "b0de5b5e483e2e3b6ce9786f2a618201749c2a247343cea3f3c889168529e9ab",
+    "apps/api/internal/modules/moderation/events/testdata/http_accept.py": "89c38661fabfbb7d731501714adfcb11ab9f5ac8bde04cef3d94a9502be7a3ca"
+  }
+}
