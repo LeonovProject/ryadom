@@ -9,6 +9,9 @@ const elements=new Map();
 function element(){return {innerHTML:'',textContent:'',hidden:false,open:false,focus(){},scrollIntoView(){},close(){this.open=false},showModal(){this.open=true},querySelectorAll(){return []},querySelector(){return {focus(){}}}}}
 for(const id of ['main','prototype-bar','site-header','site-footer','mobile-nav','toast','modal'])elements.set('#'+id,element());
 let hash='#/';
+// Dates must stay within the +1 year creation limit.
+const futureDate=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Krasnoyarsk'}).format(new Date(Date.now()+180*24*60*60*1000));
+const futureYear=futureDate.slice(0,4);
 const location={get hash(){return hash},set hash(value){hash=value.startsWith('#')?value:'#'+value;(winListeners.hashchange||[]).forEach(fn=>fn())}};
 const ctx={document:{querySelector:q=>elements.get(q),addEventListener:(type,fn)=>(listeners[type]??=[]).push(fn)},location,innerWidth:1280,scrollY:0,scrollTo(){},setTimeout:()=>1,clearTimeout(){},console,URL,URLSearchParams,Date,Intl,FormData:class{constructor(form){this.values=form.values||{}}*[Symbol.iterator](){yield*Object.entries(this.values)}get(key){return this.values[key]??null}}};
 ctx.window={addEventListener:(type,fn)=>(winListeners[type]??=[]).push(fn)};
@@ -29,7 +32,7 @@ action('logout');navigate('/events/tennis');action('login');action('choose-profi
 action('logout');navigate('/events/tennis');action('login');action('choose-profile',{id:'alex'});assert(content().includes('Участие подтверждено'));
 for(const status of ['PENDING','CONFIRMED','REJECTED','UNPUBLISHED','ERROR','LOADING']){change('preview',status);assert(content().length>100,status)}change('preview','DEFAULT');
 action('logout');navigate('/events/run');submit('question',{body:'Можно ли прийти впервые?'},{event:'run'});assert(modal().open);action('choose-profile',{id:'alex'});assert(content().includes('Можно ли прийти впервые?'));submit('question',{body:'Можно ли прийти впервые?'},{event:'run'});assert(content().includes('<p>Можно ли прийти впервые?</p>'));
-navigate('/events/new');submit('create',{organizer:'personal',title:'Тестовая встреча',sport:'custom',customSport:'Фрисби',description:'Описание вымышленной встречи',date:'2030-11-01',time:'10:00',city:'Красноярск',place:'В парке'});assert(content().includes('Как можно присоединиться?'));submit('create',{mode:'OPEN',conditions:''});assert(content().includes('Всё выглядит правильно?'));submit('create',{});assert(content().includes('Тестовая встреча'));assert(content().includes('Фрисби'));assert(content().includes('2030'));assert(hash.startsWith('#/events/demo-'));
+navigate('/events/new');submit('create',{organizer:'personal',title:'Тестовая встреча',sport:'custom',customSport:'Фрисби',description:'Описание вымышленной встречи',date:futureDate,time:'10:00',city:'Красноярск',place:'В парке'});assert(content().includes('Как можно присоединиться?'));submit('create',{mode:'OPEN',conditions:''});assert(content().includes('Всё выглядит правильно?'));submit('create',{});assert(content().includes('Тестовая встреча'));assert(content().includes('Фрисби'));assert(content().includes(futureYear));assert(hash.startsWith('#/events/demo-'));
 navigate('/events/new');emit('input',{closest:()=>({dataset:{form:'create'},values:{title:'Не сохранено'}})});change('screen','/events');assert(modal().open);assert(modal().innerHTML.includes('Выйти из создания?'));action('leave-form',{path:'/events'});assert.equal(hash,'#/events');
 action('reset');assert.equal(hash,'#/');navigate('/events');assert(!content().includes('Тестовая встреча'));
 // Behavioral checks for the second screen review; this still mocks the DOM.
@@ -66,7 +69,7 @@ navigate('/admin/organizations/rook');action('moderate',{kind:'approve',id:'rook
 navigate('/admin/organizations/pulse');action('moderate',{kind:'reject',id:'pulse'});submit('moderation',{reason:'   '},{kind:'reject',id:'pulse'});assert(modal().open);assert(content().includes('Предоставить допуск'));submit('moderation',{reason:'Уточните формат и деятельность клуба.'},{kind:'reject',id:'pulse'});assert(content().includes('Уточните формат и деятельность клуба.'));assert(!content().includes('data-kind="approve"'));
 action('login');action('choose-profile',{id:'anna'});navigate('/me/organizations/pulse');assert(content().includes('Уточните формат и деятельность клуба.'));assert(!content().includes('Создать встречу от организации'));
 navigate('/me/organizations/rook');assert(content().includes('Создать встречу от организации'));navigate('/events/new?organization=rook');assert(content().includes('value="rook" selected'));
-submit('create',{organizer:'rook',title:'Новая партия кружка',sport:'Шахматы',description:'Вымышленная встреча клуба',date:'2030-11-01',time:'16:00',city:'Красноярск',place:'Зал клуба'});submit('create',{mode:'OPEN',conditions:''});submit('create',{});assert(content().includes('Новая партия кружка'));assert(content().includes('Шахматный кружок'));const newClubEvent=hash.slice('#/events/'.length);
+submit('create',{organizer:'rook',title:'Новая партия кружка',sport:'Шахматы',description:'Вымышленная встреча клуба',date:futureDate,time:'16:00',city:'Красноярск',place:'Зал клуба'});submit('create',{mode:'OPEN',conditions:''});submit('create',{});assert(content().includes('Новая партия кружка'));assert(content().includes('Шахматный кружок'));const newClubEvent=hash.slice('#/events/'.length);
 navigate('/organizations/rook');assert(content().includes('Новая партия кружка'));
 navigate('/organizations/new');submit('organization',{name:'Новый <клуб>',description:'Описание нового клуба',interests:'Фрисби, Бег'});assert(content().includes('Новый &lt;клуб&gt;'));assert(content().includes('Профиль создан'));const createdOrg=hash.split('/').at(-1);action('org-submit',{id:createdOrg});assert(content().includes('Заявка на рассмотрении'));
 navigate('/me/organizations/yard');action('org-submit',{id:'yard'});assert(content().includes('Заявка на рассмотрении'));
@@ -94,8 +97,23 @@ navigate('/events/new');emit('input',{closest:()=>({dataset:{form:'create'},valu
 navigate('/organizations/new');emit('input',{closest:()=>({dataset:{form:'organization'},values:{description:'Описание без названия'}})});change('screen','/events');assert(modal().open);action('leave-form',{path:'/events'});
 action('reset');
 console.log('PASS: organization creation/submission, private and public access, approval/rejection with required reason, publication after approval, admin search/navigation, single-message hiding, unpublication for all audiences and stale actions, safe login return, form warnings. All data is in memory.');
+// Imported design review: discovery is read-only and covers remain local, allowlisted assets.
+action('reset');navigate('/orgs');assert(content().includes('Организации рядом'));
+assert.equal((content().match(/<article class="org-card">/g)||[]).length,5);
+assert(!content().includes('data-action="org-join"'));assert(!content().includes('Шахматный кружок «Ход»'));assert(!content().includes('Клуб «Высота»'));
+navigate('/organizations/temp');assert(!content().includes('data-action="org-join"'));assert(!content().includes('вступление по заявке'));
+action('login');action('choose-profile',{id:'alex'});navigate('/events/new');
+submit('create',{organizer:'personal',title:'Проверка обложки',sport:'custom',customSport:'Фрисби',description:'Встреча',date:futureDate,time:'10:00',city:'Красноярск',place:'Парк'});
+assert(content().includes('<legend>Обложка встречи</legend>'));
+submit('create',{art:'bike-blue',mode:'OPEN',conditions:'Вода'});assert(content().includes('assets/event-art/bike-blue.svg'));
+submit('create',{});assert(content().includes('assets/event-art/bike-blue.svg'));
+navigate('/events/new');submit('create',{organizer:'personal',title:'Волейбол',sport:'Волейбол',description:'Встреча',date:futureDate,time:'10:00',city:'Красноярск',place:'Парк'});
+submit('create',{art:'../../not-an-asset',mode:'OPEN',conditions:''});assert(content().includes('assets/event-art/volleyball.svg'));assert(!content().includes('not-an-asset'));
+action('reset');navigate('/events');
+for(const match of content().matchAll(/src="(assets\/event-art\/[^"]+)"/g))assert(fs.existsSync(path.join(root,match[1])),match[1]);
+console.log('PASS: approved-only organization discovery without membership, preserved cover choice, unknown artwork fallback and existing local files. DOM mocked.');
 const snapshots=[];
-for(const path of ['/','/events','/events/run','/people/anna','/organizations/temp']){navigate(path);snapshots.push({path,html:content()})}
+for(const path of ['/','/events','/orgs','/events/run','/people/anna','/organizations/temp']){navigate(path);snapshots.push({path,html:content()})}
 action('login');action('choose-profile',{id:'alex'});navigate('/events/new');snapshots.push({path:'/events/new',html:content()});
 for(const route of ['/login','/register','/me','/me/events','/me/organizations','/organizations/new','/me/organizations/rook','/events/tennis/manage']){action('login');action('choose-profile',{id:'anna'});navigate(route);snapshots.push({path:route,html:content()})}
 action('login');action('choose-profile',{id:'admin'});

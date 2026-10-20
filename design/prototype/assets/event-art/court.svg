@@ -1,200 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   viewBox="0 0 400 150"
-   preserveAspectRatio="xMidYMid slice"
-   role="img"
-   aria-label="Теннисный корт"
-   version="1.1"
-   id="svg13"
-   sodipodi:docname="court.svg"
-   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs13" />
-  <sodipodi:namedview
-     id="namedview13"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="4.4325"
-     inkscape:cx="275.1269"
-     inkscape:cy="83.812747"
-     inkscape:window-width="1920"
-     inkscape:window-height="1001"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg13" />
-  <rect
-     width="400"
-     height="150"
-     fill="#fff1f2"
-     id="rect1"
-     x="-6.4105791e-08"
-     y="0.90242571" />
-  <!-- Разметка корта: базовая версия из app.js artwork(), дополнена сеткой и подачей -->
-  <g
-     fill="none"
-     stroke="#D92D3A"
-     opacity=".2"
-     stroke-width="1"
-     id="g3">
-    <rect
-       x="130"
-       y="-25"
-       width="220"
-       height="190"
-       rx="4"
-       id="rect2" />
-    <path
-       d="M130 70h220m-110-95v190m-110-155h220M130 135h220m50-125v125m120-125v125"
-       id="path2" />
-    <!-- новое: линии подачи и центральная отметка -->
-    <path
-       d="M130 15h220M240 -25v190"
-       stroke-dasharray="2 5"
-       opacity=".7"
-       id="path3" />
-    <circle
-       cx="240"
-       cy="70"
-       r="3"
-       fill="#D92D3A"
-       stroke="none"
-       opacity=".8"
-       id="circle3" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice">
+  <defs />
+  <rect width="400" height="150" fill="#fff1f2" x="-6.4105791e-08" y="0.90242571" />
+
+  <g fill="none" stroke="#D92D3A" opacity=".2" stroke-width="1">
+    <rect x="130" y="-25" width="220" height="190" rx="4" />
+    <path d="M130 70h220m-110-95v190m-110-155h220M130 135h220m50-125v125m120-125v125" />
+
+    <path d="M130 15h220M240 -25v190" stroke-dasharray="2 5" opacity=".7" />
+    <circle cx="240" cy="70" r="3" fill="#D92D3A" stroke="none" opacity=".8" />
   </g>
-  <!-- новое: сетка -->
-  <g
-     stroke="#9F1C28"
-     stroke-width="1"
-     opacity=".45"
-     fill="none"
-     id="g6">
-    <path
-       d="M60 70h64"
-       id="path4" />
-    <path
-       d="M60 66v8M68 66v8M76 66v8M84 66v8M92 66v8M100 66v8M108 66v8M116 66v8M124 66v8"
-       stroke-width=".7"
-       id="path5" />
-    <path
-       d="M60 70c0 3 64 3 64 0"
-       stroke-width=".7"
-       opacity=".6"
-       id="path6" />
+
+  <g stroke="#9F1C28" stroke-width="1" opacity=".45" fill="none">
+    <path d="M60 70h64" />
+    <path d="M60 66v8M68 66v8M76 66v8M84 66v8M92 66v8M100 66v8M108 66v8M116 66v8M124 66v8" stroke-width=".7" />
+    <path d="M60 70c0 3 64 3 64 0" stroke-width=".7" opacity=".6" />
   </g>
-  <!-- Ракетка: овал с струнами, горловина и рукоять -->
-  <g
-     transform="translate(295 52) rotate(-25)"
-     fill="none"
-     stroke="#D92D3A"
-     stroke-linecap="round"
-     id="g10">
-    <ellipse
-       cx="0"
-       cy="-14"
-       rx="15"
-       ry="19"
-       stroke-width="2.2"
-       id="ellipse6" />
-    <path
-       d="M-9 -29v30M0 -33v38M9 -29v30"
-       stroke-width="1"
-       opacity=".7"
-       id="path7" />
-    <path
-       d="M-14 -20h28M-15 -14h30M-14 -7h28"
-       stroke-width="1"
-       opacity=".7"
-       id="path8" />
-    <rect
-       x="-3.5"
-       y="22"
-       width="7"
-       height="15"
-       rx="2"
-       stroke-width="2.2"
-       id="rect9" />
-    <path
-       d="M-3.5 27h7M-3.5 32h7"
-       stroke-width="1"
-       opacity=".6"
-       id="path10" />
-    <path
-       d="M 0.74936519,21.697944 1.0467551,5.9412632 -0.79179507,5.7931009 -1.0891846,21.549782 Z"
-       style="fill:#d92d3a;stroke-width:0.841126"
-       id="path14" />
+
+  <g transform="translate(295 52) rotate(-25)" fill="none" stroke="#D92D3A" stroke-linecap="round">
+    <ellipse cx="0" cy="-14" rx="15" ry="19" stroke-width="2.2" />
+    <path d="M-9 -29v30M0 -33v38M9 -29v30" stroke-width="1" opacity=".7" />
+    <path d="M-14 -20h28M-15 -14h30M-14 -7h28" stroke-width="1" opacity=".7" />
+    <rect x="-3.5" y="22" width="7" height="15" rx="2" stroke-width="2.2" />
+    <path d="M-3.5 27h7M-3.5 32h7" stroke-width="1" opacity=".6" />
+    <path d="M 0.74936519,21.697944 1.0467551,5.9412632 -0.79179507,5.7931009 -1.0891846,21.549782 Z" fill="#d92d3a" stroke-width="0.841126" />
   </g>
-  <!-- новое: мячи и траектория подачи -->
-  <path
-     d="M 170.72842,73.607888 C 225.59397,19.821158 272.48792,28.334741 272.12419,27.602985"
-     fill="none"
-     stroke="#d92d3a"
-     stroke-width="1.2"
-     stroke-dasharray="1, 6"
-     stroke-linecap="round"
-     opacity="0.5"
-     id="path11"
-     sodipodi:nodetypes="cc" />
-  <circle
-     cx="164.22423"
-     cy="80.257095"
-     r="4.3047638"
-     fill="none"
-     stroke="#d92d3a"
-     stroke-width="1.33926"
-     id="circle11" />
-  <path
-     d="m 161.3141,77.250346 c 2.1161,1.724677 3.70317,4.024245 4.76121,6.898707"
-     fill="none"
-     stroke="#d92d3a"
-     stroke-width="1.10296"
-     opacity="0.8"
-     id="path12" />
-  <circle
-     cx="-79.833977"
-     cy="-191.22981"
-     r="4.5592494"
-     fill="none"
-     stroke="#d92d3a"
-     stroke-width="1.2"
-     opacity="0.7"
-     id="circle12"
-     transform="rotate(126)" />
-  <path
-     d="m 205.27248,47.238635 c -2.48972,0.767324 -5.09469,0.806913 -7.81495,0.118669"
-     fill="none"
-     stroke="#d92d3a"
-     stroke-width="0.9"
-     opacity="0.6"
-     id="path13" />
-  <rect
-     style="fill:#fff1f2;fill-opacity:1"
-     id="rect14"
-     width="89.654602"
-     height="48.815495"
-     x="38.286663"
-     y="40.52005" />
-  <rect
-     style="fill:#fff1f2;fill-opacity:1"
-     id="rect15"
-     width="239.61069"
-     height="41.477215"
-     x="125.46857"
-     y="-31.985315" />
-  <rect
-     style="fill:#fff1f2;fill-opacity:1"
-     id="rect16"
-     width="243.43936"
-     height="37.967606"
-     x="120.1244"
-     y="135.59859" />
+
+  <path d="M 170.72842,73.607888 C 225.59397,19.821158 272.48792,28.334741 272.12419,27.602985" fill="none" stroke="#d92d3a" stroke-width="1.2" stroke-dasharray="1, 6" stroke-linecap="round" opacity="0.5" />
+  <circle cx="164.22423" cy="80.257095" r="4.3047638" fill="none" stroke="#d92d3a" stroke-width="1.33926" />
+  <path d="m 161.3141,77.250346 c 2.1161,1.724677 3.70317,4.024245 4.76121,6.898707" fill="none" stroke="#d92d3a" stroke-width="1.10296" opacity="0.8" />
+  <circle cx="-79.833977" cy="-191.22981" r="4.5592494" fill="none" stroke="#d92d3a" stroke-width="1.2" opacity="0.7" transform="rotate(126)" />
+  <path d="m 205.27248,47.238635 c -2.48972,0.767324 -5.09469,0.806913 -7.81495,0.118669" fill="none" stroke="#d92d3a" stroke-width="0.9" opacity="0.6" />
+  <rect width="89.654602" height="48.815495" x="38.286663" y="40.52005" fill="#fff1f2" fill-opacity="1" />
+  <rect width="239.61069" height="41.477215" x="125.46857" y="-31.985315" fill="#fff1f2" fill-opacity="1" />
+  <rect width="243.43936" height="37.967606" x="120.1244" y="135.59859" fill="#fff1f2" fill-opacity="1" />
 </svg>
