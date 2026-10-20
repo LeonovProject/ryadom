@@ -51,7 +51,7 @@ test('mobile filters preserve unknown direction and dates on search, omit empty 
   await page.route('**/api/v1/events?*', async (route) => { requests.push(new URL(route.request().url())); await fulfillCase(route, 'searchFindsRejectedActivityType'); });
   const params = new URLSearchParams({ from, activityTypeId: type, joinMode: 'APPROVAL', dateFrom: '2026-11-07', dateTo: '2026-11-10', city: 'Красноярск' });
   await page.goto(`/events?${params}`);
-  await page.getByRole('button', { name: 'Фильтры', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Фильтры', exact: true })).toHaveAttribute('aria-expanded', 'true');
   await expect(page.getByLabel('Направление', { exact: true })).toHaveValue(type);
   await expect(page.getByRole('option', { name: 'Направление из ссылки' })).toHaveCount(1);
   await expect(page.getByLabel('Последний день включительно')).toHaveValue('2026-11-09');
@@ -198,7 +198,7 @@ for (const width of [320, 390, 768, 1280]) {
     await assertNoOverflow(page);
     await page.screenshot({ path: `.artifacts/fe-03/home-${width}.png`, fullPage: true });
     await page.goto(`/events?${new URLSearchParams({ from, joinMode: 'OPEN' })}`);
-    if (width <= 600) await page.getByRole('button', { name: 'Фильтры', exact: true }).click();
+    if (width <= 600) await expect(page.getByRole('button', { name: 'Фильтры', exact: true })).toHaveAttribute('aria-expanded', 'true');
     await expect(page.getByRole('article')).toHaveCount(3);
     await expect(page.getByRole('heading', { name: '<script>это название</script>' })).toBeVisible();
     await expect(page.getByText('Организатор временно недоступен', { exact: true })).toBeVisible();

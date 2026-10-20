@@ -7,15 +7,19 @@ import styles from './catalog.module.css';
 
 export function CatalogFilters({ search, defaultFrom, onApply, onReset }: { search: string; defaultFrom: string; onApply: (search: string) => void; onReset: () => void }) {
   const [draft, setDraft] = useState(() => draftFromSearch(search));
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(() => hasAdvancedFilters(search));
   const [error, setError] = useState<string | null>(null);
   const summary = useRef<HTMLParagraphElement>(null);
   const id = useId();
   const types = useActivityTypes();
-  useEffect(() => { setDraft(draftFromSearch(search)); setError(null); }, [search]);
+  useEffect(() => { setDraft(draftFromSearch(search)); setError(null); if (hasAdvancedFilters(search)) setExpanded(true); }, [search]);
   useEffect(() => { if (error) summary.current?.focus(); }, [error]);
   const update = (key: keyof typeof draft, value: string) => { setDraft((previous) => ({ ...previous, [key]: value })); setError(null); };
-  const knownType = types.data?.some((item) => item.id === draft.activityTypeId);
+  const availableTypes = types.isError ? [] : types.data;
+  const knownType = availableTypes?.some((item) => item.id.toLowerCase() === draft.activityTypeId.toLowerCase());
+  const selectedType = availableTypes?.find((item) => item.id.toLowerCase() === draft.activityTypeId.toLowerCase());
+  const source = new URLSearchParams(search);
+  const openDateRange = source.has('dateFrom') && !source.has('dateTo') && draft.firstDay === source.get('dateFrom') && !draft.lastDay;
   function submit(event: FormEvent) {
     event.preventDefault();
     try { onApply(applyDraft(search, draft, defaultFrom)); } catch (problem) { setError(problem instanceof Error ? problem.message : 'Проверь фильтры.'); }
@@ -30,10 +34,10 @@ export function CatalogFilters({ search, defaultFrom, onApply, onReset }: { sear
     <div id={`${id}-filters`} className={styles.moreFilters} data-expanded={expanded}>
       <div className={styles.selectField}>
         <label htmlFor={`${id}-activity`}>Направление</label>
-        <select id={`${id}-activity`} name="activityTypeId" value={draft.activityTypeId} onChange={(event) => update('activityTypeId', event.target.value)}>
+        <select id={`${id}-activity`} name="activityTypeId" value={selectedType?.id ?? draft.activityTypeId} onChange={(event) => update('activityTypeId', event.target.value)}>
           <option value="">Любое направление</option>
           {draft.activityTypeId && !knownType && <option value={draft.activityTypeId}>Направление из ссылки</option>}
-          {types.data?.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
+          {availableTypes?.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
         </select>
         {types.isPending && <p role="status" className={styles.caption}>Загружаем направления…</p>}
         {types.isError && <div className={styles.inlineError}><p>Не удалось загрузить направления. Другие фильтры доступны.</p><Button variant="quiet" onClick={() => void types.refetch()}>Повторить загрузку направлений</Button></div>}
@@ -51,10 +55,15 @@ export function CatalogFilters({ search, defaultFrom, onApply, onReset }: { sear
           <TextField label="Первый день" name="firstDay" type="date" value={draft.firstDay} onChange={(event) => update('firstDay', event.target.value)} />
           <TextField label="Последний день включительно" name="lastDay" type="date" value={draft.lastDay} onChange={(event) => update('lastDay', event.target.value)} />
         </div>
-        <p className={styles.caption}>Если указан только первый день, ищем встречи за этот день. Дата определяется зоной каждой встречи.</p>
+        <p className={styles.caption}>{openDateRange ? 'В ссылке выбраны встречи начиная с первого дня, без последнего. Для поиска за один день укажи ту же дату последней.' : 'Если указан только первый день, ищем встречи за этот день.'} Дата определяется зоной каждой встречи.</p>
       </fieldset>
     </div>
     {error && <p ref={summary} role="alert" tabIndex={-1} className={styles.inlineError}>{error}</p>}
     <div className={styles.filterActions}><Button type="submit" variant="secondary">Применить фильтры</Button><Button variant="quiet" onClick={onReset}>Сбросить фильтры</Button></div>
   </form>;
+}
+
+function hasAdvancedFilters(search: string) {
+  const params = new URLSearchParams(search);
+  return ['activityTypeId', 'joinMode', 'dateFrom', 'dateTo'].some((key) => params.has(key));
 }

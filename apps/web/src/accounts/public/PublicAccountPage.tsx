@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
+import { profileReturnTo } from '../../features/events/detail/navigation';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useSession } from '../../features/auth/SessionProvider';
 import { EventFeed } from '../../features/events/catalog/EventFeed';
 import { api } from '../../shared/api/client';
@@ -19,10 +20,11 @@ async function readAccount(accountId: string, signal: AbortSignal) {
 export function PublicAccountPage() {
   const { accountId = '' } = useParams();
   const session = useSession();
+  const back = profileReturnTo(useLocation().state);
   const resource = useResourceQuery('public-account', accountId, readAccount);
   const account = resource.data;
   return <div className={styles.page}>
-    <Link to="/events" className={styles.back}>← К встречам</Link>
+    <Link to={back.to} state={back.state} className={styles.back}>{back.label}</Link>
     {resource.isPending || resource.isError || !account ? <ResourceState error={resource.error} loadingTitle="Открываем профиль" notFoundTitle="Профиль не найден" retry={() => void resource.refetch()} />
       : <>
         <section className={styles.profile}>

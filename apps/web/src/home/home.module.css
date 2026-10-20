@@ -21,6 +21,7 @@
 .types a:hover { background: var(--color-brand-tint); border-color: var(--color-brand-primary); }
 .sectionHeader { display: flex; align-items: end; justify-content: space-between; gap: var(--space-4); }
 .sectionHeader > div, .personalLinks { display: grid; gap: var(--space-3); }
+.sectionHeader > .meetingActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); }
 .personalLinks > a { justify-self: start; }
 .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-8); }
 .steps > div { display: flex; gap: var(--space-4); }
@@ -31,7 +32,7 @@
 .community > div { display: grid; gap: var(--space-3); }
 .community p { color: var(--color-text-secondary); max-width: 640px; }
 .community > a { flex-shrink: 0; }
-.error, .typeError { color: var(--color-status-error); }
+.typeError { color: var(--color-status-error); }
 .typeError { display: grid; justify-items: start; gap: var(--space-2); }
 @media (max-width: 1024px) { .hero { gap: var(--space-6); } .hero h1 { font-size: 40px; line-height: 48px; } .steps { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); } .community { align-items: start; flex-direction: column; } }
 @media (max-width: 600px) {

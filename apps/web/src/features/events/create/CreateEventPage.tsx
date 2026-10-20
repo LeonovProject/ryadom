@@ -37,6 +37,8 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
   const [restored] = useState(() => readDraft(me.account.id));
   const [values, setValues] = useState(() => restored?.values ?? emptyEvent(organizationId));
   const [step, setStep] = useState(restored?.step ?? 0);
+  const [editingReview, setEditingReview] = useState(false);
+  const editTarget = useRef<EventField | null>(null);
   const [dirty, setDirty] = useState(!!restored);
   const [uncertain, setUncertain] = useState(restored?.uncertain ?? false);
   const [pending, setPending] = useState(false);
@@ -58,7 +60,14 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
   useEffect(() => { if (dirty && !committed.current) saveDraft({ ownerId: me.account.id, values, step, uncertain }); }, [dirty, me.account.id, values, step, uncertain]);
   useBeforeUnload(useCallback((event) => { if (!committed.current && (dirty || lock.current || uncertain)) { event.preventDefault(); event.returnValue = ''; } }, [dirty, uncertain]));
   const previousStep = useRef(step);
-  useLayoutEffect(() => { if (previousStep.current !== step) heading.current?.focus(); previousStep.current = step; }, [step]);
+  useLayoutEffect(() => {
+    if (previousStep.current !== step) {
+      const field = editTarget.current && document.getElementById(`event-${editTarget.current}`);
+      (field || heading.current)?.focus();
+      editTarget.current = null;
+    }
+    previousStep.current = step;
+  }, [step]);
   useEffect(() => {
     const first = Object.keys(errors)[0];
     if (first) document.getElementById(`event-${first}`)?.focus();
@@ -70,6 +79,11 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
     setValues((previous) => ({ ...previous, [field]: value }));
     setDirty(true); setErrors({}); setFailure(null);
   }
+  function editReview(field: EventField, targetStep: number) {
+    if (lock.current || uncertain) return;
+    editTarget.current = field;
+    setErrors({}); setFailure(null); setEditingReview(true); setStep(targetStep);
+  }
   function showErrors(next: EventErrors) {
     setErrors(next);
     if (Object.keys(next).some((field) => firstStepFields.includes(field as EventField))) setStep(0);
@@ -79,9 +93,9 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
     event.preventDefault();
     if (lock.current || uncertain) return;
     const current = validateEvent(values, me.organizations);
-    const relevant = step === 0 ? Object.fromEntries(Object.entries(current).filter(([field]) => firstStepFields.includes(field as EventField))) : step === 1 ? Object.fromEntries(Object.entries(current).filter(([field]) => !firstStepFields.includes(field as EventField))) : current;
+    const relevant = editingReview ? current : step === 0 ? Object.fromEntries(Object.entries(current).filter(([field]) => firstStepFields.includes(field as EventField))) : step === 1 ? Object.fromEntries(Object.entries(current).filter(([field]) => !firstStepFields.includes(field as EventField))) : current;
     if (Object.keys(relevant).length) { showErrors(relevant); return; }
-    if (step < 2) { setErrors({}); setStep(step + 1); return; }
+    if (step < 2) { setErrors({}); setStep(editingReview ? 2 : step + 1); setEditingReview(false); return; }
     lock.current = true; setPending(true); setFailure(null); setErrors({});
     // Persist uncertainty before dispatch: losing a session/unmounting cannot re-enable POST.
     saveDraft({ ownerId: me.account.id, values, step, uncertain: true });
@@ -125,12 +139,12 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
       </div>}
       {uncertain && <div className={styles.notice} role="status"><p>Повторная отправка заблокирована, чтобы не создать дубль. Сначала проверь свои встречи. Совпадение названия не подтверждает результат этого запроса.</p><Link to="/me/events?tab=created">Перейти к моим встречам</Link><p>Этот раздел ещё в разработке. Перезагрузка удалит форму из памяти и не отменит возможную публикацию.</p></div>}
       <fieldset className={styles.fields} disabled={pending || uncertain}>
-        {step === 0 ? <BasicsStep values={values} errors={errors} change={change} me={me} /> : step === 1 ? <ParticipationStep values={values} errors={errors} change={change} /> : <ReviewStep values={values} me={me} />}
+        {step === 0 ? <BasicsStep values={values} errors={errors} change={change} me={me} /> : step === 1 ? <ParticipationStep values={values} errors={errors} change={change} /> : <ReviewStep values={values} me={me} edit={editReview} />}
       </fieldset>
       {step === 2 && Object.keys(localErrors).length > 0 && <p className={styles.notice}>Сведения изменились или время уже прошло. При публикации нужно будет проверить форму.</p>}
       <div className={styles.actions}>
         {step > 0 && <Button variant="secondary" disabled={pending || uncertain} onClick={() => { setErrors({}); setStep(step - 1); }}>Назад</Button>}
-        <Button type="submit" pending={pending} disabled={uncertain}>{pending ? 'Публикуем…' : step === 2 ? 'Опубликовать встречу' : step === 0 ? 'Далее: участие' : 'Проверить встречу'}</Button>
+        <Button type="submit" pending={pending} disabled={uncertain}>{pending ? 'Публикуем…' : step === 2 ? 'Опубликовать встречу' : editingReview ? 'Вернуться к проверке' : step === 0 ? 'Далее: участие' : 'Проверить встречу'}</Button>
       </div>
       <p className={styles.muted}>Черновик хранится только в памяти вкладки. После перезагрузки его не будет.</p>
     </form>

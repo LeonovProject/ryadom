@@ -9,7 +9,7 @@ import { ResourceState } from '../../../shared/ui/ResourceState';
 import { PageTitle } from '../../../shared/ui/PageTitle';
 import { StatusBadge } from '../../../shared/ui/StatusBadge';
 import { useSession } from '../../auth/SessionProvider';
-import { safeReturnTo } from '../../auth/return-to';
+import { catalogReturnTo } from './navigation';
 import styles from './detail.module.css';
 
 async function readEvent(eventId: string, signal: AbortSignal) {
@@ -24,9 +24,7 @@ export function EventPage() {
   const location = useLocation();
   const session = useSession();
   const resource = useResourceQuery('event', eventId, readEvent);
-  const rawReturn = location.state?.catalogReturnTo;
-  const target = typeof rawReturn === 'string' ? safeReturnTo(rawReturn) : '/events';
-  const backTo = target.startsWith('/events?') || target === '/events' ? target : '/events';
+  const backTo = catalogReturnTo(location.state);
   const event = resource.data;
   return <div className={styles.page}>
     <Link to={backTo} className={styles.back}>← К найденным встречам</Link>
@@ -41,15 +39,16 @@ export function EventPage() {
         <ButtonLink to="/events" variant="secondary">Найти другую встречу</ButtonLink>
         <Button variant="quiet" pending={resource.isFetching} onClick={() => void resource.refetch()}>Обновить сведения</Button>
       </section>
-        : <PublishedEvent key={event.id} event={event} isAdmin={session.me?.systemRole === 'ADMIN'} loggedIn={!!session.me} refreshing={resource.isFetching} refresh={() => void resource.refetch()} />}
+        : <PublishedEvent key={event.id} event={event} backTo={backTo} isAdmin={session.me?.systemRole === 'ADMIN'} loggedIn={!!session.me} refreshing={resource.isFetching} refresh={() => void resource.refetch()} />}
   </div>;
 }
 
-function PublishedEvent({ event, isAdmin, loggedIn, refreshing, refresh }: { event: components['schemas']['PublishedEventDetail']; isAdmin: boolean; loggedIn: boolean; refreshing: boolean; refresh: () => void }) {
+function PublishedEvent({ event, backTo, isAdmin, loggedIn, refreshing, refresh }: { backTo: string; event: components['schemas']['PublishedEventDetail']; isAdmin: boolean; loggedIn: boolean; refreshing: boolean; refresh: () => void }) {
   const [failedCover, setFailedCover] = useState<string | null>(null);
   const organizer = event.organizer;
   const owner = organizer.type === 'PERSONAL' ? organizer.account.displayName : organizer.organization.name;
   const ownerLink = organizer.type === 'PERSONAL' ? `/people/${organizer.account.id}` : `/organizations/${organizer.organization.id}`;
+  const profileState = { eventReturnTo: `/events/${event.id}`, catalogReturnTo: backTo };
   const blocked = organizer.type === 'PERSONAL' ? organizer.account.isBlocked : organizer.ownerIsBlocked;
   const started = event.capabilities.joinBlockedReason === 'EVENT_STARTED';
   return <>
@@ -80,9 +79,9 @@ function PublishedEvent({ event, isAdmin, loggedIn, refreshing, refresh }: { eve
       <aside className={styles.side} aria-label="Организатор и участие">
         <section className={styles.card}>
           <h2>{organizer.type === 'PERSONAL' ? 'Организатор' : 'Организация'}</h2>
-          <Link to={ownerLink} className={styles.owner}><Avatar name={owner} url={organizer.type === 'PERSONAL' ? organizer.account.avatarUrl : null} /><span>{owner}</span></Link>
+          <Link to={ownerLink} state={profileState} className={styles.owner}><Avatar name={owner} url={organizer.type === 'PERSONAL' ? organizer.account.avatarUrl : null} /><span>{owner}</span></Link>
           {blocked && <p className={styles.warning}>Организатор временно недоступен.{event.joinMode === 'APPROVAL' ? ' Сейчас он не может рассмотреть заявки.' : ''}</p>}
-          <Link to={ownerLink}>Открыть {organizer.type === 'PERSONAL' ? 'профиль' : 'страницу организации'}</Link>
+          <Link to={ownerLink} state={profileState}>Открыть {organizer.type === 'PERSONAL' ? 'профиль' : 'страницу организации'}</Link>
         </section>
         <section className={styles.card}>
           <h2>Участие</h2>

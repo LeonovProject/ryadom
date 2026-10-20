@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
+import { profileReturnTo } from '../../features/events/detail/navigation';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useSession } from '../../features/auth/SessionProvider';
 import { EventFeed } from '../../features/events/catalog/EventFeed';
 import { api } from '../../shared/api/client';
@@ -20,11 +21,12 @@ async function readOrganization(organizationId: string, signal: AbortSignal) {
 export function PublicOrganizationPage() {
   const { organizationId = '' } = useParams();
   const session = useSession();
+  const back = profileReturnTo(useLocation().state);
   const resource = useResourceQuery('public-organization', organizationId, readOrganization);
   const organization = resource.data;
   const owned = organization && session.me?.organizations.some((item) => item.id === organization.id);
   return <div className={styles.page}>
-    <Link to="/events" className={styles.back}>← К встречам</Link>
+    <Link to={back.to} state={back.state} className={styles.back}>{back.label}</Link>
     {resource.isPending || resource.isError || !organization ? <ResourceState error={resource.error} loadingTitle="Открываем организацию" notFoundTitle="Организация не найдена" retry={() => void resource.refetch()} />
       : <>
         <section className={styles.profile}>

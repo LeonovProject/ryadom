@@ -5,7 +5,7 @@
   "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "User-approved packet workflow after BE-03: assign 2-3 related cards to one worktree, continue sequentially without per-card integration. Backend owns ordinary API registration, frontend owns ordinary page wiring. Coordinator accepts verified author tests and integrates completed packets; early handoff only for blockers/shared contract changes.",
+  "assignmentMode": "BE-P1 b689651 and FE-P1 fccce11 integrated with real shared S1/S2 acceptance. Continue backend BE-P2 and frontend FE-P2 from the exact integration SHA; preserve backend uncommitted participation work and existing branch history.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -108,19 +108,26 @@
     },
     "BE-04": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p1/README.md",
+      "scope": "BE-P1/FE-P1 merged with unchanged verified production sources. Author checks accepted; current combined images and real HTTPS/browser S1/S2 passed. No participation/discussion acceptance."
     },
     "BE-05": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p1/README.md",
+      "scope": "BE-P1/FE-P1 merged with unchanged verified production sources. Author checks accepted; current combined images and real HTTPS/browser S1/S2 passed. No participation/discussion acceptance."
     },
     "BE-06": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p1/README.md",
+      "scope": "BE-P1/FE-P1 merged with unchanged verified production sources. Author checks accepted; current combined images and real HTTPS/browser S1/S2 passed. No participation/discussion acceptance."
     },
     "BE-07": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Uncommitted participation work observed only in backend worktree; not included in shared P1 integration or accepted as complete."
     },
     "BE-08": {
       "ownerRole": "BACKEND",
@@ -150,28 +157,33 @@
     },
     "FE-03": {
       "ownerRole": "FRONTEND",
-      "status": "IN_PROGRESS",
-      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
+      "status": "COMPLETED",
+      "scope": "BE-P1/FE-P1 merged with unchanged verified production sources. Author checks accepted; current combined images and real HTTPS/browser S1/S2 passed. No participation/discussion acceptance.",
+      "verificationReport": "docs/development/integration/2026-10-20/p1/README.md"
     },
     "FE-04": {
       "ownerRole": "FRONTEND",
-      "status": "IN_PROGRESS",
-      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
+      "status": "COMPLETED",
+      "scope": "BE-P1/FE-P1 merged with unchanged verified production sources. Author checks accepted; current combined images and real HTTPS/browser S1/S2 passed. No participation/discussion acceptance.",
+      "verificationReport": "docs/development/integration/2026-10-20/p1/README.md"
     },
     "FE-05": {
       "ownerRole": "FRONTEND",
-      "status": "IN_PROGRESS",
-      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
+      "status": "COMPLETED",
+      "scope": "BE-P1/FE-P1 merged with unchanged verified production sources. Author checks accepted; current combined images and real HTTPS/browser S1/S2 passed. No participation/discussion acceptance.",
+      "verificationReport": "docs/development/integration/2026-10-20/p1/README.md"
     },
     "FE-06": {
       "ownerRole": "FRONTEND",
-      "status": "IN_PROGRESS",
-      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
+      "status": "COMPLETED",
+      "scope": "BE-P1/FE-P1 merged with unchanged verified production sources. Author checks accepted; current combined images and real HTTPS/browser S1/S2 passed. No participation/discussion acceptance.",
+      "verificationReport": "docs/development/integration/2026-10-20/p1/README.md"
     },
     "FE-07": {
       "ownerRole": "FRONTEND",
-      "status": "IN_PROGRESS",
-      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
+      "status": "COMPLETED",
+      "scope": "BE-P1/FE-P1 merged with unchanged verified production sources. Author checks accepted; current combined images and real HTTPS/browser S1/S2 passed. No participation/discussion acceptance.",
+      "verificationReport": "docs/development/integration/2026-10-20/p1/README.md"
     },
     "FE-08": {
       "ownerRole": "FRONTEND",
@@ -255,8 +267,8 @@
     }
   },
   "nextAssignments": [
-    "BE-04",
-    "FE-03"
+    "BE-07",
+    "FE-08"
   ],
   "firstIntegration": {
     "foundation": [
@@ -283,9 +295,9 @@
   },
   "integration": {
     "date": "2026-10-20",
-    "backendCommit": "f4ef6a5",
-    "frontendCommit": "6d1dab9",
-    "report": "docs/development/integration/2026-10-20/README.md",
+    "backendCommit": "b689651",
+    "frontendCommit": "fccce11",
+    "report": "docs/development/integration/2026-10-20/p1/README.md",
     "realBusinessOperations": [
       "login",
       "register",
@@ -296,48 +308,24 @@
       "listActivityTypes",
       "listEvents",
       "getEvent",
-      "listMyEvents"
+      "listMyEvents",
+      "createEvent",
+      "createOrganization",
+      "listMyOrganizations",
+      "getMyOrganization",
+      "getOrganization",
+      "submitOrganization",
+      "adminListOrganizations",
+      "adminGetOrganization",
+      "adminDecideOrganization"
     ],
-    "frontendScope": "FE-01 through FE-07 implemented; FE-03 through FE-07 still require their real backend modules."
+    "frontendScope": "FE-01 through FE-07 accepted locally; participation/discussion and remaining administrative/media paths still pending."
   },
   "continuation": {
     "report": "docs/development/handoff/continuation-2026-10-20.md",
     "parentCommit": "28ab164ed7d3e2ca43c919bc4d87b4711275efe1",
     "commitReference": "Exact containing-commit SHA is supplied by the coordinator after commit/push; no self-referential SHA is embedded.",
-    "preparedAssignments": [
-      {
-        "task": "BE-04",
-        "executorRoles": [
-          "BACKEND",
-          "DATABASE"
-        ],
-        "status": "PREPARED_NOT_STARTED",
-        "branchSuggestion": "codex/be-04-create-event",
-        "scope": [
-          "apps/api/internal/modules/events/",
-          "apps/api/internal/modules/activitytypes/",
-          "apps/api/db/queries/events.sql",
-          "apps/api/db/queries/activity_types.sql",
-          "apps/api/internal/db/"
-        ],
-        "integrationOwner": "COORDINATOR",
-        "supersededByPacket": "BE-P1"
-      },
-      {
-        "task": "FE-03",
-        "executorRoles": [
-          "FRONTEND"
-        ],
-        "status": "PREPARED_NOT_STARTED",
-        "branchSuggestion": "codex/fe-03-live-catalog",
-        "scope": [
-          "apps/web/src/features/events/catalog/",
-          "apps/web/src/home/"
-        ],
-        "integrationOwner": "COORDINATOR",
-        "supersededByPacket": "FE-P1"
-      }
-    ],
+    "preparedAssignments": [],
     "commonFiles": "Backend owns main.go module registration and a single DATABASE owns SQL/sqlc; frontend owns page/navigation/cache wiring. Coordinator retains shared contracts/client generation/dependencies/Compose/brand/root documentation. No concurrent edits of another packet owner files.",
     "implementedExtras": [
       "DEC-24 demo access",
@@ -352,7 +340,7 @@
     ],
     "contractChanged": false,
     "deploymentPerformed": false,
-    "latestReport": "docs/development/integration/2026-10-20/be-03/README.md"
+    "latestReport": "docs/development/integration/2026-10-20/p1/README.md"
   },
   "workPackets": {
     "policy": "docs/development/handoff/work-packets.md",
@@ -383,7 +371,9 @@
         "acceptance": [
           "S1",
           "S2"
-        ]
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "docs/development/integration/2026-10-20/p1/README.md"
       },
       "BE-P2": {
         "ownerRoles": [
@@ -398,7 +388,7 @@
         "requiresPackets": [
           "BE-P1"
         ],
-        "readiness": "WAITING_FOR_PACKET",
+        "readiness": "READY_TO_ASSIGN",
         "scope": [
           "apps/api/internal/modules/events/",
           "apps/api/internal/modules/participation/",
@@ -447,8 +437,43 @@
         ],
         "runtimeDependencies": [
           "BE-04"
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "docs/development/integration/2026-10-20/p1/README.md"
+      },
+      "FE-P2": {
+        "ownerRoles": [
+          "FRONTEND"
+        ],
+        "tasks": [
+          "FE-08",
+          "FE-09",
+          "FE-10"
+        ],
+        "requiresPackets": [
+          "FE-P1"
+        ],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "apps/web/src/features/participation/",
+          "apps/web/src/features/discussion/",
+          "apps/web/src/features/events/detail/",
+          "apps/web/src/home/",
+          "apps/web/src/app/App.tsx",
+          "apps/web/src/app/AppShell.tsx",
+          "apps/web/src/app/routes.ts",
+          "apps/web/src/shared/api/"
+        ],
+        "acceptance": [
+          "S3/S4 and personal home after BE-07",
+          "S5 after BE-08; fixtures alone do not complete the packet"
+        ],
+        "runtimeDependencies": [
+          "BE-07",
+          "BE-08"
         ]
       }
-    }
+    },
+    "latestIntegrationReport": "docs/development/integration/2026-10-20/p1/README.md"
   }
 }
