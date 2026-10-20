@@ -4,6 +4,7 @@ import { createQueryClient } from '../shared/api/query-client';
 import { StatePanel } from '../shared/ui/StatePanel';
 import { SessionProvider } from '../features/auth/SessionProvider';
 import { AuthPage } from '../features/auth/AuthPage';
+import { demoAccessEnabled } from '../features/demo/demo-access';
 import { PrivateAccountPage } from '../accounts/private/PrivateAccountPage';
 import { CatalogPage } from '../features/events/catalog/CatalogPage';
 import { HomePage } from '../home/HomePage';
@@ -41,6 +42,10 @@ const router = createBrowserRouter([{
           : route.path === '/me' ? <PrivateAccountPage />
             : <ScreenPlaceholder route={route} /> };
     }),
+    ...(demoAccessEnabled ? [{
+      path: '/demo',
+      lazy: async () => ({ Component: (await import('../features/demo/DemoPage')).DemoPage }),
+    }] : []),
     ...(import.meta.env.DEV ? [{
       path: '/dev/ui',
       lazy: async () => ({ Component: (await import('./ComponentGallery')).ComponentGallery }),

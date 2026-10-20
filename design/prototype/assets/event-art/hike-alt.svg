@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice">
+  <defs />
+  <rect width="400" height="150" fill="#EDF6F0" />
+
+  <path d="M66 22a16 16 0 1 0 12 26 13 13 0 0 1-12-26z" fill="#236341" opacity=".3" />
+  <g fill="#236341" opacity=".5">
+    <circle cx="150" cy="18" r="1.6" />
+    <circle cx="200" cy="34" r="1.2" />
+    <circle cx="252" cy="16" r="1.6" />
+    <circle cx="320" cy="30" r="1.3" />
+    <circle cx="110" cy="44" r="1.2" />
+    <circle cx="286" cy="46" r="1.1" />
+  </g>
+
+  <path d="M-20 150 90 46l50 54 60-64 90 114z" fill="#236341" opacity=".16" />
+  <path d="M150 150 260 60l44 48 34-28 82 70z" fill="#236341" opacity=".22" />
+
+  <g stroke="#236341" stroke-width="1.6" stroke-linejoin="round">
+    <path d="M70 132 110 84l40 48z" fill="#236341" fill-opacity=".2" />
+    <path d="m 110,83.661591 v 47.999999 m -14,0 14,-22 14,22" fill="none" />
+    <path d="M64 132h92" stroke-width="1.2" opacity=".6" />
+  </g>
+
+  <g transform="translate(196 118)" fill="none" stroke="#236341" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-14 16 14 8M-14 8l28 8" stroke-width="1.3" />
+    <path d="M0 12c-8-4-8-14 0-22 8 8 8 18 0 22z" fill="#236341" fill-opacity=".3" />
+    <path d="M0 8c-3.5-2-3.5-7 0-11 3.5 4 3.5 9 0 11z" fill="#236341" fill-opacity=".45" stroke-width="1" />
+  </g>
+  <path d="m 196.45121,101.86576 c -3,-7.999996 3,-9.999996 0,-17.999996 m 10,21.999996 c -2,-5.999996 2,-7.999996 0,-13.999996" fill="none" stroke="#236341" stroke-width="1.1" opacity="0.4" stroke-linecap="round" />
+
+  <g fill="none" stroke="#236341" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="240" cy="108" r="4.5" />
+    <path d="M240 113v11" />
+    <path d="m 239.18234,114.77197 -7.96536,3.39514" stroke-width="1.60486" />
+    <path d="m 240.05259,124.32006 -8.47647,6.25262 m 8.47647,-6.25262 6.9353,7.50314" stroke-width="1.9633" />
+    <g transform="translate(0 0) matrix(-1,0,0,1,480.2132,-0.45121263)"><path d="m 239.18234,114.77197 -7.96536,3.39514" stroke-width="1.60486" />
+    </g></g>
+
+
+  <path d="M150 18 200 34l52-18" fill="none" stroke="#236341" stroke-width=".8" stroke-dasharray="1 4" opacity=".5" />
+</svg>

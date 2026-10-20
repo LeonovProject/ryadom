@@ -77,6 +77,20 @@ docker build --network=host -f infra/web/Dockerfile -t ryadom-web:local .
 
 ## Устройство и эксплуатация
 
+### Публичные демодоступы
+
+В демонстрационной поставке задать `WEB_DEMO_ACCESS=true` в `.env` и пересобрать
+веб: `docker compose build web`, затем `docker compose up -d --wait web`.
+Доступны `/demo`, `/demo/accounts.txt` и выбор в форме входа. По умолчанию выключено;
+смена переменной требует пересборки. Обычный email/пароль проверяет API, сессии
+и БД не сбрасываются. Это не `DEMO_MODE` будущего административного сброса.
+Состав и ограничения — [демодоступы](../docs/product/demo-access.md).
+
+Для сборки напрямую добавить `--build-arg VITE_DEMO_ACCESS=true` к команде
+`docker build --network=host -f infra/web/Dockerfile -t ryadom-web:local .`.
+
+### Хранение и сеть
+
 [compose.yaml](../compose.yaml) ждёт PostgreSQL health, затем успешный goose up,
 затем API readiness и веб. Миграции не создают seed и повторно безопасны.
 Мигратор и API собираются из одной версии исходников; ожидаемая схема этой

@@ -19,6 +19,8 @@ RUN pnpm install --frozen-lockfile
 COPY apps/web/ apps/web/
 COPY packages/api-client/ packages/api-client/
 COPY brandbook/assets/ brandbook/assets/
+ARG VITE_DEMO_ACCESS=false
+ENV VITE_DEMO_ACCESS=${VITE_DEMO_ACCESS}
 RUN pnpm typecheck && pnpm build
 RUN mkdir -p /out/docs \
  && cp node_modules/swagger-ui-dist/swagger-ui-bundle.js node_modules/swagger-ui-dist/swagger-ui.css /out/docs/

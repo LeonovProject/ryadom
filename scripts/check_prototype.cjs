@@ -94,8 +94,23 @@ navigate('/events/new');emit('input',{closest:()=>({dataset:{form:'create'},valu
 navigate('/organizations/new');emit('input',{closest:()=>({dataset:{form:'organization'},values:{description:'Описание без названия'}})});change('screen','/events');assert(modal().open);action('leave-form',{path:'/events'});
 action('reset');
 console.log('PASS: organization creation/submission, private and public access, approval/rejection with required reason, publication after approval, admin search/navigation, single-message hiding, unpublication for all audiences and stale actions, safe login return, form warnings. All data is in memory.');
+// Imported design review: discovery is read-only and covers remain local, allowlisted assets.
+action('reset');navigate('/orgs');assert(content().includes('Организации рядом'));
+assert.equal((content().match(/<article class="org-card">/g)||[]).length,5);
+assert(!content().includes('data-action="org-join"'));assert(!content().includes('Шахматный кружок «Ход»'));assert(!content().includes('Клуб «Высота»'));
+navigate('/organizations/temp');assert(!content().includes('data-action="org-join"'));assert(!content().includes('вступление по заявке'));
+action('login');action('choose-profile',{id:'alex'});navigate('/events/new');
+submit('create',{organizer:'personal',title:'Проверка обложки',sport:'custom',customSport:'Фрисби',description:'Встреча',date:'2030-11-01',time:'10:00',city:'Красноярск',place:'Парк'});
+assert(content().includes('<legend>Обложка встречи</legend>'));
+submit('create',{art:'bike-blue',mode:'OPEN',conditions:'Вода'});assert(content().includes('assets/event-art/bike-blue.svg'));
+submit('create',{});assert(content().includes('assets/event-art/bike-blue.svg'));
+navigate('/events/new');submit('create',{organizer:'personal',title:'Волейбол',sport:'Волейбол',description:'Встреча',date:'2030-11-01',time:'10:00',city:'Красноярск',place:'Парк'});
+submit('create',{art:'../../not-an-asset',mode:'OPEN',conditions:''});assert(content().includes('assets/event-art/volleyball.svg'));assert(!content().includes('not-an-asset'));
+action('reset');navigate('/events');
+for(const match of content().matchAll(/src="(assets\/event-art\/[^"]+)"/g))assert(fs.existsSync(path.join(root,match[1])),match[1]);
+console.log('PASS: approved-only organization discovery without membership, preserved cover choice, unknown artwork fallback and existing local files. DOM mocked.');
 const snapshots=[];
-for(const path of ['/','/events','/events/run','/people/anna','/organizations/temp']){navigate(path);snapshots.push({path,html:content()})}
+for(const path of ['/','/events','/orgs','/events/run','/people/anna','/organizations/temp']){navigate(path);snapshots.push({path,html:content()})}
 action('login');action('choose-profile',{id:'alex'});navigate('/events/new');snapshots.push({path:'/events/new',html:content()});
 for(const route of ['/login','/register','/me','/me/events','/me/organizations','/organizations/new','/me/organizations/rook','/events/tennis/manage']){action('login');action('choose-profile',{id:'anna'});navigate(route);snapshots.push({path:route,html:content()})}
 action('login');action('choose-profile',{id:'admin'});

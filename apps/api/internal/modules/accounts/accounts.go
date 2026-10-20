@@ -66,7 +66,12 @@ func (s *Service) Me(ctx context.Context, tx pgx.Tx, id uuid.UUID, expires time.
 	}
 	refs := make([]openapi.OwnedOrganizationRef, 0, len(organizations))
 	for _, o := range organizations {
-		refs = append(refs, openapi.OwnedOrganizationRef{Id: o.ID, Name: o.Name, ApprovalState: openapi.ApprovalState(o.ApprovalState), CanPublish: o.CanPublish})
+		state := openapi.ApprovalState(o.ApprovalState)
+		// The SQL projection uses DRAFT for an absent application; HTTP uses the contract enum.
+		if o.ApprovalState == "DRAFT" {
+			state = openapi.ApprovalStateNOTSUBMITTED
+		}
+		refs = append(refs, openapi.OwnedOrganizationRef{Id: o.ID, Name: o.Name, ApprovalState: state, CanPublish: o.CanPublish})
 	}
 	return openapi.Me{Account: account, Email: openapi.Email(private.Email), SystemRole: openapi.MeSystemRole(private.SystemRole), SessionExpiresAt: expires, Organizations: refs}, nil
 }

@@ -5,7 +5,7 @@
   "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "Backend f4ef6a5 and frontend 6d1dab9 merged into main for local intermediate integration on 2026-10-20. Continue from the merge commit, not either original branch head.",
+  "assignmentMode": "Shared continuation checkpoint of 2026-10-20 includes integration, DEC-24/25/26 and the Me approval-state fix. Both implementers use the exact commit containing continuation-2026-10-20.md; previous branch heads are historical. Prepared assignments do not start agents.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -18,6 +18,7 @@
     "apps/api/internal/db/": "DATABASE",
     "apps/web/": "COORDINATOR",
     "apps/web/src/": "FRONTEND",
+    "apps/web/src/shared/qr/": "COORDINATOR",
     "packages/api-client/": "COORDINATOR",
     "packages/contracts/": "COORDINATOR",
     "brandbook/": "COORDINATOR",
@@ -27,6 +28,26 @@
     "tools/": "COORDINATOR"
   },
   "tasks": {
+    "QR-01": {
+      "ownerRole": "COORDINATOR",
+      "status": "PLANNED",
+      "scope": "DEC-25 preparation only: pin a local QR dependency and shared browser adapter before FE-17; no external QR service."
+    },
+    "FE-16": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED",
+      "scope": "DEC-25 prepared handoff: optional helper appends reviewed plain text to existing conditions; no API or database change."
+    },
+    "FE-17": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED",
+      "scope": "DEC-25 prepared handoff: fresh public event preview, local QR and browser print; no new route or write operation."
+    },
+    "QA-02": {
+      "ownerRole": "QA",
+      "status": "PLANNED",
+      "scope": "DEC-25 prepared handoff: real Compose save/read/unpublish and independently decoded invitation; not a replacement for QA-01."
+    },
     "BASE-01": {
       "ownerRole": "COORDINATOR",
       "status": "COMPLETED"
@@ -233,8 +254,6 @@
   },
   "nextAssignments": [
     "BE-03",
-    "BE-05",
-    "BE-13",
     "FE-03"
   ],
   "firstIntegration": {
@@ -274,5 +293,56 @@
       "listAvatarPresets"
     ],
     "frontendScope": "FE-01 through FE-07 implemented; FE-03 through FE-07 still require their real backend modules."
+  },
+  "continuation": {
+    "report": "docs/development/handoff/continuation-2026-10-20.md",
+    "parentCommit": "28ab164ed7d3e2ca43c919bc4d87b4711275efe1",
+    "commitReference": "Exact containing-commit SHA is supplied by the coordinator after commit/push; no self-referential SHA is embedded.",
+    "preparedAssignments": [
+      {
+        "task": "BE-03",
+        "executorRoles": [
+          "BACKEND",
+          "DATABASE"
+        ],
+        "status": "PREPARED_NOT_STARTED",
+        "branchSuggestion": "codex/be-03-catalog",
+        "scope": [
+          "apps/api/internal/modules/events/",
+          "apps/api/internal/modules/activitytypes/",
+          "apps/api/db/queries/events.sql",
+          "apps/api/db/queries/activity_types.sql",
+          "apps/api/internal/db/"
+        ],
+        "integrationOwner": "COORDINATOR"
+      },
+      {
+        "task": "FE-03",
+        "executorRoles": [
+          "FRONTEND"
+        ],
+        "status": "PREPARED_NOT_STARTED",
+        "branchSuggestion": "codex/fe-03-live-catalog",
+        "scope": [
+          "apps/web/src/features/events/catalog/",
+          "apps/web/src/home/"
+        ],
+        "integrationOwner": "COORDINATOR"
+      }
+    ],
+    "commonFiles": "Contract/dependencies/Compose/navigation/module registration are sequential coordinator work; SQL/sqlc have one DATABASE owner.",
+    "implementedExtras": [
+      "DEC-24 demo access",
+      "accounts.Me DRAFT -> NOT_SUBMITTED",
+      "DEC-26 separate HTML design 0.3"
+    ],
+    "specifiedOnly": [
+      "QR-01",
+      "FE-16",
+      "FE-17",
+      "QA-02"
+    ],
+    "contractChanged": false,
+    "deploymentPerformed": false
   }
 }

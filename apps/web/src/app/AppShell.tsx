@@ -5,6 +5,7 @@ import { ButtonLink } from '../shared/ui/Button';
 import { Avatar } from '../shared/ui/Avatar';
 import { useSession } from '../features/auth/SessionProvider';
 import { SessionNotice } from '../features/auth/SessionNotice';
+import { demoAccessEnabled } from '../features/demo/demo-access';
 import styles from './app.module.css';
 
 export function AppShell() {
@@ -56,6 +57,7 @@ export function AppShell() {
       <footer className={styles.footer}>
         <div className={`${styles.container} ${styles.footerInner}`}>
           <p>Рядом — компания для спорта.</p>
+          {demoAccessEnabled && <Link to="/demo">Демоаккаунты</Link>}
           {import.meta.env.DEV && <Link to="/dev/ui">Компоненты интерфейса</Link>}
         </div>
       </footer>

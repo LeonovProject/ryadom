@@ -11,6 +11,8 @@ import { useSession } from './SessionProvider';
 import { usePresets } from './use-presets';
 import { LogoutButton } from './LogoutButton';
 import { validateAuth, type AuthField, type AuthValues } from './validation';
+import { demoAccessEnabled, findDemoAccount, type DemoAccount } from '../demo/demo-access';
+import { DemoAccountPicker } from '../demo/DemoAccountPicker';
 import styles from './auth.module.css';
 
 export function AuthPage({ mode }: { mode: 'login' | 'register' }) {
@@ -44,7 +46,12 @@ function AuthForm({ mode, returnTo }: { mode: 'login' | 'register'; returnTo: st
   const register = mode === 'register';
   const session = useSession();
   const navigate = useNavigate();
-  const [values, setValues] = useState<AuthValues>({ displayName: '', email: '', password: '', confirmation: '', presetId: '' });
+  const location = useLocation();
+  const [values, setValues] = useState<AuthValues>(() => {
+    const account = !register && findDemoAccount(location.state?.demoAccount);
+    return { displayName: '', email: account ? account.email : '', password: account ? account.password : '', confirmation: '', presetId: '' };
+  });
+  const [demoNotice, setDemoNotice] = useState('');
   const [touched, setTouched] = useState<Partial<Record<AuthField, boolean>>>({});
   const [failure, setFailure] = useState<AuthFailure | null>(null);
   const [pending, setPending] = useState(false);
@@ -81,6 +88,13 @@ function AuthForm({ mode, returnTo }: { mode: 'login' | 'register'; returnTo: st
     // Retain uncertainty and rate limits; editing must not enable an automatic replay.
     if (failure && failure.code !== 'UNKNOWN_RESULT' && failure.code !== 'RATE_LIMITED') setFailure(null);
     if (field === 'presetId') setStalePreset(false);
+  }
+  function selectDemo(account: DemoAccount) {
+    if (pending || wait || unknown) return;
+    setValues((previous) => ({ ...previous, email: account.email, password: account.password }));
+    setTouched({}); setFailure(null);
+    setDemoNotice(`Подставлены данные: ${account.name}. Нажми «Войти».`);
+    document.getElementById('login-email')?.focus();
   }
   const inputProps = (field: AuthField) => ({
     id: `${mode}-${field}`, name: field, value: values[field], disabled: pending,
@@ -123,6 +137,11 @@ function AuthForm({ mode, returnTo }: { mode: 'login' | 'register'; returnTo: st
   }
 
   return <form onSubmit={submit} noValidate className={styles.card} aria-label={register ? 'Регистрация' : 'Вход'} aria-busy={pending}>
+    {!register && demoAccessEnabled && <>
+      <DemoAccountPicker onSelect={selectDemo} disabled={pending || wait > 0 || unknown} />
+      <p role="status">{demoNotice}</p>
+      <Link to={`/demo?returnTo=${encodeURIComponent(returnTo)}`}>Все демоаккаунты и файл для скачивания</Link>
+    </>}
     {failure && <div ref={summary} tabIndex={-1} role="alert" className={styles.errorBox}>
       <p>{failure.code === 'INVALID_CREDENTIALS' ? 'Неверный email или пароль.' : failure.code === 'ACCOUNT_BLOCKED' ? 'Аккаунт заблокирован.' : failure.message}</p>
       {unknown && <p>Автоматического повтора нет. {register ? 'Если профиль был создан, войди с указанными email и паролем.' : 'Проверь текущий вход или начни новую попытку вручную.'}</p>}

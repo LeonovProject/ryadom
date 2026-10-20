@@ -69,6 +69,8 @@ services:
     build:
       context: .
       dockerfile: infra/web/Dockerfile
+      args:
+        VITE_DEMO_ACCESS: ${WEB_DEMO_ACCESS:-false}
     ports:
       - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-8080}:8080"
     networks:

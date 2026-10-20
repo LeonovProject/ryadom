@@ -1,0 +1,8 @@
+[
+  {"key":"alex","name":"Алексей","label":"Участник и автор встреч","description":"Ищет компанию для спорта, записывается и создаёт личные встречи.","email":"alex@example.test","password":"Ryadom-Alex-2026!"},
+  {"key":"anna","name":"Анна","label":"Представитель организаций","description":"Управляет клубом «Шаг рядом» и организациями на разных этапах допуска. Это аккаунт пользователя с организациями.","email":"anna@example.test","password":"Ryadom-Anna-2026!"},
+  {"key":"marina","name":"Марина","label":"Администратор","description":"Проверяет допуск организаций и модерирует платформу.","email":"marina@example.test","password":"Ryadom-Marina-2026!"},
+  {"key":"ivan","name":"Иван","label":"Дополнительный участник","description":"В начальном наборе ожидает решения по заявке на «Футбол во дворе».","email":"ivan@example.test","password":"Ryadom-Ivan-2026!"},
+  {"key":"dasha","name":"Дарья","label":"Дополнительный участник","description":"Вторая заявка на «Футбол во дворе»: позволяет независимо проверить принятие и отказ.","email":"dasha@example.test","password":"Ryadom-Dasha-2026!"},
+  {"key":"blocked","name":"Борис","label":"Заблокированный пользователь","description":"Вход должен быть запрещён. Его встреча и записи других людей сохранены.","email":"blocked@example.test","password":"Ryadom-Blocked-2026!"}
+]

@@ -102,3 +102,31 @@ button.text-link{background:transparent;padding:0}
   .page-intro{flex-wrap:wrap}.page-intro>div{flex-basis:100%}
   .my-row>div:nth-child(2){flex:1 1 calc(100% - 60px)}
 }
+/* Event artwork from SVG files and organization discovery. */
+.event-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.art-picker{border:0;margin:28px 0 0;padding:0}
+.art-picker legend{display:block;font-size:16px;font-weight:700;margin-bottom:12px}
+.art-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.art-option{position:relative;margin:0;cursor:pointer;min-height:var(--size-control)}
+.art-option input{position:absolute;opacity:0;width:1px;height:1px}
+.art-option img{display:block;width:100%;height:auto;aspect-ratio:8/3;object-fit:cover;border:1px solid var(--line);border-radius:12px}
+.art-option span{display:block;font-size:14px;color:var(--ink);margin-top:6px}
+.art-option .art-selected{display:none;position:absolute;top:6px;right:6px;margin:0;padding:2px 6px;border-radius:6px;background:var(--red);color:#fff;font-weight:700}
+.art-option input:checked~.art-selected{display:block}
+.art-option:has(input:checked) img{border-color:var(--red);outline:2px solid var(--red);outline-offset:-2px}
+.art-option:has(input:focus-visible) img{outline:3px solid var(--color-focus);outline-offset:2px}
+.art-hint{display:block;font-size:14px;color:var(--muted);margin-top:12px}
+.org-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.org-card{border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;background:var(--color-surface-base)}
+.org-card-top{display:flex;align-items:center;gap:13px}
+.org-card-top>div{flex:1;min-width:0}
+.org-card-top h2{font-size:18px}
+.org-card-top .icon{width:14px;height:14px;vertical-align:-2px}
+.org-card-desc{font-size:16px;color:var(--muted);line-height:1.7}
+.org-card-actions{margin-top:auto}
+@media(max-width:767px){
+  .org-grid{grid-template-columns:1fr}
+  .art-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+.catalog-org-link{margin-bottom:20px}.org-card-actions .btn{min-height:48px}.org-card-top h2{overflow-wrap:anywhere}

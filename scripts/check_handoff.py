@@ -9,7 +9,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 manifest = json.loads((ROOT / 'docs/development/handoff/manifest.json').read_text())
 queue = (ROOT / 'docs/development/tasks/README.md').read_text()
 rows = re.findall(r'^\| ([A-Z]+-\d+[A-Z]?) \| [^\n]+', queue, re.M)
-assert len(rows) == len(set(rows)) == 44
+assert rows and len(rows) == len(set(rows)), 'Task queue is empty or contains duplicate IDs'
 assert set(rows) == set(manifest['tasks']), 'Task ownership does not match queue'
 allowed_roles = {'COORDINATOR', 'BACKEND', 'DATABASE', 'FRONTEND', 'QA'}
 assert {x['ownerRole'] for x in manifest['tasks'].values()} <= allowed_roles

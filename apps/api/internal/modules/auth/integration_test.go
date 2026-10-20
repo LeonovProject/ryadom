@@ -282,12 +282,17 @@ func TestDemoLoginAndEmptyPresetCatalogue(t *testing.T) {
 	approved := 0
 	states := map[openapi.ApprovalState]int{}
 	for _, org := range me.Organizations {
+		switch org.ApprovalState {
+		case openapi.ApprovalStateNOTSUBMITTED, openapi.ApprovalStatePENDING, openapi.ApprovalStateAPPROVED, openapi.ApprovalStateREJECTED:
+		default:
+			t.Fatalf("organization state outside OpenAPI contract: %s", org.ApprovalState)
+		}
 		states[org.ApprovalState]++
 		if org.CanPublish {
 			approved++
 		}
 	}
-	if approved != 1 || states["PENDING"] != 2 || states["DRAFT"] != 1 || states["REJECTED"] != 1 {
+	if approved != 1 || states["PENDING"] != 2 || states["NOT_SUBMITTED"] != 1 || states["REJECTED"] != 1 {
 		t.Fatal("independent organization states")
 	}
 	code(t, f.call("GET", "/me", nil, cookie), 200, "")
