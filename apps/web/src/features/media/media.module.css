@@ -1,0 +1,9 @@
+.card { border: 1px solid #d9dce3; border-radius: 20px; padding: 24px; margin-block: 20px; display: grid; gap: 16px; min-width: 0; }
+.card fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 16px; min-width: 0; }
+.card form { display: grid; gap: 16px; }
+.card label { display: grid; gap: 8px; }
+.card input, .card select { min-height: 48px; max-width: 100%; padding: 10px; border: 1px solid #8a8f9b; border-radius: 10px; font: inherit; }
+.avatar { width: 160px; height: 160px; object-fit: contain; }
+.presets { display: flex; flex-wrap: wrap; gap: 12px; }
+.preset { width: 112px; min-height: 120px; border: 1px solid #8a8f9b; border-radius: 12px; background: white; cursor: pointer; font: inherit; }
+.preset img { display: block; width: 80px; height: 80px; margin: auto; }

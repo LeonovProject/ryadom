@@ -1,0 +1,34 @@
+{
+  "base": "a65d1c9",
+  "backend": "4a399f1",
+  "frontend": "6c5f143",
+  "qrVersion": "1.5.4",
+  "sha256": {
+    "apps/web/src/features/media/MediaPanels.tsx": "b7df144248b57650925cef2740227a679185a7710c7a604d7ede20c567c09465",
+    "apps/web/src/features/media/media.module.css": "b51b29a16219aec0c3d975688ea4f4ab8ae9b540d6d905a44d7bb967c022104d",
+    "apps/web/src/shared/qr/index.ts": "5c5ad82e507df9ec911b09e790eb93b6af3e07a2c7d8a79f06faafe3982ac5ab",
+    "apps/web/src/features/events/invitation/InvitationButton.tsx": "a9af458bebd848ced81fbdc68910aa0987a0d22ace120e742d425e05e9cd07ab",
+    "apps/web/src/features/events/detail/EventPage.tsx": "5a3e91678ef8a54b87b2c40cce8c4c5654f6421231cb49135a8cfc7fb66f4451",
+    "apps/web/package.json": "bbad504ea9dfba2a60412e84ae0bf3078364c3afe05fa7527c3913fd5e3bc320",
+    "pnpm-lock.yaml": "40ca29402543e3255638913c338764a9f7bddefb709b720e9e4f7095135e5d36",
+    "apps/api/cmd/api/main.go": "572b404de103a110e5b7f0be5d34146bdce8277d0ad2646b962f043f8ce02973",
+    "apps/api/internal/platform/config/config.go": "3d8a5b09bffaec11c4d5399032ff59d0fb411c3af54e5a143b1e4e5a5c1fcf8b"
+  },
+  "checks": {
+    "productionBuildApi": "PASS",
+    "productionBuildWeb": "PASS",
+    "typescript": "PASS",
+    "unit": "14/14 PASS",
+    "invitationBrowser": "3/3 PASS",
+    "combinedRealHttpMediaPrint": "PASS",
+    "qrIndependentDecode": "PASS zxing-cpp matches canonical event URL",
+    "pdf": "1 A4 page rendered and inspected",
+    "serverSourceHashes": "14/14 match author report",
+    "repository": "PASS",
+    "handoff": "PASS",
+    "contract": "60/100/280/64 PASS, 7 presets"
+  },
+  "fullFinalRegressionRepeated": false,
+  "reason": "User explicitly requested minimal tests within about 10 minutes",
+  "externalDeploymentVerified": false
+}

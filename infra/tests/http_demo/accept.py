@@ -13,6 +13,9 @@ import uuid
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', required=True, type=Path)
+    parser.add_argument('--api-image', default='ryadom-http-demo-api')
+    parser.add_argument('--web-image', default='ryadom-qa01-web')
+    parser.add_argument('--browser-script', type=Path)
     args = parser.parse_args()
     root = args.source.resolve()
     spec = importlib.util.spec_from_file_location('ops', root / 'infra/tests/accept.py')
@@ -35,7 +38,7 @@ def main():
         env.write_text(''.join(f'{key}={value}\n' for key, value in values.items()))
         env.chmod(0o600)
         override = private / 'images.yaml'
-        override.write_text('services:\n  api:\n    image: ryadom-http-demo-api\n  web:\n    image: ryadom-qa01-web\n  migrate:\n    image: ryadom-qa01-migrate\n  seed:\n    image: ryadom-qa01-seed\n')
+        override.write_text(f'services:\n  api:\n    image: {args.api_image}\n  web:\n    image: {args.web_image}\n  migrate:\n    image: ryadom-qa01-migrate\n  seed:\n    image: ryadom-qa01-seed\n')
         argv = ['docker', 'compose', '--env-file', str(env), '-p', project,
                 '-f', str(root / 'compose.yaml'), '-f', str(override)]
         def compose(*command, expected=0):
@@ -44,7 +47,7 @@ def main():
             compose('config', '--quiet')
             compose('up', '-d', '--wait', '--wait-timeout', '120', 'web')
             compose('run', '--rm', '--no-deps', 'seed')
-            subprocess.run(['node', str(root / 'infra/tests/http_demo/browser.cjs'), origin], cwd=root, check=True)
+            subprocess.run(['node', str(args.browser_script or root / 'infra/tests/http_demo/browser.cjs'), origin], cwd=root, check=True)
             logs = compose('logs', '--no-color').stdout
             assert jwt not in logs and password not in logs
             print('PASS disposable HTTP Compose: migrate, seed, real browser login/HTTP cookie/Origin/logout; no shared DB used', flush=True)

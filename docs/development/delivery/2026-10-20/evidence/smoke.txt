@@ -1,0 +1,2 @@
+PASS final real HTTP: seven presets, CUSTOM upload, admin approve/hide/restore, preset replacement, cover upload, invitation fresh preview/PNG QR/A4 PDF
+PASS disposable HTTP Compose: migrate, seed, real browser login/HTTP cookie/Origin/logout; no shared DB used

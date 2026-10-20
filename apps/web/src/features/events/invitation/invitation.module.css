@@ -1,0 +1,33 @@
+.overlay { position: fixed; inset: 0; background: rgb(23 25 29 / 48%); z-index: 80; }
+.dialog { position: fixed; z-index: 81; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(840px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto; padding: var(--space-6); border-radius: var(--radius-card); background: var(--color-surface-base); }
+.controls, .sheet { display: grid; gap: var(--space-4); min-width: 0; overflow-wrap: anywhere; }
+.controls { padding-bottom: var(--space-6); border-bottom: 1px solid var(--color-border-subtle); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.sheet { padding-top: var(--space-6); color: #161616; background: white; }
+.sheet section { display: grid; gap: var(--space-2); }
+.sheet h1 { font-size: 28px; line-height: 1.2; }
+.sheet h2 { font-size: 20px; }
+.brand > div { display: flex; align-items: center; gap: var(--space-2); font: 700 28px Montserrat, sans-serif; }
+.brand p { margin-top: var(--space-2); }
+.text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.warning { border-left: 3px solid currentColor; padding-left: var(--space-3); }
+.destination { display: grid; justify-items: start; gap: var(--space-2); break-inside: avoid; }
+.destination > img { width: 152px; height: 152px; max-width: 100%; object-fit: contain; }
+.destination a { color: inherit; overflow-wrap: anywhere; }
+@media print {
+  @page ryadom-invitation { size: A4 portrait; margin: 12mm; }
+  :global(body[data-invitation-active]) { margin: 0 !important; background: white !important; overflow: visible !important; height: auto !important; position: static !important; }
+  :global(body[data-invitation-active]) > :not([data-invitation-dialog]) { display: none !important; }
+  :global(body[data-invitation-active]) > [data-invitation-dialog] { display: block !important; position: static !important; transform: none !important; width: auto !important; max-width: none !important; height: auto !important; max-height: none !important; overflow: visible !important; padding: 0 !important; margin: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+  :global(html:has(body[data-invitation-active])) { overflow: visible !important; height: auto !important; }
+  .dialog { page: ryadom-invitation; }
+  .controls { display: none !important; }
+  .sheet { padding: 0; gap: 3mm; font: 400 14pt/1.35 'Open Sans', sans-serif; }
+  .sheet h1 { font: 700 24pt/1.2 Montserrat, sans-serif; }
+  .sheet h2 { font: 700 16pt/1.35 Montserrat, sans-serif; break-after: avoid; }
+  .brand > div { font-size: 20pt; }
+  .when > p:first-of-type { break-inside: avoid; }
+  .destination > img { width: 40mm; height: 40mm; }
+  .destination { break-inside: avoid; }
+  .sheet a { color: black; }
+}

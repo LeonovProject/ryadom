@@ -48,7 +48,7 @@ export function AppShell() {
           </nav>
         </div>
       </header>
-      <div className={styles.buildNotice}>Приложение в разработке. Часть разделов ещё недоступна.</div>
+      <div className={styles.buildNotice}>Рядом — найди компанию для спорта и первой встречи.</div>
       {session.notice && <div className={styles.container}><SessionNotice /></div>}
       <main id="main-content" tabIndex={-1} className={`${styles.container} ${styles.main}`}>
         <RouteFocus />

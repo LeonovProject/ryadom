@@ -1,3 +1,4 @@
+import { AvatarPanel } from '../../features/media/MediaPanels';
 import { DemoResetPanel } from '../../features/admin/demoreset/DemoResetPanel';
 import { useLocation } from 'react-router-dom';
 import { useSession } from '../../features/auth/SessionProvider';
@@ -54,6 +55,7 @@ export function PrivateAccountPage() {
                 <ButtonLink to="/admin/accounts" variant="secondary">Аккаунты</ButtonLink>
               </div>
             </section>}
+            <AvatarPanel />
             <DemoResetPanel />
           </>}
   </div>;

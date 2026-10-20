@@ -1,0 +1,15 @@
+[WebServer] (node:831022) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite --host 127.0.0.1 --port 4175 --strictPort
+[WebServer] (node:831053) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:831119) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓  1 apps/web/src/features/events/invitation/tests/invitation.spec.ts:24:1 › guest OPEN: local QR, zoned time, focus, compact/mobile preview and only the sheet prints (1.0s)
+  ✓  2 apps/web/src/features/events/invitation/tests/invitation.spec.ts:51:1 › freshness: changed fields require another click, counters do not; withdrawn/read/QR failures clear or block printing (1.0s)
+  ✓  3 apps/web/src/features/events/invitation/tests/invitation.spec.ts:81:1 › APPROVAL organization and full long conditions print across pages without private fields or clipped text (580ms)
+
+  3 passed (4.3s)

@@ -1,3 +1,5 @@
+import { CoverPanel } from '../../media/MediaPanels';
+import { InvitationButton } from '../invitation/InvitationButton';
 import { ReportButton } from '../../reports/ReportButton';
 import { readEvent } from './api';
 import { Discussion } from '../../discussion/Discussion';
@@ -57,6 +59,7 @@ function PublishedEvent({ event, backTo, isAdmin, loggedIn, refreshing, refresh 
       <PageTitle title={event.title} />
     </div>
     {event.coverUrl && failedCover !== event.coverUrl && <div className={styles.cover}><img src={event.coverUrl} alt="" onError={() => setFailedCover(event.coverUrl)} /></div>}
+    {event.capabilities.canSetCover && loggedIn && <CoverPanel eventId={event.id} refresh={refresh} />}
     <section className={styles.card}>
           <h2>Когда и где</h2>
           <dl className={styles.facts}>
@@ -88,6 +91,7 @@ function PublishedEvent({ event, backTo, isAdmin, loggedIn, refreshing, refresh 
           <StatusBadge domain="publication" status="PUBLISHED" />
           <p className={styles.mode}>{event.joinMode === 'OPEN' ? 'Свободная запись' : 'По заявке'}</p>
           <p className={styles.muted}>{event.joinMode === 'OPEN' ? 'При записи участник сразу попадает в подтверждённый состав.' : 'Заявку рассматривает организатор. До принятия она не считается подтверждённым участием.'}</p>
+          {!started && <InvitationButton eventId={event.id} />}
           <p>Подтверждённых участников: <strong>{event.confirmedCount}</strong></p>
           {event.myParticipation && <div className={styles.stack}><h3>Твоя запись</h3><StatusBadge domain="participation" status={event.myParticipation.status} />{started && event.myParticipation.status === 'PENDING' && <p className={styles.warning}>Заявка не рассмотрена до начала встречи.</p>}</div>}
           {started && <p className={styles.notice}>Встреча уже началась. Запись и решения по заявкам закрыты.</p>}

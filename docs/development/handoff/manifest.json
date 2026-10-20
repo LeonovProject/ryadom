@@ -5,7 +5,7 @@
   "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "QA-01 accepted on e5657b6 plus two coordinator fixes. Real S1-S6 before/after disposable reset, Go/race and UI regression passed; Swagger/roster fixes rechecked. MEDIA-01A ready, then MEDIA-01B; QR-01/FE-16 independent. No new agents dispatched.",
+  "assignmentMode": "Final product integration including HTTP demo, server MEDIA, helper, seven presets, printing/QR and media UI. Minimal checks per user time constraint; external deployment remains user responsibility.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -31,23 +31,27 @@
   "tasks": {
     "QR-01": {
       "ownerRole": "COORDINATOR",
-      "status": "PLANNED",
-      "scope": "DEC-25 preparation only: pin a local QR dependency and shared browser adapter before FE-17; no external QR service."
+      "status": "COMPLETED",
+      "scope": "Final local integration; server author checks accepted by source hashes; production build and focused smoke. See report for exact scope and remaining external check.",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md"
     },
     "FE-16": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED",
-      "scope": "DEC-25 prepared handoff: optional helper appends reviewed plain text to existing conditions; no API or database change."
+      "status": "COMPLETED",
+      "scope": "Final local integration; server author checks accepted by source hashes; production build and focused smoke. See report for exact scope and remaining external check.",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md"
     },
     "FE-17": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED",
-      "scope": "DEC-25 prepared handoff: fresh public event preview, local QR and browser print; no new route or write operation."
+      "status": "COMPLETED",
+      "scope": "Final local integration; server author checks accepted by source hashes; production build and focused smoke. See report for exact scope and remaining external check.",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md"
     },
     "QA-02": {
       "ownerRole": "QA",
-      "status": "PLANNED",
-      "scope": "DEC-25 prepared handoff: real Compose save/read/unpublish and independently decoded invitation; not a replacement for QA-01."
+      "status": "COMPLETED",
+      "scope": "Focused final acceptance per explicit user minimal-test instruction: 14 units, 3 invitation browser cases, production builds and real HTTP media/moderation/QR/PDF smoke. Prior QA/author evidence retained. Exhaustive final regression not repeated; report states limits.",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md"
     },
     "BASE-01": {
       "ownerRole": "COORDINATOR",
@@ -265,23 +269,33 @@
     },
     "MEDIA-01A": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md",
+      "scope": "Final local integration; server author checks accepted by source hashes; production build and focused smoke. See report for exact scope and remaining external check."
     },
     "MEDIA-01B": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md",
+      "scope": "Final local integration; server author checks accepted by source hashes; production build and focused smoke. See report for exact scope and remaining external check."
     },
     "MEDIA-01C": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md",
+      "scope": "Final local integration; server author checks accepted by source hashes; production build and focused smoke. See report for exact scope and remaining external check."
     },
     "MEDIA-01D": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md",
+      "scope": "Final local integration; server author checks accepted by source hashes; production build and focused smoke. See report for exact scope and remaining external check."
     },
     "MEDIA-01E": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md",
+      "scope": "Final local integration; server author checks accepted by source hashes; production build and focused smoke. See report for exact scope and remaining external check."
     },
     "MEDIA-01F": {
       "ownerRole": "COORDINATOR",
@@ -291,7 +305,9 @@
     },
     "DELIVERY-01A": {
       "ownerRole": "COORDINATOR",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/delivery/2026-10-20/README.md",
+      "scope": "Focused final acceptance per explicit user minimal-test instruction: 14 units, 3 invitation browser cases, production builds and real HTTP media/moderation/QR/PDF smoke. Prior QA/author evidence retained. Exhaustive final regression not repeated; report states limits."
     },
     "DELIVERY-01B": {
       "ownerRole": "COORDINATOR",
@@ -299,9 +315,7 @@
     }
   },
   "nextAssignments": [
-    "MEDIA-01A",
-    "QR-01",
-    "FE-16"
+    "DELIVERY-01B"
   ],
   "firstIntegration": {
     "foundation": [
@@ -328,9 +342,9 @@
   },
   "integration": {
     "date": "2026-10-20",
-    "backendCommit": "42c73b5",
-    "frontendCommit": "f0f0f98",
-    "report": "docs/development/integration/2026-10-20/p3/README.md",
+    "backendCommit": "4a399f1",
+    "frontendCommit": "6c5f143",
+    "report": "docs/development/delivery/2026-10-20/README.md",
     "realBusinessOperations": [
       "login",
       "register",
@@ -378,7 +392,7 @@
       "adminGetAccount",
       "adminSetAccountStatus"
     ],
-    "frontendScope": "FE-01 through FE-15 and independent QA-01 accepted locally. Two coordinator QA fixes verified; see tests/e2e/qa01/README.md. MEDIA and first-meeting/print remain pending."
+    "frontendScope": "Final local product including MEDIA-01C/D/E, FE-16/17 and QR integrated; targeted acceptance passed. 47/48 completed; external deployment verification pending."
   },
   "continuation": {
     "report": "docs/development/handoff/continuation-2026-10-20.md",
