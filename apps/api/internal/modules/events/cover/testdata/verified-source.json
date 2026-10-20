@@ -1,0 +1,29 @@
+{
+  "baseCommit": "a65d1c983e3665b74263e37e1c755e391c0b63e6",
+  "cards": [
+    "MEDIA-01A",
+    "MEDIA-01B"
+  ],
+  "avatarCommit": "9cc428746122b6611de9280980da25d138478d70",
+  "files": {
+    "apps/api/cmd/api/main.go": "572b404de103a110e5b7f0be5d34146bdce8277d0ad2646b962f043f8ce02973",
+    "apps/api/db/queries/account_avatars.sql": "8845eb04ffa7658f2c22b2abb2a975b0debb5330fd3d5ca4b486272b26fcf170",
+    "apps/api/db/queries/event_cover.sql": "440fd1b99e75ad25af88009357d1c8d5b0c478dd73f24897400a2e4d67199470",
+    "apps/api/internal/db/account_avatars.sql.go": "6721da98607996e7e9d6a5091ece97fe30662ad01beb26a832384080ad4e0d25",
+    "apps/api/internal/db/event_cover.sql.go": "226f90926e445859589da5fa61b8b1dab4451382e182c7542d366d6a6f5f1e72",
+    "apps/api/internal/modules/accounts/avatar/avatar.go": "a9ac844c987e96c4574349bfcf91501ac0d28ce565c121120dc78af49f81bf13",
+    "apps/api/internal/modules/accounts/avatar/cursor.go": "fcec7b42739864ee1fa0f1a351aeee27252eaa5ae75e57850c00ea86228e7988",
+    "apps/api/internal/modules/events/cover/cover.go": "ea4922902e8943a40677ae499ae95a343c2abf7ee9853a5ad45e2a241104cd84",
+    "apps/api/internal/modules/events/cover/testdata/http_accept.py": "378d0e62892bd8953f822779d53fbb571b2304385b6605a3e81130c0577683e2",
+    "apps/api/internal/modules/events/media_avatar_test.go": "7a562cb16f2ccfe24eb5cbe5363a0e81ba94cb0f62521a0af526bc5b73223b7e",
+    "apps/api/internal/modules/events/media_cover_test.go": "b32e46f64578229153bea1a9c72d23794fd2fcebd356955b8121d68994b5b555",
+    "apps/api/internal/transport/httpapi/router.go": "c12cfca4c049816e7010ce9214b99b324abd0ff7989860831a53487c607ee10b",
+    "apps/api/internal/transport/httpapi/svg.go": "696957b223b70e7f6ec97f41ef7faa59402fe08521c4f5c5ed07d8d289a73340",
+    "apps/api/internal/transport/httpapi/validation.go": "73e8169eed7453713aa94d57f69afa7c6c3764007933e5c5d3d65534980b1545"
+  },
+  "unchangedContractFiles": {
+    "packages/contracts/openapi.yaml": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
+    "apps/api/internal/transport/openapi/api.gen.go": "14297ff07ee5fa3cacc74d0425021039422c1158ae565e11920c970f980c0f97",
+    "packages/api-client/src/schema.d.ts": "6cd4f8c657371bd1dae35f4db1b13f1dfe7dee82137a10723231b8ca45ec57f1"
+  }
+}
