@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => { await guestFixtures(page); });
 test('unimplemented routes remain explicit placeholders; unknown URLs get 404', async ({ page }) => {
   const requests: string[] = [];
   page.on('request', (request) => { if (new URL(request.url()).pathname.startsWith('/api/v1/')) requests.push(request.url()); });
-  for (const route of screenRoutes.filter((route) => !['/', '/events', '/events/new', '/login', '/register', '/me', '/me/events', '/events/:eventId/manage', '/events/:eventId', '/people/:accountId', '/organizations/:organizationId', '/organizations/new', '/me/organizations', '/me/organizations/:organizationId', '/admin/organizations', '/admin/organizations/:organizationId', '/admin/events', '/admin/events/:eventId', '/admin/activity-types'].includes(route.path))) {
+  for (const route of screenRoutes.filter((route) => !['/', '/events', '/events/new', '/login', '/register', '/me', '/me/events', '/events/:eventId/manage', '/events/:eventId', '/people/:accountId', '/organizations/:organizationId', '/organizations/new', '/me/organizations', '/me/organizations/:organizationId', '/admin/organizations', '/admin/organizations/:organizationId', '/admin/events', '/admin/events/:eventId', '/admin/activity-types', '/admin/accounts'].includes(route.path))) {
     await page.goto(route.path.replace(/:[^/]+/g, 'example'));
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.title);
     await expect(page.getByRole('heading', { name: 'Раздел готовится' })).toBeVisible();
