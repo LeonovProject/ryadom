@@ -21,6 +21,7 @@ import (
 	orgmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/participation"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/reports"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/authn"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/avatarpresets"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/config"
@@ -121,6 +122,13 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	if err = activityReview.Register(handler); err != nil {
+		return err
+	}
+	reportService, err := reports.New(eventService, discussionService, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = reportService.Register(handler); err != nil {
 		return err
 	}
 	server := &http.Server{Addr: cfg.Address, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16384}
