@@ -60,6 +60,50 @@ for task in manifest['nextAssignments']:
     assert all(manifest['tasks'][dep]['status'] == 'COMPLETED'
                for dep in dependencies[task]), f'Next task is not ready: {task}'
 
+packets = manifest['workPackets']['packets']
+packet_done, packet_active = set(), set()
+def packet_prerequisites(name):
+    assert name in packets, f'Unknown packet: {name}'
+    assert name not in packet_active, f'Packet dependency cycle: {name}'
+    if name in packet_done:
+        return
+    packet_active.add(name)
+    for prerequisite in packets[name]['requiresPackets']:
+        packet_prerequisites(prerequisite)
+    packet_active.remove(name)
+    packet_done.add(name)
+
+completed = {task for task, entry in manifest['tasks'].items()
+             if entry['status'] == 'COMPLETED'}
+assigned_cards = set()
+for name, packet in packets.items():
+    packet_prerequisites(name)
+    tasks, roles = packet['tasks'], set(packet['ownerRoles'])
+    assert 1 <= len(tasks) <= 3 and len(tasks) == len(set(tasks)), name
+    assert not assigned_cards.intersection(tasks), f'Overlapping packet cards: {name}'
+    assigned_cards.update(tasks)
+    assert roles and roles <= allowed_roles, name
+    assert all(task in dependencies and manifest['tasks'][task]['ownerRole'] in roles
+               for task in tasks), f'Unknown card or owner mismatch: {name}'
+    available = completed.copy()
+    for prerequisite in packet['requiresPackets']:
+        available.update(packets[prerequisite]['tasks'])
+    external = set()
+    for task in tasks:
+        assert dependencies[task] <= available, f'Packet order/dependency mismatch: {name}/{task}'
+        external.update(dependencies[task] - set(tasks))
+        available.add(task)
+    if packet['readiness'] == 'READY_TO_ASSIGN':
+        assert external <= completed, f'Packet is not ready: {name}'
+    else:
+        assert packet['readiness'] == 'WAITING_FOR_PACKET' and packet['requiresPackets'], name
+    assert set(packet.get('runtimeDependencies', [])) <= set(rows), name
+    for path in packet['scope']:
+        candidates = [(prefix, owner) for prefix, owner in manifest['pathOwners'].items()
+                      if path.startswith(prefix)]
+        owner = max(candidates, key=lambda item: len(item[0]))[1] if candidates else 'COORDINATOR'
+        assert owner in roles, f'Packet scope crosses ownership: {name}/{path}'
+
 policy = json.loads((ROOT / 'packages/contracts/svg-policy.json').read_text())
 fixture_path = ROOT / 'packages/contracts/examples/svg-cases.json'
 fixtures = json.loads(fixture_path.read_text())
@@ -78,5 +122,6 @@ for case in fixtures['cases']:
         assert (case['status'], case['code']) in {
             (413, 'PAYLOAD_TOO_LARGE'), (422, 'VALIDATION_ERROR'),
         }
-print(f'PASS: {len(rows)} owned tasks, matching acyclic dependencies, source hashes, '
+print(f'PASS: {len(rows)} owned tasks, {len(packets)} bounded packets with valid order/scope, '
+      f'matching acyclic dependencies, source hashes, '
       f'SVG policy and {len(names)} specified cases. SVG runtime cases not executed.')

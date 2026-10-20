@@ -5,7 +5,7 @@
   "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "Shared continuation checkpoint of 2026-10-20 includes integration, DEC-24/25/26 and the Me approval-state fix. Both implementers use the exact commit containing continuation-2026-10-20.md; previous branch heads are historical. Prepared assignments do not start agents.",
+  "assignmentMode": "User-approved packet workflow after BE-03: assign 2-3 related cards to one worktree, continue sequentially without per-card integration. Backend owns ordinary API registration, frontend owns ordinary page wiring. Coordinator accepts verified author tests and integrates completed packets; early handoff only for blockers/shared contract changes.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -102,7 +102,9 @@
     },
     "BE-03": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/be-03/README.md",
+      "scope": "Integrated 574e593 plus coordinator module registration/transport validation. Author full acceptance accepted; current API image and four-operation shared Compose smoke passed. No createEvent yet."
     },
     "BE-04": {
       "ownerRole": "BACKEND",
@@ -253,7 +255,7 @@
     }
   },
   "nextAssignments": [
-    "BE-03",
+    "BE-04",
     "FE-03"
   ],
   "firstIntegration": {
@@ -290,7 +292,11 @@
       "logout",
       "getMe",
       "getAccount",
-      "listAvatarPresets"
+      "listAvatarPresets",
+      "listActivityTypes",
+      "listEvents",
+      "getEvent",
+      "listMyEvents"
     ],
     "frontendScope": "FE-01 through FE-07 implemented; FE-03 through FE-07 still require their real backend modules."
   },
@@ -300,13 +306,13 @@
     "commitReference": "Exact containing-commit SHA is supplied by the coordinator after commit/push; no self-referential SHA is embedded.",
     "preparedAssignments": [
       {
-        "task": "BE-03",
+        "task": "BE-04",
         "executorRoles": [
           "BACKEND",
           "DATABASE"
         ],
         "status": "PREPARED_NOT_STARTED",
-        "branchSuggestion": "codex/be-03-catalog",
+        "branchSuggestion": "codex/be-04-create-event",
         "scope": [
           "apps/api/internal/modules/events/",
           "apps/api/internal/modules/activitytypes/",
@@ -314,7 +320,8 @@
           "apps/api/db/queries/activity_types.sql",
           "apps/api/internal/db/"
         ],
-        "integrationOwner": "COORDINATOR"
+        "integrationOwner": "COORDINATOR",
+        "supersededByPacket": "BE-P1"
       },
       {
         "task": "FE-03",
@@ -327,10 +334,11 @@
           "apps/web/src/features/events/catalog/",
           "apps/web/src/home/"
         ],
-        "integrationOwner": "COORDINATOR"
+        "integrationOwner": "COORDINATOR",
+        "supersededByPacket": "FE-P1"
       }
     ],
-    "commonFiles": "Contract/dependencies/Compose/navigation/module registration are sequential coordinator work; SQL/sqlc have one DATABASE owner.",
+    "commonFiles": "Backend owns main.go module registration and a single DATABASE owns SQL/sqlc; frontend owns page/navigation/cache wiring. Coordinator retains shared contracts/client generation/dependencies/Compose/brand/root documentation. No concurrent edits of another packet owner files.",
     "implementedExtras": [
       "DEC-24 demo access",
       "accounts.Me DRAFT -> NOT_SUBMITTED",
@@ -343,6 +351,104 @@
       "QA-02"
     ],
     "contractChanged": false,
-    "deploymentPerformed": false
+    "deploymentPerformed": false,
+    "latestReport": "docs/development/integration/2026-10-20/be-03/README.md"
+  },
+  "workPackets": {
+    "policy": "docs/development/handoff/work-packets.md",
+    "baselineCommit": "b43dab25550f99f79e01a154522a7f7f0969276e",
+    "activation": "PREPARED_NOT_DISPATCHED: publish the instruction update to an existing executor through an authorized assignment; no agents started by this file.",
+    "packets": {
+      "BE-P1": {
+        "ownerRoles": [
+          "BACKEND",
+          "DATABASE"
+        ],
+        "tasks": [
+          "BE-04",
+          "BE-05",
+          "BE-06"
+        ],
+        "requiresPackets": [],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "apps/api/internal/modules/events/",
+          "apps/api/internal/modules/activitytypes/",
+          "apps/api/internal/modules/organizations/",
+          "apps/api/internal/modules/moderation/organizations/",
+          "apps/api/db/queries/",
+          "apps/api/internal/db/",
+          "apps/api/cmd/api/main.go"
+        ],
+        "acceptance": [
+          "S1",
+          "S2"
+        ]
+      },
+      "BE-P2": {
+        "ownerRoles": [
+          "BACKEND",
+          "DATABASE"
+        ],
+        "tasks": [
+          "BE-07",
+          "BE-08",
+          "BE-09"
+        ],
+        "requiresPackets": [
+          "BE-P1"
+        ],
+        "readiness": "WAITING_FOR_PACKET",
+        "scope": [
+          "apps/api/internal/modules/events/",
+          "apps/api/internal/modules/participation/",
+          "apps/api/internal/modules/discussion/",
+          "apps/api/internal/modules/moderation/messages/",
+          "apps/api/internal/modules/moderation/events/",
+          "apps/api/db/queries/",
+          "apps/api/internal/db/",
+          "apps/api/cmd/api/main.go"
+        ],
+        "acceptance": [
+          "S3",
+          "S4",
+          "S5",
+          "S6",
+          "A2",
+          "A3"
+        ]
+      },
+      "FE-P1": {
+        "ownerRoles": [
+          "FRONTEND"
+        ],
+        "tasks": [
+          "FE-03",
+          "FE-04",
+          "FE-05"
+        ],
+        "requiresPackets": [],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "apps/web/src/features/events/catalog/",
+          "apps/web/src/features/events/detail/",
+          "apps/web/src/features/events/create/",
+          "apps/web/src/home/",
+          "apps/web/src/accounts/public/",
+          "apps/web/src/features/organizations/public/",
+          "apps/web/src/app/App.tsx",
+          "apps/web/src/app/AppShell.tsx",
+          "apps/web/src/app/routes.ts",
+          "apps/web/src/shared/api/"
+        ],
+        "acceptance": [
+          "Catalog/detail on BE-03",
+          "S1 after BE-04; fixtures alone do not complete the packet"
+        ],
+        "runtimeDependencies": [
+          "BE-04"
+        ]
+      }
+    }
   }
 }
