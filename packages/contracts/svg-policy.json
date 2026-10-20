@@ -1,0 +1,145 @@
+{
+  "version": "1.0.0",
+  "namespace": "http://www.w3.org/2000/svg",
+  "parser": {
+    "go": "1.27.2",
+    "package": "encoding/xml",
+    "strict": true,
+    "customEntities": false,
+    "charsetReader": false
+  },
+  "limits": {
+    "inputUtf8Bytes": 131072,
+    "normalizedUtf8Bytes": 131072,
+    "xmlDepth": 16,
+    "elements": 512,
+    "attributesPerElement": 32,
+    "attributeUtf8Bytes": 32768,
+    "pathSegmentsTotal": 4096,
+    "numbersTotal": 16384,
+    "pointsPerElement": 2048,
+    "transformsPerAttribute": 8,
+    "gradients": 32,
+    "stopsTotal": 256,
+    "idLength": 64,
+    "viewportDimension": 4096,
+    "absoluteNumber": 1000000
+  },
+  "elements": {
+    "svg": [
+      "viewBox",
+      "width",
+      "height",
+      "preserveAspectRatio"
+    ],
+    "g": [],
+    "defs": [],
+    "path": [
+      "d",
+      "pathLength"
+    ],
+    "rect": [
+      "x",
+      "y",
+      "width",
+      "height",
+      "rx",
+      "ry"
+    ],
+    "circle": [
+      "cx",
+      "cy",
+      "r"
+    ],
+    "ellipse": [
+      "cx",
+      "cy",
+      "rx",
+      "ry"
+    ],
+    "line": [
+      "x1",
+      "y1",
+      "x2",
+      "y2"
+    ],
+    "polyline": [
+      "points"
+    ],
+    "polygon": [
+      "points"
+    ],
+    "linearGradient": [
+      "id",
+      "x1",
+      "y1",
+      "x2",
+      "y2",
+      "gradientUnits",
+      "gradientTransform",
+      "spreadMethod"
+    ],
+    "radialGradient": [
+      "id",
+      "cx",
+      "cy",
+      "r",
+      "fx",
+      "fy",
+      "fr",
+      "gradientUnits",
+      "gradientTransform",
+      "spreadMethod"
+    ],
+    "stop": [
+      "offset",
+      "stop-color",
+      "stop-opacity"
+    ]
+  },
+  "presentationAttributes": [
+    "fill",
+    "fill-opacity",
+    "fill-rule",
+    "stroke",
+    "stroke-width",
+    "stroke-opacity",
+    "stroke-linecap",
+    "stroke-linejoin",
+    "stroke-miterlimit",
+    "stroke-dasharray",
+    "stroke-dashoffset",
+    "opacity",
+    "transform"
+  ],
+  "transforms": [
+    "matrix",
+    "translate",
+    "scale",
+    "rotate",
+    "skewX",
+    "skewY"
+  ],
+  "paint": {
+    "hexDigits": [
+      3,
+      4,
+      6,
+      8
+    ],
+    "names": [
+      "none",
+      "black",
+      "white",
+      "transparent"
+    ],
+    "localGradientReferencesOnly": true
+  },
+  "rejection": {
+    "sizeStatus": 413,
+    "sizeCode": "PAYLOAD_TOO_LARGE",
+    "contentStatus": 422,
+    "contentCode": "VALIDATION_ERROR",
+    "field": "/svg"
+  }
+}

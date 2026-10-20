@@ -1,0 +1,262 @@
+{
+  "policyVersion": "1.0.0",
+  "cases": [
+    {
+      "name": "preparedAvatar",
+      "file": "../avatar-presets/ryadom-companion.svg",
+      "valid": true
+    },
+    {
+      "name": "preparedCover",
+      "file": "../../../design/assets/event-covers/ryadom-meeting-point.svg",
+      "valid": true
+    },
+    {
+      "name": "localGradient",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><defs><linearGradient id=\"red\"><stop offset=\"0\" stop-color=\"#D92D3A\"/><stop offset=\"1\" stop-color=\"#FFFFFF\"/></linearGradient></defs><rect width=\"256\" height=\"256\" fill=\"url(#red)\"/></svg>",
+      "valid": true
+    },
+    {
+      "name": "simpleTransform",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><g transform=\"translate(10 10) scale(0.5)\"><circle cx=\"100\" cy=\"100\" r=\"80\" fill=\"#D92D3A\"/></g></svg>",
+      "valid": true
+    },
+    {
+      "name": "script",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><script>alert(1)</script></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "handler",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><circle r=\"10\" onclick=\"alert(1)\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "foreignObject",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><foreignObject/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "externalImage",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><image href=\"https://example.test/a.png\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "dataImage",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><image href=\"data:image/png;base64,AA==\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "externalPaint",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><path d=\"M0 0L1 1\" fill=\"url(https://example.test/a.svg#x)\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "missingGradient",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><rect width=\"10\" height=\"10\" fill=\"url(#missing)\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "duplicateGradient",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><defs><linearGradient id=\"x\"/><linearGradient id=\"x\"/></defs></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "gradientInheritance",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><defs><linearGradient id=\"x\" href=\"#y\"/></defs></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "css",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><style>circle{fill:red}</style></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "inlineCss",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><circle r=\"10\" style=\"fill:red\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "animation",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><animate attributeName=\"r\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "text",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><text>hello</text></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "notFinite",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><circle r=\"NaN\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "coordinateTooLarge",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><circle cx=\"1000001\" r=\"10\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "wrongArcFlag",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><path d=\"M0 0A10 10 0 2 0 20 20\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "pathMissingArguments",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><path d=\"M0 0L1\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "strayText",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\">hello</svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "unknownAttribute",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><circle r=\"10\" filter=\"url(#blur)\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "doctype",
+      "svg": "<!DOCTYPE svg [<!ENTITY x \"value\">]><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><path d=\"M0 0L1 1\"/></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "processingInstruction",
+      "svg": "<?xml-stylesheet href=\"https://example.test/x.css\"?><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"></svg>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "wrongNamespace",
+      "svg": "<svg xmlns=\"https://example.test\" viewBox=\"0 0 10 10\"/>",
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "sizeAtLimit",
+      "recipe": {
+        "kind": "utf8Bytes",
+        "value": 131072
+      },
+      "valid": true
+    },
+    {
+      "name": "sizeOverLimit",
+      "recipe": {
+        "kind": "utf8Bytes",
+        "value": 131073
+      },
+      "valid": false,
+      "status": 413,
+      "code": "PAYLOAD_TOO_LARGE"
+    },
+    {
+      "name": "multibyteOverLimit",
+      "recipe": {
+        "kind": "utf8Bytes",
+        "value": 131073,
+        "paddingCharacter": "я"
+      },
+      "valid": false,
+      "status": 413,
+      "code": "PAYLOAD_TOO_LARGE"
+    },
+    {
+      "name": "depthAtLimit",
+      "recipe": {
+        "kind": "depth",
+        "value": 16
+      },
+      "valid": true
+    },
+    {
+      "name": "depthOverLimit",
+      "recipe": {
+        "kind": "depth",
+        "value": 17
+      },
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "elementsAtLimit",
+      "recipe": {
+        "kind": "elements",
+        "value": 512
+      },
+      "valid": true
+    },
+    {
+      "name": "elementsOverLimit",
+      "recipe": {
+        "kind": "elements",
+        "value": 513
+      },
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    },
+    {
+      "name": "segmentsAtLimit",
+      "recipe": {
+        "kind": "segments",
+        "value": 4096
+      },
+      "valid": true
+    },
+    {
+      "name": "segmentsOverLimit",
+      "recipe": {
+        "kind": "segments",
+        "value": 4097
+      },
+      "valid": false,
+      "status": 422,
+      "code": "VALIDATION_ERROR"
+    }
+  ]
+}

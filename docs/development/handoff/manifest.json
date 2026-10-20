@@ -1,0 +1,235 @@
+{
+  "preparedAt": "2026-10-20",
+  "baselineRequirementsCommit": "b08d3ae43f09436854fa071b6a3cff48ac75902e",
+  "contractVersion": "0.13.0",
+  "openapiSha256": "77df5d7003dccc914c05073e417b2fd65553a559ce297e0f9d8b077bfe1562a4",
+  "svgPolicyVersion": "1.0.0",
+  "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
+  "assignmentMode": "Role ownership is fixed; no worker agents have been started.",
+  "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
+  "pathOwners": {
+    "apps/api/": "BACKEND",
+    "apps/api/go.mod": "COORDINATOR",
+    "apps/api/go.sum": "COORDINATOR",
+    "apps/api/AGENTS.md": "COORDINATOR",
+    "apps/api/internal/transport/openapi/": "COORDINATOR",
+    "apps/api/internal/foundation/": "COORDINATOR",
+    "apps/api/db/": "DATABASE",
+    "apps/api/internal/db/": "DATABASE",
+    "apps/web/": "COORDINATOR",
+    "apps/web/src/": "FRONTEND",
+    "packages/api-client/": "COORDINATOR",
+    "packages/contracts/": "COORDINATOR",
+    "brandbook/": "COORDINATOR",
+    "docs/": "COORDINATOR",
+    "design/": "COORDINATOR",
+    "scripts/": "COORDINATOR",
+    "tools/": "COORDINATOR"
+  },
+  "tasks": {
+    "BASE-01": {
+      "ownerRole": "COORDINATOR",
+      "status": "COMPLETED"
+    },
+    "DB-01": {
+      "ownerRole": "DATABASE",
+      "status": "PLANNED"
+    },
+    "DB-02": {
+      "ownerRole": "DATABASE",
+      "status": "PLANNED"
+    },
+    "BE-01": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "FE-01": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "OPS-01": {
+      "ownerRole": "COORDINATOR",
+      "status": "PLANNED"
+    },
+    "DOCS-01": {
+      "ownerRole": "COORDINATOR",
+      "status": "PLANNED"
+    },
+    "AUTH-01": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-02": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-03": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-04": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-05": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-06": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-07": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-08": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-09": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-10": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-11": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "BE-12": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "FE-02": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-03": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-04": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-05": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-06": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-07": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-08": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-09": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-10": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-11": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-12": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-13": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "FE-14": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "BE-13": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "FE-15": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "QA-01": {
+      "ownerRole": "QA",
+      "status": "PLANNED"
+    },
+    "MEDIA-00": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "MEDIA-01A": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "MEDIA-01B": {
+      "ownerRole": "BACKEND",
+      "status": "PLANNED"
+    },
+    "MEDIA-01C": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "MEDIA-01D": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "MEDIA-01E": {
+      "ownerRole": "FRONTEND",
+      "status": "PLANNED"
+    },
+    "MEDIA-01F": {
+      "ownerRole": "COORDINATOR",
+      "status": "PLANNED"
+    },
+    "DELIVERY-01A": {
+      "ownerRole": "COORDINATOR",
+      "status": "PLANNED"
+    },
+    "DELIVERY-01B": {
+      "ownerRole": "COORDINATOR",
+      "status": "PLANNED"
+    }
+  },
+  "nextAssignments": [
+    "BE-01",
+    "DB-01",
+    "FE-01"
+  ],
+  "firstIntegration": {
+    "foundation": [
+      "BE-01",
+      "DB-01",
+      "FE-01",
+      "OPS-01",
+      "DOCS-01"
+    ],
+    "business": "register with explicit preset -> create event -> read it in a second session",
+    "after": [
+      "AUTH-01",
+      "DB-02",
+      "BE-02",
+      "BE-03",
+      "BE-04",
+      "FE-02",
+      "FE-03",
+      "FE-04",
+      "FE-05",
+      "MEDIA-00",
+      "MEDIA-01F"
+    ]
+  }
+}

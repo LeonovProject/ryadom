@@ -1,0 +1,30 @@
+# Isolated preparation environment, not the product deployment Compose.
+name: ryadom-foundation
+services:
+  db:
+    image: postgres:17.11-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    environment:
+      POSTGRES_DB: ryadom_foundation
+      POSTGRES_USER: foundation
+      POSTGRES_PASSWORD: foundation-local-check-only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U foundation -d ryadom_foundation"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    # No published ports and no access to the user's existing database.
+    tmpfs:
+      - /var/lib/postgresql/data
+  go-check:
+    build:
+      context: .
+      dockerfile: tools/foundation/go.Dockerfile
+    environment:
+      RYADOM_FOUNDATION_DATABASE_URL: postgres://foundation:foundation-local-check-only@db:5432/ryadom_foundation?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+  web-check:
+    build:
+      context: .
+      dockerfile: tools/foundation/web.Dockerfile
