@@ -134,6 +134,7 @@ def main():
             assert status == 404 and error['requestId'] == headers['X-Request-ID'] and 'no-store' in headers['Cache-Control']
             assert request(base, '/api/v1/health/ready')[0] == 404
             assert request(base, '/api/openapi.yaml')[2] == (root / 'packages/contracts/openapi.yaml').read_bytes()
+            assert request(base, '/api/docs')[0] == 200
             assert request(base, '/api/docs/')[0] == 200
             assert request(base, '/api/docs/swagger-ui-bundle.js')[0] == 200
             assert b'supportedSubmitMethods: []' in request(base, '/api/docs/initializer.js')[2]

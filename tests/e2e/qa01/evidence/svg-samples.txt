@@ -1,0 +1,1 @@
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/platform/svg	0.005s

@@ -1,0 +1,31 @@
+[WebServer] (node:603186) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite --host 127.0.0.1 --port 4175 --strictPort
+[WebServer] (node:603216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 19 tests using 1 worker
+
+(node:603295) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   1 apps/web/src/app/tests/shell.spec.ts:7:1 › unimplemented routes remain explicit placeholders; unknown URLs get 404 (718ms)
+  ✓   2 apps/web/src/app/tests/shell.spec.ts:24:3 › layout, fonts and navigation at 320px (704ms)
+  ✓   3 apps/web/src/app/tests/shell.spec.ts:24:3 › layout, fonts and navigation at 390px (716ms)
+  ✓   4 apps/web/src/app/tests/shell.spec.ts:24:3 › layout, fonts and navigation at 768px (578ms)
+  ✓   5 apps/web/src/app/tests/shell.spec.ts:24:3 › layout, fonts and navigation at 1280px (613ms)
+  ✓   6 apps/web/src/app/tests/shell.spec.ts:54:1 › dialog traps keyboard focus, closes on Escape and restores focus (643ms)
+  ✓   7 apps/web/src/app/tests/shell.spec.ts:75:1 › skip link, field error associations and explicit state transitions (556ms)
+  ✓   8 apps/web/src/features/participation/user/tests/p2.spec.ts:25:51 › join OPEN has one POST and shows canonical status (486ms)
+  ✓   9 apps/web/src/features/participation/user/tests/p2.spec.ts:25:51 › join APPROVAL has one POST and shows canonical status (499ms)
+  ✓  10 apps/web/src/features/participation/user/tests/p2.spec.ts:32:1 › uncertain join never replays and a failed read cannot unlock it (543ms)
+  ✓  11 apps/web/src/features/participation/user/tests/p2.spec.ts:42:1 › personal home shares server referenceTime and preserves server ordering (449ms)
+  ✓  12 apps/web/src/features/participation/user/tests/p2.spec.ts:58:1 › my list windows and limited unavailable records stay separate (576ms)
+  ✓  13 apps/web/src/features/participation/user/tests/p2.spec.ts:80:55 › author decision ACCEPT waits for the server and rereads (511ms)
+  ✓  14 apps/web/src/features/participation/user/tests/p2.spec.ts:80:55 › author decision REJECT waits for the server and rereads (507ms)
+  ✓  15 apps/web/src/features/participation/user/tests/p2.spec.ts:89:1 › author can read after start but cannot decide; ADMIN without authorship cannot read the roster (703ms)
+  ✓  16 apps/web/src/features/participation/user/tests/p2.spec.ts:103:3 › author roster labels another participant correctly: CONFIRMED, unpublished=false (463ms)
+  ✓  17 apps/web/src/features/participation/user/tests/p2.spec.ts:103:3 › author roster labels another participant correctly: CONFIRMED, unpublished=true (457ms)
+  ✓  18 apps/web/src/features/participation/user/tests/p2.spec.ts:103:3 › author roster labels another participant correctly: PENDING, unpublished=false (454ms)
+  ✓  19 apps/web/src/features/participation/user/tests/p2.spec.ts:103:3 › author roster labels another participant correctly: REJECTED, unpublished=false (445ms)
+
+  19 passed (12.5s)

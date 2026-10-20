@@ -1,0 +1,75 @@
+[
+  {
+    "sourceTrace": ".artifacts/frontend/playwright/features-organizations-pri-93d52--API-and-keep-safe-returnTo/trace.zip",
+    "errors": [
+      {
+        "text": "Failed to load resource: net::ERR_NETWORK_CHANGED",
+        "location": {
+          "url": "http://127.0.0.1:4175/@fs/home/evgen/Projects/championship_18_10/brandbook/assets/states.json?import",
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "time": 161099.87
+      },
+      {
+        "text": "Failed to load resource: net::ERR_NETWORK_CHANGED",
+        "location": {
+          "url": "http://127.0.0.1:4175/src/features/events/catalog/EventCard.tsx",
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "time": 161101.355
+      },
+      {
+        "text": "Failed to load resource: net::ERR_NETWORK_CHANGED",
+        "location": {
+          "url": "http://127.0.0.1:4175/src/shared/api/event-cache.ts",
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "time": 161101.385
+      },
+      {
+        "text": "Failed to load resource: net::ERR_NETWORK_CHANGED",
+        "location": {
+          "url": "http://127.0.0.1:4175/src/shared/ui/FormLeavePrompt.tsx",
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "time": 161101.487
+      },
+      {
+        "text": "Failed to load resource: net::ERR_NETWORK_CHANGED",
+        "location": {
+          "url": "http://127.0.0.1:4175/src/features/discussion/messages.ts",
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "time": 161101.52
+      },
+      {
+        "text": "Failed to load resource: net::ERR_NETWORK_CHANGED",
+        "location": {
+          "url": "http://127.0.0.1:4175/src/features/discussion/discussion.module.css",
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "time": 161101.868
+      }
+    ]
+  },
+  {
+    "sourceTrace": ".artifacts/frontend/playwright/features-organizations-pri-55ee2-eplayed-or-proven-by-a-name/trace.zip",
+    "errors": [
+      {
+        "text": "Failed to load resource: net::ERR_NETWORK_CHANGED",
+        "location": {
+          "url": "http://127.0.0.1:4175/node_modules/.vite/deps/react-DF_sq4VP.js?v=540290ac",
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "time": 172102.362
+      }
+    ]
+  }
+]

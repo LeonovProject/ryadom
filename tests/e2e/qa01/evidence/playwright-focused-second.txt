@@ -1,0 +1,30 @@
+[WebServer] (node:554604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite --host 127.0.0.1 --port 4175 --strictPort
+[WebServer] (node:554618) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:554711) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   1 apps/web/src/features/admin/accounts/tests/accounts.spec.ts:13:54 › explicit BLOCKED uses the viewed revision and checks server confirmation (895ms)
+  ✓   2 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:169:1 › lost response after saved decision only rereads and never claims success (704ms)
+(node:554927) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   3 apps/web/src/features/admin/accounts/tests/accounts.spec.ts:13:54 › explicit BLOCKED uses the viewed revision and checks server confirmation (887ms)
+  ✓   4 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:169:1 › lost response after saved decision only rereads and never claims success (684ms)
+(node:555173) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   5 apps/web/src/features/admin/accounts/tests/accounts.spec.ts:13:54 › explicit BLOCKED uses the viewed revision and checks server confirmation (823ms)
+  ✓   6 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:169:1 › lost response after saved decision only rereads and never claims success (698ms)
+(node:555429) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   7 apps/web/src/features/admin/accounts/tests/accounts.spec.ts:13:54 › explicit BLOCKED uses the viewed revision and checks server confirmation (894ms)
+  ✓   8 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:169:1 › lost response after saved decision only rereads and never claims success (670ms)
+(node:555678) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   9 apps/web/src/features/admin/accounts/tests/accounts.spec.ts:13:54 › explicit BLOCKED uses the viewed revision and checks server confirmation (850ms)
+  ✓  10 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:169:1 › lost response after saved decision only rereads and never claims success (700ms)
+
+  10 passed (12.5s)

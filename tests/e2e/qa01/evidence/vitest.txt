@@ -1,0 +1,8 @@
+
+ RUN  v5.0.5 /home/evgen/Projects/championship_18_10
+
+
+ Test Files  16 passed (16)
+      Tests  114 passed (114)
+   Start at  20:31:34
+   Duration  1.09s (import 43%, transform 29%, tests 20%, worker 7%)

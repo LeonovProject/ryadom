@@ -1,0 +1,111 @@
+{
+  "base": "http://127.0.0.1:45117",
+  "checks": [
+    {
+      "path": "/api/docs",
+      "status": 308,
+      "location": "/api/docs/",
+      "bytes": 164,
+      "passed": true
+    },
+    {
+      "path": "/api/docs/",
+      "status": 200,
+      "location": null,
+      "bytes": 352,
+      "passed": true
+    },
+    {
+      "path": "/api/docs/swagger-ui-bundle.js",
+      "status": 200,
+      "location": null,
+      "bytes": 1684244,
+      "passed": true
+    },
+    {
+      "path": "/api/openapi.yaml",
+      "status": 200,
+      "location": null,
+      "bytes": 282869,
+      "passed": true
+    },
+    {
+      "path": "/demo",
+      "status": 200,
+      "location": null,
+      "bytes": 624,
+      "passed": true
+    },
+    {
+      "path": "/demo/accounts.txt",
+      "status": 200,
+      "location": null,
+      "bytes": 2223,
+      "passed": true
+    },
+    {
+      "path": "/assets/avatars/presets/ryadom-companion.svg",
+      "status": 200,
+      "location": null,
+      "bytes": 1130,
+      "passed": true
+    }
+  ],
+  "passed": true
+}
+{
+  "base": "https://127.0.0.1:49247",
+  "checks": [
+    {
+      "path": "/api/docs",
+      "status": 308,
+      "location": "/api/docs/",
+      "bytes": 164,
+      "passed": true
+    },
+    {
+      "path": "/api/docs/",
+      "status": 200,
+      "location": null,
+      "bytes": 352,
+      "passed": true
+    },
+    {
+      "path": "/api/docs/swagger-ui-bundle.js",
+      "status": 200,
+      "location": null,
+      "bytes": 1684244,
+      "passed": true
+    },
+    {
+      "path": "/api/openapi.yaml",
+      "status": 200,
+      "location": null,
+      "bytes": 282869,
+      "passed": true
+    },
+    {
+      "path": "/demo",
+      "status": 200,
+      "location": null,
+      "bytes": 624,
+      "passed": true
+    },
+    {
+      "path": "/demo/accounts.txt",
+      "status": 200,
+      "location": null,
+      "bytes": 2223,
+      "passed": true
+    },
+    {
+      "path": "/assets/avatars/presets/ryadom-companion.svg",
+      "status": 200,
+      "location": null,
+      "bytes": 1130,
+      "passed": true
+    }
+  ],
+  "passed": true
+}
+PASS QA01-F01: real HTTP and HTTPS keep the external origin; Swagger/schema/demo/preset readable

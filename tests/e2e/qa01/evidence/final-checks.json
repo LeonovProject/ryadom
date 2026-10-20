@@ -1,0 +1,27 @@
+[
+  {
+    "name": "repository",
+    "exitCode": 0,
+    "output": "OK: brandbook, shared assets, archive, primary sources, criteria and documentation links\n"
+  },
+  {
+    "name": "handoff",
+    "exitCode": 0,
+    "output": "PASS: 48 owned tasks, 10 bounded packets with valid order/scope, matching acyclic dependencies, source hashes, SVG policy and 35 specified cases. SVG runtime cases not executed.\n"
+  },
+  {
+    "name": "contracts",
+    "exitCode": 0,
+    "output": "PASS: OpenAPI 3.0.3, 60 operations, 100 schemas, 280 HTTP examples, 64 rejected payloads, SVG byte boundaries, preset manifest (1 items), unique sample IDs, matching named OpenAPI/HTTP examples, authentication/blocking contract. No API executed.\n"
+  },
+  {
+    "name": "syntaxAndDiff",
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "name": "gitState",
+    "exitCode": 0,
+    "output": "## main...origin/main\n M AGENTS.md\n M CONTEXT.md\n M README.md\n M apps/web/src/features/participation/manage/ManagePage.tsx\n M apps/web/src/features/participation/user/tests/p2.spec.ts\n M apps/web/src/shared/ui/StatusBadge.tsx\n M docs/development/handoff/README.md\n M docs/development/handoff/backend.md\n M docs/development/handoff/continuation-2026-10-20.md\n M docs/development/handoff/frontend.md\n M docs/development/handoff/manifest.json\n M docs/development/handoff/validation.md\n M docs/development/handoff/work-packets.md\n M docs/development/tasks/README.md\n M docs/development/tasks/verification.md\n M docs/product/acceptance.md\n M infra/tests/accept.py\n M infra/web/routes.conf\n?? tests/\n"
+  }
+]

@@ -1,0 +1,1 @@
+PASS actual Swagger UI: /api/docs keeps external origin, schema rendered, 60 operations, no JS errors

@@ -1,0 +1,1 @@
+PASS QA independent before: registration/preset/keyboard, actual S1-S6/A1-A6, both organization/participation decisions, long discussion/scroll anchor, direct unavailable actions, retained roster and four widths

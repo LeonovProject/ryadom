@@ -102,7 +102,7 @@ function Roster({ event, status, refreshingEvent }: { event: components['schemas
     {!feed.data && feed.isPending ? <StatePanel kind="loading" title="Загружаем состав" /> : feed.isError && !feed.isFetchNextPageError ? <StatePanel kind="error" title="Состав сейчас недоступен" action={<Button onClick={refresh}>Повторить загрузку состава</Button>}>Сведения и действия скрыты до успешного чтения.</StatePanel> : <>
       {!entries.size && <StatePanel kind="empty" title="В этом разделе пока нет записей">Выбери другой раздел или обнови состав позже.</StatePanel>}
       {[...entries.values()].map((item) => <article key={item.id} className={styles.card}>
-        <div className={styles.row}><Avatar name={item.account.displayName} url={item.account.avatarUrl} /><h3><Link to={`/people/${item.account.id}`}>{item.account.displayName}</Link></h3><StatusBadge domain="participation" status={item.status} /></div>
+        <div className={styles.row}><Avatar name={item.account.displayName} url={item.account.avatarUrl} /><h3><Link to={`/people/${item.account.id}`}>{item.account.displayName}</Link></h3><StatusBadge domain="participation" status={item.status} context="roster" /></div>
         {item.account.isBlocked && <p>Аккаунт участника заблокирован. Запись сохранена.</p>}
         {item.status === 'PENDING' && canDecide && <div className={styles.row}><Button disabled={!!pending} pending={pending === item.id} onClick={() => void decide(item, 'ACCEPT')}>Принять</Button><Button variant="secondary" disabled={!!pending} onClick={() => void decide(item, 'REJECT')}>Отклонить</Button></div>}
       </article>)}

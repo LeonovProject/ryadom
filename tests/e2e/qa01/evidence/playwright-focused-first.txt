@@ -1,0 +1,30 @@
+[WebServer] (node:517810) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite --host 127.0.0.1 --port 4175 --strictPort
+[WebServer] (node:517837) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:517883) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   1 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:84:1 › a forbidden next page hides previously loaded administrative profiles (553ms)
+  ✓   2 apps/web/src/features/events/catalog/tests/return-position.spec.ts:111:1 › the bookmark is consumed once and a subsequent refresh does not pull focus back (994ms)
+(node:518139) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   3 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:84:1 › a forbidden next page hides previously loaded administrative profiles (600ms)
+  ✓   4 apps/web/src/features/events/catalog/tests/return-position.spec.ts:111:1 › the bookmark is consumed once and a subsequent refresh does not pull focus back (1.1s)
+(node:518368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   5 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:84:1 › a forbidden next page hides previously loaded administrative profiles (553ms)
+  ✓   6 apps/web/src/features/events/catalog/tests/return-position.spec.ts:111:1 › the bookmark is consumed once and a subsequent refresh does not pull focus back (1.1s)
+(node:518620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   7 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:84:1 › a forbidden next page hides previously loaded administrative profiles (578ms)
+  ✓   8 apps/web/src/features/events/catalog/tests/return-position.spec.ts:111:1 › the bookmark is consumed once and a subsequent refresh does not pull focus back (1.0s)
+(node:518889) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node-22 --trace-warnings ...` to show where the warning was created)
+  ✓   9 apps/web/src/features/admin/organizations/tests/organizations.spec.ts:84:1 › a forbidden next page hides previously loaded administrative profiles (563ms)
+  ✓  10 apps/web/src/features/events/catalog/tests/return-position.spec.ts:111:1 › the bookmark is consumed once and a subsequent refresh does not pull focus back (1.0s)
+
+  10 passed (12.3s)

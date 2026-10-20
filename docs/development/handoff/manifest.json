@@ -5,7 +5,7 @@
   "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "BE-P3/BE-13 42c73b5 and FE-P3/FE-14/15 f0f0f98 integrated. Combined moderation/accounts/reset UI checked in disposable HTTPS/Compose. Next QA-01; MEDIA-01A/B retain QA-01 dependency. Independent QR-01 and FE-16 prepared, not dispatched.",
+  "assignmentMode": "QA-01 accepted on e5657b6 plus two coordinator fixes. Real S1-S6 before/after disposable reset, Go/race and UI regression passed; Swagger/roster fixes rechecked. MEDIA-01A ready, then MEDIA-01B; QR-01/FE-16 independent. No new agents dispatched.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -253,7 +253,9 @@
     },
     "QA-01": {
       "ownerRole": "QA",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "tests/e2e/qa01/README.md",
+      "scope": "Independent QA on e5657b6 plus verified coordinator redirect/roster-copy fixes. Real S1-S6 before/after disposable reset; full Go/race/vet, unit 114, UI baseline 225 and focused final 19 passed. Both P2 defects closed. Shared DB preserved; only preview web updated. Late MEDIA/QA-02/DELIVERY remain pending."
     },
     "MEDIA-00": {
       "ownerRole": "BACKEND",
@@ -297,7 +299,7 @@
     }
   },
   "nextAssignments": [
-    "QA-01",
+    "MEDIA-01A",
     "QR-01",
     "FE-16"
   ],
@@ -376,7 +378,7 @@
       "adminGetAccount",
       "adminSetAccountStatus"
     ],
-    "frontendScope": "FE-01 through FE-15 accepted locally. QA-01 now ready; personal SVG/cover MEDIA and first-meeting/print features remain pending."
+    "frontendScope": "FE-01 through FE-15 and independent QA-01 accepted locally. Two coordinator QA fixes verified; see tests/e2e/qa01/README.md. MEDIA and first-meeting/print remain pending."
   },
   "continuation": {
     "report": "docs/development/handoff/continuation-2026-10-20.md",
@@ -682,7 +684,9 @@
         "acceptance": [
           "Independent complete QA-01 per tasks/verification.md",
           "Real Compose S1-S6 and administrative scenarios, fresh DB, reset recovery and ordinary recreation"
-        ]
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "tests/e2e/qa01/README.md"
       },
       "FE-P5": {
         "ownerRoles": [

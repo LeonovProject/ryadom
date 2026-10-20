@@ -1,0 +1,97 @@
+{
+  "task": "QA-01",
+  "date": "2026-10-20",
+  "timezone": "Asia/Krasnoyarsk",
+  "sourceBase": "e5657b61785baf244f8de69f00b5d51b8f271291",
+  "workingTreeFixes": true,
+  "result": "PASS",
+  "openBlockingDefects": [],
+  "fixedDefects": [
+    "QA01-F01",
+    "QA01-F02"
+  ],
+  "sourceSha256": {
+    "infra/web/routes.conf": "d1f63465cd983aa6d0ef56b28950514cdde7f8a0e8104d588abfb053f4146636",
+    "infra/tests/accept.py": "4af0d86f8e887c40435fe442429d7454cb0747dd0327c0a80a08dfb8efa3b59a",
+    "apps/web/src/shared/ui/StatusBadge.tsx": "bab6c5c43d4a06602368dda7b71446d090964d241c50ecc61e10fd53f4b06aa6",
+    "apps/web/src/features/participation/manage/ManagePage.tsx": "de11756cd290c9ef1a0ed99f6cc6b8f4ac9a78ab15e67273f2eab7b4534fd247",
+    "apps/web/src/features/participation/user/tests/p2.spec.ts": "e09e196f746759001d13359af26022a65756f935332cc580021416f9ddf1d038",
+    "tests/e2e/qa01/accept.py": "414b742b5c1c9aaf59ced780258ec7e5c1e6187b09373f7a1656b07ce5d4411a",
+    "tests/e2e/qa01/browser.cjs": "a5b7289074bc6eac358bc0a5377265fb311cf07fe2d4aa2acccf05206ea31833",
+    "tests/e2e/qa01/backend.py": "b72bc315d9ee8a248352457f08420cc1ed493a42f7c9e44c8427c20fc031bc18",
+    "tests/e2e/qa01/routes.py": "77a1d2991baf3c664f8a8266d6567d6fc3155dee2c22f999964c571e552652f9",
+    "tests/e2e/qa01/routes_accept.py": "ef72481f98c2a81cc06cc2c7746953306ef5b4b7b6eca04258c23ca48e9e4249"
+  },
+  "checks": {
+    "realComposeBeforeAndAfterReset": "PASS",
+    "sameVolumePersistence": "PASS",
+    "realCoreAfterRosterFix": "PASS (no second reset required)",
+    "goRace": {
+      "packages": 18,
+      "topLevelPass": 119,
+      "includingSubtestsPass": 394,
+      "dbIntegrationExecuted": true
+    },
+    "goVet": "PASS",
+    "optionalSvgSampleExport": "PASS separately",
+    "vitest": {
+      "files": 16,
+      "tests": 114,
+      "result": "PASS"
+    },
+    "playwrightFullBeforeRosterFix": {
+      "passed": 225,
+      "failed": 0,
+      "retries": 0
+    },
+    "playwrightFocusedAfterFixes": {
+      "passed": 19,
+      "failed": 0,
+      "newCases": 4
+    },
+    "earlierPlaywrightRuns": {
+      "runs": 3,
+      "eachPassed": 223,
+      "eachFailed": 2,
+      "traceEvidence": "evidence/network-change.json",
+      "isolatedFullRunPassed": true,
+      "initialFailuresWithoutTraceCauseProven": false
+    },
+    "webProductionBuildAndTypes": "PASS",
+    "swaggerHttpAndHttps": "PASS",
+    "sharedPreviewReadOnlyRoutes": "PASS",
+    "contracts": {
+      "operations": 60,
+      "schemas": 100,
+      "httpExamples": 280,
+      "negativeExamples": 64,
+      "result": "PASS"
+    },
+    "generatedGoAndTypescript": "byte-identical to committed DTOs",
+    "repository": "PASS",
+    "handoff": "PASS",
+    "syntaxAndDiff": "PASS",
+    "swaggerBrowser": "PASS: 60 operations, external origin retained, no JS errors"
+  },
+  "sharedPreview": {
+    "url": "http://127.0.0.1:4180/",
+    "webUpdated": true,
+    "apiRecreated": false,
+    "databaseRecreated": false,
+    "resetOrSeedExecuted": false,
+    "demoMode": false
+  },
+  "contractDatabaseOrDependencyChanges": false,
+  "agentsDispatched": false,
+  "remainingScope": [
+    "MEDIA-01A..E",
+    "QR-01",
+    "FE-16",
+    "FE-17",
+    "QA-02",
+    "DELIVERY-01A",
+    "DELIVERY-01B"
+  ],
+  "commitOrPushPerformedDuringQA": false,
+  "continuation": "Subsequent user request authorizes committing this QA result and fixes, then pushing main to origin and gitverse. Use the containing commit SHA as the continuation base."
+}

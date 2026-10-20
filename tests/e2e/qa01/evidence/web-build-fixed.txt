@@ -1,0 +1,159 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.06kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/golang:1.27.2-bookworm@sha256:5cf287a799e6b94384bad13d16b14904c531f51ba65792237e122ce42b392f61
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/nginx:1.30.6-alpine@sha256:970364228b1e4f932abc22d321932816782cca8a20b85a77552a7cfe9acfb3b5
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/node:22.23.1-bookworm-slim@sha256:6c74791e557ce11fc957704f6d4fe134a7bc8d6f5ca4403205b2966bd488f6b3
+#4 DONE 0.0s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 220B done
+#5 DONE 0.0s
+
+#6 [svg-check 1/7] FROM docker.io/library/golang:1.27.2-bookworm@sha256:5cf287a799e6b94384bad13d16b14904c531f51ba65792237e122ce42b392f61
+#6 resolve docker.io/library/golang:1.27.2-bookworm@sha256:5cf287a799e6b94384bad13d16b14904c531f51ba65792237e122ce42b392f61 0.0s done
+#6 DONE 0.0s
+
+#7 [stage-2 1/7] FROM docker.io/library/nginx:1.30.6-alpine@sha256:970364228b1e4f932abc22d321932816782cca8a20b85a77552a7cfe9acfb3b5
+#7 resolve docker.io/library/nginx:1.30.6-alpine@sha256:970364228b1e4f932abc22d321932816782cca8a20b85a77552a7cfe9acfb3b5 0.0s done
+#7 DONE 0.0s
+
+#8 [web-build  1/13] FROM docker.io/library/node:22.23.1-bookworm-slim@sha256:6c74791e557ce11fc957704f6d4fe134a7bc8d6f5ca4403205b2966bd488f6b3
+#8 resolve docker.io/library/node:22.23.1-bookworm-slim@sha256:6c74791e557ce11fc957704f6d4fe134a7bc8d6f5ca4403205b2966bd488f6b3 0.0s done
+#8 DONE 0.0s
+
+#9 [internal] load build context
+#9 transferring context: 87.33kB 0.0s done
+#9 DONE 0.0s
+
+#10 [web-build  4/13] COPY package.json pnpm-workspace.yaml pnpm-lock.yaml .npmrc tsconfig.base.json ./
+#10 CACHED
+
+#11 [web-build  6/13] COPY packages/api-client/package.json packages/api-client/package.json
+#11 CACHED
+
+#12 [web-build  5/13] COPY apps/web/package.json apps/web/package.json
+#12 CACHED
+
+#13 [web-build  2/13] RUN npm install --global pnpm@11.25.0
+#13 CACHED
+
+#14 [web-build  3/13] WORKDIR /workspace
+#14 CACHED
+
+#15 [web-build  7/13] RUN pnpm install --frozen-lockfile
+#15 CACHED
+
+#16 [web-build  8/13] COPY apps/web/ apps/web/
+#16 DONE 0.2s
+
+#17 [web-build  9/13] COPY packages/api-client/ packages/api-client/
+#17 DONE 0.1s
+
+#18 [web-build 10/13] COPY brandbook/assets/ brandbook/assets/
+#18 DONE 0.1s
+
+#19 [web-build 11/13] RUN pnpm typecheck && pnpm build
+#19 0.506 $ pnpm -r typecheck
+#19 0.877 Scope: 2 of 3 workspace projects
+#19 0.889 $ tsc -p tsconfig.json
+#19 3.106 $ tsc -p tsconfig.json
+#19 9.817 $ pnpm --filter @ryadom/web build
+#19 10.18 $ tsc -p tsconfig.json && vite build
+#19 16.20 vite v8.3.4 building client environment for production...
+#19 16.20 transforming...
+#19 16.36 ✓ 238 modules transformed.
+#19 16.42 rendering chunks...
+#19 16.50 computing gzip size...
+#19 16.50 dist/index.html                                    0.62 kB │ gzip:   0.37 kB
+#19 16.50 dist/demo/accounts.txt                             2.22 kB │ gzip:   0.93 kB
+#19 16.50 dist/assets/OpenSans-Regular-Ce6w6qPM.ttf        217.36 kB
+#19 16.50 dist/assets/OpenSans-Bold-Cjgd81ie.ttf           224.59 kB
+#19 16.50 dist/assets/Montserrat-Bold-B0QqtyEg.otf         325.54 kB
+#19 16.50 dist/assets/admin-DOkYS6dT.css                     1.24 kB │ gzip:   0.48 kB
+#19 16.50 dist/assets/organizations-C4_DmP9t.css             1.76 kB │ gzip:   0.64 kB
+#19 16.50 dist/assets/OrganizationListPage-BBiwL-Pr.css      1.97 kB │ gzip:   0.65 kB
+#19 16.50 dist/assets/return-to-DWiSyu7m.css                 4.42 kB │ gzip:   1.25 kB
+#19 16.50 dist/assets/index-DIiB88LX.css                    35.58 kB │ gzip:   6.03 kB
+#19 16.50 dist/assets/PrivateGate-Daxh1fVk.js                0.94 kB │ gzip:   0.58 kB
+#19 16.50 dist/assets/admin.module-1vEanwzR.js               1.42 kB │ gzip:   0.72 kB
+#19 16.50 dist/assets/queries-B-uEJJwn.js                    2.18 kB │ gzip:   0.86 kB
+#19 16.50 dist/assets/admin-action-CDODBRi5.js               2.54 kB │ gzip:   1.29 kB
+#19 16.50 dist/assets/DemoPage-BaasivBh.js                   2.70 kB │ gzip:   1.23 kB
+#19 16.50 dist/assets/organizations.module-eMN1e2u2.js       3.26 kB │ gzip:   1.57 kB
+#19 16.50 dist/assets/MyOrganizationsPage-CKkrgyLy.js        3.93 kB │ gzip:   1.59 kB
+#19 16.50 dist/assets/EventListPage-CQmsfJTe.js              4.63 kB │ gzip:   2.02 kB
+#19 16.50 dist/assets/MyEventsPage-FZygmDFX.js               4.94 kB │ gzip:   2.08 kB
+#19 16.50 dist/assets/CreateOrganizationPage-Bd82mLQo.js     6.31 kB │ gzip:   2.70 kB
+#19 16.50 dist/assets/ActivityTypesPage-DuvBZViB.js          7.63 kB │ gzip:   2.92 kB
+#19 16.50 dist/assets/ManagePage-5gSnMUZF.js                 8.29 kB │ gzip:   3.33 kB
+#19 16.50 dist/assets/OrganizationListPage-pMxZU9l_.js       9.47 kB │ gzip:   3.72 kB
+#19 16.50 dist/assets/AccountsPage-DQgSuXvS.js              10.13 kB │ gzip:   3.76 kB
+#19 16.50 dist/assets/OrganizationCabinetPage-BfIA8l6J.js   10.65 kB │ gzip:   3.71 kB
+#19 16.50 dist/assets/EventReviewPage-EBZPTTBx.js           11.18 kB │ gzip:   3.66 kB
+#19 16.50 dist/assets/OrganizationReviewPage-BTR8nitY.js    11.28 kB │ gzip:   3.91 kB
+#19 16.50 dist/assets/PageTitle-Dq2hzVPs.js                 23.60 kB │ gzip:   7.94 kB
+#19 16.50 dist/assets/return-to-DRjP7Ibs.js                115.22 kB │ gzip:  38.69 kB
+#19 16.50 dist/assets/index-BkZqANMh.js                    395.17 kB │ gzip: 118.56 kB
+#19 16.50
+#19 16.51 ✓ built in 311ms
+#19 DONE 16.6s
+
+#20 [web-build 12/13] RUN mkdir -p /out/docs  && cp node_modules/swagger-ui-dist/swagger-ui-bundle.js node_modules/swagger-ui-dist/swagger-ui.css /out/docs/
+#20 DONE 0.1s
+
+#21 [web-build 13/13] COPY infra/web/docs/ /out/docs/
+#21 DONE 0.1s
+
+#22 [stage-2 2/7] RUN rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/*
+#22 CACHED
+
+#23 [svg-check 3/7] COPY apps/api/go.mod apps/api/go.sum ./
+#23 CACHED
+
+#24 [svg-check 4/7] RUN go mod download
+#24 CACHED
+
+#25 [svg-check 2/7] WORKDIR /workspace/apps/api
+#25 CACHED
+
+#26 [svg-check 6/7] COPY packages/contracts/ /workspace/packages/contracts/
+#26 CACHED
+
+#27 [svg-check 5/7] COPY apps/api/ ./
+#27 CACHED
+
+#28 [svg-check 7/7] RUN CGO_ENABLED=0 go build -trimpath -buildvcs=false -o /checksvg ./internal/platform/svg/cmd/checksvg  && mkdir -p /out/avatars  && find /workspace/packages/contracts/avatar-presets -type f -name '*.svg' -exec /checksvg {} +  && find /workspace/packages/contracts/avatar-presets -type f -name '*.svg' -exec cp {} /out/avatars/ \;
+#28 CACHED
+
+#29 [stage-2 3/7] COPY --from=web-build /workspace/apps/web/dist/ /usr/share/nginx/html/
+#29 DONE 0.1s
+
+#30 [stage-2 4/7] COPY --from=web-build /out/docs/ /usr/share/nginx/html/api/docs/
+#30 DONE 0.1s
+
+#31 [stage-2 5/7] COPY --from=svg-check /out/avatars/ /usr/share/nginx/html/assets/avatars/presets/
+#31 DONE 0.1s
+
+#32 [stage-2 6/7] COPY packages/contracts/openapi.yaml /usr/share/nginx/html/api/openapi.yaml
+#32 DONE 0.1s
+
+#33 [stage-2 7/7] COPY infra/web/*.conf /etc/nginx/
+#33 DONE 0.1s
+
+#34 exporting to image
+#34 exporting layers 0.1s done
+#34 exporting manifest sha256:ce3ff56b330cbf50ed0b67aa8fa4ab5e5b7785a486747eb785ec9263206c8179 done
+#34 exporting config sha256:e309ccf4648dbf6c666429af59f08f87d8649d6337b45638dfe5d31189636cab done
+#34 exporting attestation manifest sha256:e1c8dcf140aebf3994bb60681d138b6e29af23d47ad690eb26b00889e7372c42 done
+#34 exporting manifest list sha256:495d2763334213b66fb64840709862a4c15d0be083098723b5bc2cddcf1fd914 done
+#34 naming to docker.io/library/ryadom-qa01-web:latest done
+#34 unpacking to docker.io/library/ryadom-qa01-web:latest 0.1s done
+#34 DONE 0.3s

@@ -98,3 +98,17 @@ test('author can read after start but cannot decide; ADMIN without authorship ca
   await expect(page.getByRole('heading', { name: 'Состав доступен автору встречи', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Алексей', exact: true })).toHaveCount(0);
 });
+
+for (const [status, removed] of [['CONFIRMED', false], ['CONFIRMED', true], ['PENDING', false], ['REJECTED', false]] as const) {
+  test(`author roster labels another participant correctly: ${status}, unpublished=${removed}`, async ({ page }) => {
+    const row = await authorFixture(page, false);
+    row.status = status;
+    await page.route(`**/api/v1/events/${id}/participations?*`, (route) => fulfillCase(route, 'listEventParticipationsSuccess', { responseBody: { items: [row], nextCursor: null } }));
+    if (removed) await page.route(`**/api/v1/events/${id}`, (route) => fulfillCase(route, 'unpublishedForAuthor'));
+    await page.goto(`${path}/manage?status=ALL`);
+    const participant = page.getByRole('article').filter({ has: page.getByRole('link', { name: 'Алексей', exact: true }) });
+    await expect(participant).toContainText(status === 'CONFIRMED' ? 'Участие подтверждено' : status === 'PENDING' ? 'Заявка отправлена' : 'Заявка отклонена');
+    await expect(participant).not.toContainText('Ты участвуешь');
+    if (removed) await expect(page.getByText('Встреча снята с публикации. Записи сохранены, новые решения недоступны.', { exact: true })).toBeVisible();
+  });
+}

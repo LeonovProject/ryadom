@@ -1,0 +1,7 @@
+PASS QA independent before: registration/preset/keyboard, actual S1-S6/A1-A6, both organization/participation decisions, long discussion/scroll anchor, direct unavailable actions, retained roster and four widths
+PASS QA independent persisted S1-S6, org approval, decisions, hidden text and removed publication
+PASS P3 UI: activity approval/rename, both reports, dismiss/hide/restore, closed repeat, unpublish, block/unblock and two revoked sessions
+PASS P3 moderation survives down/up; actual reset form, one POST, all sessions revoked, receipt recovered after login and fresh seed IDs
+PASS QA independent after: registration/preset/keyboard, actual S1-S6/A1-A6, both organization/participation decisions, long discussion/scroll anchor, direct unavailable actions, retained roster and four widths
+PASS P3 persisted receipt after second down/up, old event absent, UI recovery without reset replay
+PASS QA-01: independent real S1-S6 before/after reset, extended moderation and same-volume persistence

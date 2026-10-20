@@ -1,0 +1,852 @@
+ Container ryadom-qa01-go-405dff4f-db-1 Healthy
+ Container ryadom-qa01-go-405dff4f-go-check-run-2756f21b2bef Creating
+ Container ryadom-qa01-go-405dff4f-go-check-run-2756f21b2bef Created
+=== RUN   TestProcessLifecycle
+--- PASS: TestProcessLifecycle (1.49s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/cmd/api	2.536s
+=== RUN   TestMigrationLifecycle
+2026/10/20 13:31:44 ERROR request failed requestId=4SV6ESYRZ6R4WXJYGE6QOQZGLF code=SERVICE_UNAVAILABLE
+2026/10/20 13:31:46 ERROR request failed requestId=KWTCER3DEMGTZ6UT3FHM5GGKD7 code=SERVICE_UNAVAILABLE
+--- PASS: TestMigrationLifecycle (2.90s)
+=== RUN   TestMigrationAtomicFailure
+--- PASS: TestMigrationAtomicFailure (0.93s)
+=== RUN   TestConstraints
+=== RUN   TestConstraints/account_role
+=== RUN   TestConstraints/account_status_independent
+=== RUN   TestConstraints/account_revision
+=== RUN   TestConstraints/account_blank_name
+=== RUN   TestConstraints/email_lowercase
+=== RUN   TestConstraints/email_spaces
+=== RUN   TestConstraints/email_ASCII
+=== RUN   TestConstraints/email_separator
+=== RUN   TestConstraints/email_unique
+=== RUN   TestConstraints/display_names_not_unique
+=== RUN   TestConstraints/password_not_plaintext
+=== RUN   TestConstraints/block_requires_decision
+=== RUN   TestConstraints/active_clears_block_decision
+=== RUN   TestConstraints/admin_protected
+=== RUN   TestConstraints/block_reviewer_FK
+=== RUN   TestConstraints/user_block
+=== RUN   TestConstraints/avatar_preset_cannot_pending
+=== RUN   TestConstraints/avatar_preset_no_SVG
+=== RUN   TestConstraints/avatar_preset_no_moderation
+=== RUN   TestConstraints/avatar_preset_ID_format
+=== RUN   TestConstraints/avatar_preset_positive_revision
+=== RUN   TestConstraints/removed_manifest_ID_retained
+=== RUN   TestConstraints/avatar_NONE_clears_preset
+=== RUN   TestConstraints/avatar_reset_keeps_revision
+=== RUN   TestConstraints/avatar_negative_revision
+=== RUN   TestConstraints/avatar_CUSTOM_needs_SVG
+=== RUN   TestConstraints/avatar_pending_custom
+=== RUN   TestConstraints/avatar_custom_no_preset
+=== RUN   TestConstraints/avatar_custom_approved_needs_reviewer
+=== RUN   TestConstraints/avatar_custom_pending_no_decision
+=== RUN   TestConstraints/avatar_custom_cannot_EMPTY
+=== RUN   TestConstraints/avatar_hidden_custom
+=== RUN   TestConstraints/session_SHA256_length
+=== RUN   TestConstraints/session_SHA256_canonical_hex
+=== RUN   TestConstraints/session_24_hour_lifetime
+=== RUN   TestConstraints/session_integer_NumericDate
+=== RUN   TestConstraints/session_token_unique
+=== RUN   TestConstraints/organization_refusal_needs_reason
+=== RUN   TestConstraints/organization_refusal_blank_reason
+=== RUN   TestConstraints/organization_refusal_with_reason
+=== RUN   TestConstraints/organization_approval_no_refusal
+=== RUN   TestConstraints/organization_pending_no_decision
+=== RUN   TestConstraints/one_application_per_organization
+=== RUN   TestConstraints/seed_must_be_approved
+=== RUN   TestConstraints/seed_has_no_creator
+=== RUN   TestConstraints/custom_activity_needs_creator
+=== RUN   TestConstraints/custom_activity_approval_needs_review
+=== RUN   TestConstraints/activity_refusal_needs_reason
+=== RUN   TestConstraints/rejected_activity_remains_usable
+=== RUN   TestConstraints/activity_unique_across_states
+=== RUN   TestConstraints/event_organizer_exactly_one
+=== RUN   TestConstraints/event_organizer_required
+=== RUN   TestConstraints/personal_author_matches_creator
+=== RUN   TestConstraints/event_publication_independent
+=== RUN   TestConstraints/event_join_mode
+=== RUN   TestConstraints/event_unpublication_needs_reason
+=== RUN   TestConstraints/event_unpublication_blank_reason
+=== RUN   TestConstraints/event_unpublished_with_reason
+=== RUN   TestConstraints/event_published_no_unpublication
+=== RUN   TestConstraints/event_conditions_may_be_empty
+=== RUN   TestConstraints/event_report_revision
+=== RUN   TestConstraints/event_finite_start
+=== RUN   TestConstraints/event_activity_FK
+=== RUN   TestConstraints/participation_unique
+=== RUN   TestConstraints/participation_rejection_needs_decision
+=== RUN   TestConstraints/participation_pending_no_decision
+=== RUN   TestConstraints/participation_decision_pair
+=== RUN   TestConstraints/participation_accepted_application
+=== RUN   TestConstraints/participation_rejected_application
+=== RUN   TestConstraints/message_hidden_needs_decision
+=== RUN   TestConstraints/message_hiding_pair
+=== RUN   TestConstraints/message_restore_requires_hide_history
+=== RUN   TestConstraints/visible_hidden_history_needs_restore
+=== RUN   TestConstraints/message_hidden
+=== RUN   TestConstraints/message_restored_with_history
+=== RUN   TestConstraints/message_hidden_again_keeps_restore_history
+=== RUN   TestConstraints/message_revision_nonnegative
+=== RUN   TestConstraints/message_reports_revision_nonnegative
+=== RUN   TestConstraints/message_nonblank
+=== RUN   TestConstraints/report_exactly_one_target
+=== RUN   TestConstraints/report_target_required
+=== RUN   TestConstraints/report_target_type_matches_FK
+=== RUN   TestConstraints/report_close_needs_reviewer
+=== RUN   TestConstraints/report_OPEN_no_review
+=== RUN   TestConstraints/report_closed
+=== RUN   TestConstraints/report_real_message_FK
+=== RUN   TestConstraints/report_one_per_message_lifetime
+=== RUN   TestConstraints/closed_event_report_still_unique
+=== RUN   TestConstraints/no_cascade_event_deletion
+=== RUN   TestConstraints/no_cascade_account_deletion
+=== RUN   TestConstraints/singleton_ID_only_one
+=== RUN   TestConstraints/singleton_unique
+=== RUN   TestConstraints/receipt_complete
+=== RUN   TestConstraints/receipt_generation_changed
+=== RUN   TestConstraints/receipt_atomic_with_new_generation
+=== RUN   TestConstraints/cover_ASCII_exact_128KiB
+=== RUN   TestConstraints/avatar_ASCII_exact_128KiB
+=== RUN   TestConstraints/cover_ASCII_exceeds_128KiB
+=== RUN   TestConstraints/avatar_ASCII_exceeds_128KiB
+=== RUN   TestConstraints/cover_UTF8_exact_128KiB
+=== RUN   TestConstraints/avatar_UTF8_exact_128KiB
+=== RUN   TestConstraints/cover_UTF8_exceeds_128KiB
+=== RUN   TestConstraints/avatar_UTF8_exceeds_128KiB
+--- PASS: TestConstraints (0.41s)
+    --- PASS: TestConstraints/account_role (0.00s)
+    --- PASS: TestConstraints/account_status_independent (0.00s)
+    --- PASS: TestConstraints/account_revision (0.00s)
+    --- PASS: TestConstraints/account_blank_name (0.00s)
+    --- PASS: TestConstraints/email_lowercase (0.00s)
+    --- PASS: TestConstraints/email_spaces (0.00s)
+    --- PASS: TestConstraints/email_ASCII (0.00s)
+    --- PASS: TestConstraints/email_separator (0.00s)
+    --- PASS: TestConstraints/email_unique (0.00s)
+    --- PASS: TestConstraints/display_names_not_unique (0.00s)
+    --- PASS: TestConstraints/password_not_plaintext (0.00s)
+    --- PASS: TestConstraints/block_requires_decision (0.00s)
+    --- PASS: TestConstraints/active_clears_block_decision (0.00s)
+    --- PASS: TestConstraints/admin_protected (0.00s)
+    --- PASS: TestConstraints/block_reviewer_FK (0.00s)
+    --- PASS: TestConstraints/user_block (0.00s)
+    --- PASS: TestConstraints/avatar_preset_cannot_pending (0.00s)
+    --- PASS: TestConstraints/avatar_preset_no_SVG (0.00s)
+    --- PASS: TestConstraints/avatar_preset_no_moderation (0.00s)
+    --- PASS: TestConstraints/avatar_preset_ID_format (0.00s)
+    --- PASS: TestConstraints/avatar_preset_positive_revision (0.00s)
+    --- PASS: TestConstraints/removed_manifest_ID_retained (0.00s)
+    --- PASS: TestConstraints/avatar_NONE_clears_preset (0.00s)
+    --- PASS: TestConstraints/avatar_reset_keeps_revision (0.00s)
+    --- PASS: TestConstraints/avatar_negative_revision (0.00s)
+    --- PASS: TestConstraints/avatar_CUSTOM_needs_SVG (0.00s)
+    --- PASS: TestConstraints/avatar_pending_custom (0.00s)
+    --- PASS: TestConstraints/avatar_custom_no_preset (0.00s)
+    --- PASS: TestConstraints/avatar_custom_approved_needs_reviewer (0.00s)
+    --- PASS: TestConstraints/avatar_custom_pending_no_decision (0.00s)
+    --- PASS: TestConstraints/avatar_custom_cannot_EMPTY (0.00s)
+    --- PASS: TestConstraints/avatar_hidden_custom (0.00s)
+    --- PASS: TestConstraints/session_SHA256_length (0.00s)
+    --- PASS: TestConstraints/session_SHA256_canonical_hex (0.00s)
+    --- PASS: TestConstraints/session_24_hour_lifetime (0.00s)
+    --- PASS: TestConstraints/session_integer_NumericDate (0.00s)
+    --- PASS: TestConstraints/session_token_unique (0.00s)
+    --- PASS: TestConstraints/organization_refusal_needs_reason (0.00s)
+    --- PASS: TestConstraints/organization_refusal_blank_reason (0.00s)
+    --- PASS: TestConstraints/organization_refusal_with_reason (0.00s)
+    --- PASS: TestConstraints/organization_approval_no_refusal (0.00s)
+    --- PASS: TestConstraints/organization_pending_no_decision (0.00s)
+    --- PASS: TestConstraints/one_application_per_organization (0.00s)
+    --- PASS: TestConstraints/seed_must_be_approved (0.00s)
+    --- PASS: TestConstraints/seed_has_no_creator (0.00s)
+    --- PASS: TestConstraints/custom_activity_needs_creator (0.00s)
+    --- PASS: TestConstraints/custom_activity_approval_needs_review (0.00s)
+    --- PASS: TestConstraints/activity_refusal_needs_reason (0.00s)
+    --- PASS: TestConstraints/rejected_activity_remains_usable (0.00s)
+    --- PASS: TestConstraints/activity_unique_across_states (0.00s)
+    --- PASS: TestConstraints/event_organizer_exactly_one (0.00s)
+    --- PASS: TestConstraints/event_organizer_required (0.00s)
+    --- PASS: TestConstraints/personal_author_matches_creator (0.00s)
+    --- PASS: TestConstraints/event_publication_independent (0.00s)
+    --- PASS: TestConstraints/event_join_mode (0.00s)
+    --- PASS: TestConstraints/event_unpublication_needs_reason (0.00s)
+    --- PASS: TestConstraints/event_unpublication_blank_reason (0.00s)
+    --- PASS: TestConstraints/event_unpublished_with_reason (0.00s)
+    --- PASS: TestConstraints/event_published_no_unpublication (0.00s)
+    --- PASS: TestConstraints/event_conditions_may_be_empty (0.00s)
+    --- PASS: TestConstraints/event_report_revision (0.00s)
+    --- PASS: TestConstraints/event_finite_start (0.00s)
+    --- PASS: TestConstraints/event_activity_FK (0.00s)
+    --- PASS: TestConstraints/participation_unique (0.00s)
+    --- PASS: TestConstraints/participation_rejection_needs_decision (0.00s)
+    --- PASS: TestConstraints/participation_pending_no_decision (0.00s)
+    --- PASS: TestConstraints/participation_decision_pair (0.00s)
+    --- PASS: TestConstraints/participation_accepted_application (0.00s)
+    --- PASS: TestConstraints/participation_rejected_application (0.00s)
+    --- PASS: TestConstraints/message_hidden_needs_decision (0.00s)
+    --- PASS: TestConstraints/message_hiding_pair (0.00s)
+    --- PASS: TestConstraints/message_restore_requires_hide_history (0.00s)
+    --- PASS: TestConstraints/visible_hidden_history_needs_restore (0.00s)
+    --- PASS: TestConstraints/message_hidden (0.00s)
+    --- PASS: TestConstraints/message_restored_with_history (0.00s)
+    --- PASS: TestConstraints/message_hidden_again_keeps_restore_history (0.00s)
+    --- PASS: TestConstraints/message_revision_nonnegative (0.00s)
+    --- PASS: TestConstraints/message_reports_revision_nonnegative (0.00s)
+    --- PASS: TestConstraints/message_nonblank (0.00s)
+    --- PASS: TestConstraints/report_exactly_one_target (0.00s)
+    --- PASS: TestConstraints/report_target_required (0.00s)
+    --- PASS: TestConstraints/report_target_type_matches_FK (0.00s)
+    --- PASS: TestConstraints/report_close_needs_reviewer (0.00s)
+    --- PASS: TestConstraints/report_OPEN_no_review (0.00s)
+    --- PASS: TestConstraints/report_closed (0.00s)
+    --- PASS: TestConstraints/report_real_message_FK (0.00s)
+    --- PASS: TestConstraints/report_one_per_message_lifetime (0.00s)
+    --- PASS: TestConstraints/closed_event_report_still_unique (0.00s)
+    --- PASS: TestConstraints/no_cascade_event_deletion (0.00s)
+    --- PASS: TestConstraints/no_cascade_account_deletion (0.00s)
+    --- PASS: TestConstraints/singleton_ID_only_one (0.00s)
+    --- PASS: TestConstraints/singleton_unique (0.00s)
+    --- PASS: TestConstraints/receipt_complete (0.00s)
+    --- PASS: TestConstraints/receipt_generation_changed (0.00s)
+    --- PASS: TestConstraints/receipt_atomic_with_new_generation (0.00s)
+    --- PASS: TestConstraints/cover_ASCII_exact_128KiB (0.00s)
+    --- PASS: TestConstraints/avatar_ASCII_exact_128KiB (0.00s)
+    --- PASS: TestConstraints/cover_ASCII_exceeds_128KiB (0.00s)
+    --- PASS: TestConstraints/avatar_ASCII_exceeds_128KiB (0.00s)
+    --- PASS: TestConstraints/cover_UTF8_exact_128KiB (0.00s)
+    --- PASS: TestConstraints/avatar_UTF8_exact_128KiB (0.00s)
+    --- PASS: TestConstraints/cover_UTF8_exceeds_128KiB (0.00s)
+    --- PASS: TestConstraints/avatar_UTF8_exceeds_128KiB (0.00s)
+=== RUN   TestConcurrentParticipationUnique
+--- PASS: TestConcurrentParticipationUnique (0.35s)
+=== RUN   TestExplicitDeletionOrderPreservesDemoState
+--- PASS: TestExplicitDeletionOrderPreservesDemoState (0.79s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/db/migrations/tests	6.427s
+=== RUN   TestDatasetAccountsAndRelativeDates
+--- PASS: TestDatasetAccountsAndRelativeDates (1.49s)
+=== RUN   TestDatasetInvalidOptionsAndEmptyCatalog
+--- PASS: TestDatasetInvalidOptionsAndEmptyCatalog (0.52s)
+=== RUN   TestSeedDatasetAndSQLWindows
+--- PASS: TestSeedDatasetAndSQLWindows (0.91s)
+=== RUN   TestSeedRepeatPreservesUserChangesAndSession
+--- PASS: TestSeedRepeatPreservesUserChangesAndSession (0.82s)
+=== RUN   TestSeedRefusesForeignNonemptyDatabase
+--- PASS: TestSeedRefusesForeignNonemptyDatabase (0.36s)
+=== RUN   TestSeedFailureIsAtomic
+--- PASS: TestSeedFailureIsAtomic (1.31s)
+=== RUN   TestConcurrentSeedInitializers
+--- PASS: TestConcurrentSeedInitializers (0.72s)
+=== RUN   TestSeedReusesCallerTransaction
+--- PASS: TestSeedReusesCallerTransaction (1.70s)
+=== RUN   TestEmptyCataloguePreparedAccountsRemainUsable
+--- PASS: TestEmptyCataloguePreparedAccountsRemainUsable (0.89s)
+=== RUN   TestExplicitSeedCommand
+--- PASS: TestExplicitSeedCommand (3.74s)
+=== RUN   TestSeedWaitsForSharedResetBarrier
+--- PASS: TestSeedWaitsForSharedResetBarrier (0.77s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/db/seed	14.280s
+=== RUN   TestCLIManifestSelection
+=== RUN   TestCLIManifestSelection/ready
+=== RUN   TestCLIManifestSelection/empty
+=== RUN   TestCLIManifestSelection/wrong_image
+=== RUN   TestCLIManifestSelection/duplicate_ID
+=== RUN   TestCLIManifestSelection/malformed
+=== RUN   TestCLIManifestSelection/two_objects
+--- PASS: TestCLIManifestSelection (0.00s)
+    --- PASS: TestCLIManifestSelection/ready (0.00s)
+    --- PASS: TestCLIManifestSelection/empty (0.00s)
+    --- PASS: TestCLIManifestSelection/wrong_image (0.00s)
+    --- PASS: TestCLIManifestSelection/duplicate_ID (0.00s)
+    --- PASS: TestCLIManifestSelection/malformed (0.00s)
+    --- PASS: TestCLIManifestSelection/two_objects (0.00s)
+=== RUN   TestCLIRejectsMissingConfiguration
+--- PASS: TestCLIRejectsMissingConfiguration (0.00s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/db/seed/cmd/seed	1.027s
+?   	github.com/LeonovProject/ryadom/apps/api/internal/db	[no test files]
+=== RUN   TestDatabaseCompatibility
+--- PASS: TestDatabaseCompatibility (0.03s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/foundation	1.052s
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts	[no test files]
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts/moderation	[no test files]
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes	[no test files]
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes/review	[no test files]
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/admin/demoreset	[no test files]
+=== RUN   TestRegisterLoginLogoutAndPrivacy
+--- PASS: TestRegisterLoginLogoutAndPrivacy (1.45s)
+=== RUN   TestDemoLoginAndEmptyPresetCatalogue
+--- PASS: TestDemoLoginAndEmptyPresetCatalogue (1.68s)
+=== RUN   TestRegistrationValidationAndPasswordBytes
+--- PASS: TestRegistrationValidationAndPasswordBytes (1.17s)
+=== RUN   TestConcurrentRegistrationAndAtomicCommitFailure
+--- PASS: TestConcurrentRegistrationAndAtomicCommitFailure (1.08s)
+=== RUN   TestLimitsAndCookieForgery
+--- PASS: TestLimitsAndCookieForgery (1.50s)
+=== RUN   TestBlockGuardAndOwnerPolicies
+--- PASS: TestBlockGuardAndOwnerPolicies (1.53s)
+=== RUN   TestAuthorizationRechecksAfterWaiting
+--- PASS: TestAuthorizationRechecksAfterWaiting (1.41s)
+=== RUN   TestExpiryAndResetBarrierAfterWaiting
+--- PASS: TestExpiryAndResetBarrierAfterWaiting (0.85s)
+=== RUN   TestSessionDatabaseIsAuthoritative
+--- PASS: TestSessionDatabaseIsAuthoritative (0.85s)
+=== RUN   TestRegisterLimitAndResetSerialization
+--- PASS: TestRegisterLimitAndResetSerialization (0.83s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/modules/auth	13.428s
+=== RUN   TestDiscussionAndAtomicModerationS5A3
+--- PASS: TestDiscussionAndAtomicModerationS5A3 (8.26s)
+=== RUN   TestMessagePaginationDirectionsAndScopes
+--- PASS: TestMessagePaginationDirectionsAndScopes (8.98s)
+=== RUN   TestCreateWaitsForUnpublication
+--- PASS: TestCreateWaitsForUnpublication (2.01s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/modules/discussion	20.315s
+=== RUN   TestScopeAndSignedCursor
+--- PASS: TestScopeAndSignedCursor (0.00s)
+=== RUN   TestFilterRangesAndCapabilities
+--- PASS: TestFilterRangesAndCapabilities (0.00s)
+=== RUN   TestSubMicrosecondAbsoluteBounds
+--- PASS: TestSubMicrosecondAbsoluteBounds (0.00s)
+=== RUN   TestAccountModerationSessionsAndPreservation
+--- PASS: TestAccountModerationSessionsAndPreservation (4.01s)
+=== RUN   TestAccountModerationFiltersAndCursor
+--- PASS: TestAccountModerationFiltersAndCursor (1.87s)
+=== RUN   TestAccountModerationCommitAndWaits
+--- PASS: TestAccountModerationCommitAndWaits (1.62s)
+=== RUN   TestAdminEventUnpublicationS6
+--- PASS: TestAdminEventUnpublicationS6 (4.93s)
+=== RUN   TestAdminEventFiltersAndCursor
+--- PASS: TestAdminEventFiltersAndCursor (2.87s)
+=== RUN   TestUnpublishAtomicityAndConcurrentJoin
+--- PASS: TestUnpublishAtomicityAndConcurrentJoin (1.27s)
+=== RUN   TestCreateAtomicPersonalAndSharedActivity
+--- PASS: TestCreateAtomicPersonalAndSharedActivity (3.48s)
+=== RUN   TestCreateValidationOrganizationRightsAndRollback
+--- PASS: TestCreateValidationOrganizationRightsAndRollback (1.42s)
+=== RUN   TestConcurrentActivityAndTimeAfterWait
+--- PASS: TestConcurrentActivityAndTimeAfterWait (1.72s)
+=== RUN   TestP3ActivityReview
+--- PASS: TestP3ActivityReview (2.08s)
+=== RUN   TestP3ReportsAndRestore
+--- PASS: TestP3ReportsAndRestore (2.02s)
+=== RUN   TestP3ResetDisabled
+--- PASS: TestP3ResetDisabled (0.52s)
+=== RUN   TestP3DemoReset
+--- PASS: TestP3DemoReset (7.62s)
+=== RUN   TestCatalogVisibilityAndActivityTypes
+--- PASS: TestCatalogVisibilityAndActivityTypes (1.53s)
+=== RUN   TestCatalogFiltersBeforePagination
+--- PASS: TestCatalogFiltersBeforePagination (0.95s)
+=== RUN   TestLocalDateZonesAndAbsoluteBounds
+--- PASS: TestLocalDateZonesAndAbsoluteBounds (0.91s)
+=== RUN   TestCursorsScopeOrderingAndConcurrentChanges
+--- PASS: TestCursorsScopeOrderingAndConcurrentChanges (1.04s)
+=== RUN   TestPublishedDetailsCapabilitiesAndPrivateReview
+--- PASS: TestPublishedDetailsCapabilitiesAndPrivateReview (2.52s)
+=== RUN   TestUnpublishedPrivacyAndOwnedLists
+--- PASS: TestUnpublishedPrivacyAndOwnedLists (6.24s)
+=== RUN   TestReadBarrierAndFreshCapabilitiesAfterWaiting
+--- PASS: TestReadBarrierAndFreshCapabilitiesAfterWaiting (1.00s)
+=== RUN   TestEveryCatalogFilterBindsCursor
+--- PASS: TestEveryCatalogFilterBindsCursor (0.87s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/modules/events	51.593s
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/events	[no test files]
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/messages	[no test files]
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/organizations	[no test files]
+=== RUN   TestOrganizationDecisionsAndPublicationS2
+--- PASS: TestOrganizationDecisionsAndPublicationS2 (3.51s)
+=== RUN   TestAdminOrganizationSearchScopesAndPagination
+--- PASS: TestAdminOrganizationSearchScopesAndPagination (4.31s)
+=== RUN   TestConcurrentDecisionsWaitAndRollback
+--- PASS: TestConcurrentDecisionsWaitAndRollback (3.34s)
+=== RUN   TestOrganizationCreationPrivacyAndSubmission
+--- PASS: TestOrganizationCreationPrivacyAndSubmission (2.63s)
+=== RUN   TestOrganizationListPaginationAndValidation
+--- PASS: TestOrganizationListPaginationAndValidation (3.54s)
+=== RUN   TestOrganizationConcurrentSubmitAndCommitFailure
+--- PASS: TestOrganizationConcurrentSubmitAndCommitFailure (1.95s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/modules/organizations	20.383s
+=== RUN   TestOpenApprovalAuthorAndPrivacyS3S4
+--- PASS: TestOpenApprovalAuthorAndPrivacyS3S4 (6.00s)
+=== RUN   TestBoundariesBothModesAndUnpublishedPriority
+--- PASS: TestBoundariesBothModesAndUnpublishedPriority (3.18s)
+=== RUN   TestConcurrentJoinsDecisionsWaitAndCommit
+--- PASS: TestConcurrentJoinsDecisionsWaitAndCommit (2.14s)
+=== RUN   TestWindowsSortingBeforeLimitAndReferenceCursor
+--- PASS: TestWindowsSortingBeforeLimitAndReferenceCursor (2.55s)
+=== RUN   TestPaginationScopesAndCurrentOrganizationOwner
+--- PASS: TestPaginationScopesAndCurrentOrganizationOwner (1.70s)
+=== RUN   TestJoinWaitRechecksStateTimeAndSession
+=== RUN   TestJoinWaitRechecksStateTimeAndSession/start
+=== RUN   TestJoinWaitRechecksStateTimeAndSession/unpublish
+=== RUN   TestJoinWaitRechecksStateTimeAndSession/block
+=== RUN   TestJoinWaitRechecksStateTimeAndSession/reset
+--- PASS: TestJoinWaitRechecksStateTimeAndSession (4.48s)
+    --- PASS: TestJoinWaitRechecksStateTimeAndSession/start (1.16s)
+    --- PASS: TestJoinWaitRechecksStateTimeAndSession/unpublish (1.12s)
+    --- PASS: TestJoinWaitRechecksStateTimeAndSession/block (1.13s)
+    --- PASS: TestJoinWaitRechecksStateTimeAndSession/reset (1.06s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/modules/participation	21.151s
+?   	github.com/LeonovProject/ryadom/apps/api/internal/modules/reports	[no test files]
+=== RUN   TestCanonicalEmail
+--- PASS: TestCanonicalEmail (0.00s)
+=== RUN   TestLoginLimitsAndWindowEdges
+--- PASS: TestLoginLimitsAndWindowEdges (0.00s)
+=== RUN   TestDeniedAttemptsCountTowardIPAndKeepMaximumRetry
+--- PASS: TestDeniedAttemptsCountTowardIPAndKeepMaximumRetry (0.00s)
+=== RUN   TestIPLimitAcrossEmails
+--- PASS: TestIPLimitAcrossEmails (0.00s)
+=== RUN   TestRegistrationLimit
+--- PASS: TestRegistrationLimit (0.00s)
+=== RUN   TestCapacityDoesNotEvictLiveKeys
+--- PASS: TestCapacityDoesNotEvictLiveKeys (0.10s)
+=== RUN   TestCapacityAllocationIsAtomicAcrossLoginKeys
+--- PASS: TestCapacityAllocationIsAtomicAcrossLoginKeys (0.00s)
+=== RUN   TestConcurrentAttempts
+--- PASS: TestConcurrentAttempts (0.01s)
+=== RUN   TestIPCanonicalizationAndInvalidInputs
+--- PASS: TestIPCanonicalizationAndInvalidInputs (0.00s)
+=== RUN   TestUntrustedPeerCannotSetClientIP
+--- PASS: TestUntrustedPeerCannotSetClientIP (0.00s)
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/trusted_v4
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/trusted_v6
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/mapped_IP
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/missing_header_uses_peer
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/two_header_lines
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/chain
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/IP_plus_port
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/blank
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/host_name
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/v6_zone
+=== RUN   TestTrustedProxyMustSupplyOneUnambiguousIP/invalid_peer
+--- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/trusted_v4 (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/trusted_v6 (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/mapped_IP (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/missing_header_uses_peer (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/two_header_lines (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/chain (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/IP_plus_port (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/blank (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/host_name (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/v6_zone (0.00s)
+    --- PASS: TestTrustedProxyMustSupplyOneUnambiguousIP/invalid_peer (0.00s)
+=== RUN   TestPasswordNativeVector
+--- PASS: TestPasswordNativeVector (0.44s)
+=== RUN   TestPasswordsPreserveUnicodeAndUseFreshSalts
+--- PASS: TestPasswordsPreserveUnicodeAndUseFreshSalts (1.34s)
+=== RUN   TestPasswordLengthAndMalformedPHC
+--- PASS: TestPasswordLengthAndMalformedPHC (0.08s)
+=== RUN   TestUnknownEmailPaddingNeverAuthenticates
+--- PASS: TestUnknownEmailPaddingNeverAuthenticates (0.25s)
+=== RUN   TestIssueAndBoundaryValidation
+--- PASS: TestIssueAndBoundaryValidation (0.00s)
+=== RUN   TestIssuedAtSkewDoesNotExtendExpiry
+--- PASS: TestIssuedAtSkewDoesNotExtendExpiry (0.00s)
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/missing_issuer
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/wrong_issuer
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/missing_audience
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/wrong_audience
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/missing_subject
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/non_UUID_subject
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/nil_subject
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/numeric_subject
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/short_UUID_subject
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/missing_jti
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/invalid_jti
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/nil_jti
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/missing_iat
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/null_iat
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/float_iat
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/decimal_integer_iat
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/string_iat
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/negative_iat
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/future_iat
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/overflow_iat
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/missing_exp
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/null_exp
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/float_exp
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/string_exp
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/wrong_lifetime
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/past_exp
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/future_nbf
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/HS384
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/HS512
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/none
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/wrong_typ
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/nonstring_typ
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/wrong_key
+=== RUN   TestJWTRejectsInvalidHeadersAndClaims/unknown_critical_header
+--- PASS: TestJWTRejectsInvalidHeadersAndClaims (0.01s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/missing_issuer (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/wrong_issuer (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/missing_audience (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/wrong_audience (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/missing_subject (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/non_UUID_subject (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/nil_subject (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/numeric_subject (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/short_UUID_subject (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/missing_jti (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/invalid_jti (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/nil_jti (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/missing_iat (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/null_iat (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/float_iat (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/decimal_integer_iat (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/string_iat (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/negative_iat (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/future_iat (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/overflow_iat (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/missing_exp (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/null_exp (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/float_exp (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/string_exp (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/wrong_lifetime (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/past_exp (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/future_nbf (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/HS384 (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/HS512 (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/none (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/wrong_typ (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/nonstring_typ (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/wrong_key (0.00s)
+    --- PASS: TestJWTRejectsInvalidHeadersAndClaims/unknown_critical_header (0.00s)
+=== RUN   TestJWTRejectsAmbiguousOrMalformedEncoding
+--- PASS: TestJWTRejectsAmbiguousOrMalformedEncoding (0.00s)
+=== RUN   TestTokenConfigurationAndDigest
+--- PASS: TestTokenConfigurationAndDigest (0.00s)
+=== RUN   FuzzPasswordHashParser
+=== RUN   FuzzPasswordHashParser/seed#0
+=== RUN   FuzzPasswordHashParser/seed#1
+--- PASS: FuzzPasswordHashParser (0.00s)
+    --- PASS: FuzzPasswordHashParser/seed#0 (0.00s)
+    --- PASS: FuzzPasswordHashParser/seed#1 (0.00s)
+=== RUN   FuzzJWTValidation
+=== RUN   FuzzJWTValidation/seed#0
+=== RUN   FuzzJWTValidation/seed#1
+--- PASS: FuzzJWTValidation (0.00s)
+    --- PASS: FuzzJWTValidation/seed#0 (0.00s)
+    --- PASS: FuzzJWTValidation/seed#1 (0.00s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/platform/authn	3.309s
+=== RUN   TestManifest
+--- PASS: TestManifest (0.03s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/platform/avatarpresets	1.131s
+=== RUN   TestLoad
+=== RUN   TestLoad/DEMO_MODE/invalid
+=== RUN   TestLoad/DATABASE_URL/
+=== RUN   TestLoad/DATABASE_URL/http://wrong/database
+=== RUN   TestLoad/DATABASE_SCHEMA_VERSION/0
+=== RUN   TestLoad/API_ADDR/localhost
+=== RUN   TestLoad/WEB_ORIGIN/null
+=== RUN   TestLoad/WEB_ORIGIN/https://ryadom.example/
+=== RUN   TestLoad/WEB_ORIGIN/https://ryadom.example?
+=== RUN   TestLoad/WEB_ORIGIN/https://user@ryadom.example
+=== RUN   TestLoad/AUTH_JWT_SECRET/bad-secret
+=== RUN   TestLoad/AUTH_JWT_SECRET/c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzcw==
+=== RUN   TestLoad/COOKIE_SECURE/false
+=== RUN   TestLoad/WEB_ORIGIN/http://localhost:8080
+--- PASS: TestLoad (0.00s)
+    --- PASS: TestLoad/DEMO_MODE/invalid (0.00s)
+    --- PASS: TestLoad/DATABASE_URL/ (0.00s)
+    --- PASS: TestLoad/DATABASE_URL/http://wrong/database (0.00s)
+    --- PASS: TestLoad/DATABASE_SCHEMA_VERSION/0 (0.00s)
+    --- PASS: TestLoad/API_ADDR/localhost (0.00s)
+    --- PASS: TestLoad/WEB_ORIGIN/null (0.00s)
+    --- PASS: TestLoad/WEB_ORIGIN/https://ryadom.example/ (0.00s)
+    --- PASS: TestLoad/WEB_ORIGIN/https://ryadom.example? (0.00s)
+    --- PASS: TestLoad/WEB_ORIGIN/https://user@ryadom.example (0.00s)
+    --- PASS: TestLoad/AUTH_JWT_SECRET/bad-secret (0.00s)
+    --- PASS: TestLoad/AUTH_JWT_SECRET/c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzcw== (0.00s)
+    --- PASS: TestLoad/COOKIE_SECURE/false (0.00s)
+    --- PASS: TestLoad/WEB_ORIGIN/http://localhost:8080 (0.00s)
+=== RUN   TestProxyAndCatalogueSettings
+--- PASS: TestProxyAndCatalogueSettings (0.00s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/platform/config	1.040s
+=== RUN   TestReadinessRequiresSchema
+--- PASS: TestReadinessRequiresSchema (0.16s)
+=== RUN   TestTransactionRollbackAndDeferredCommitFailure
+--- PASS: TestTransactionRollbackAndDeferredCommitFailure (0.06s)
+=== RUN   TestBarrierWaitsAndAuthenticatesFreshState
+--- PASS: TestBarrierWaitsAndAuthenticatesFreshState (0.10s)
+=== RUN   TestOpenDoesNotRequireAvailableDatabase
+--- PASS: TestOpenDoesNotRequireAvailableDatabase (0.00s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/platform/database	1.386s
+?   	github.com/LeonovProject/ryadom/apps/api/internal/platform/fault	[no test files]
+=== RUN   TestSharedConformance
+=== RUN   TestSharedConformance/preparedAvatar
+=== RUN   TestSharedConformance/preparedCover
+=== RUN   TestSharedConformance/localGradient
+=== RUN   TestSharedConformance/simpleTransform
+=== RUN   TestSharedConformance/script
+=== RUN   TestSharedConformance/handler
+=== RUN   TestSharedConformance/foreignObject
+=== RUN   TestSharedConformance/externalImage
+=== RUN   TestSharedConformance/dataImage
+=== RUN   TestSharedConformance/externalPaint
+=== RUN   TestSharedConformance/missingGradient
+=== RUN   TestSharedConformance/duplicateGradient
+=== RUN   TestSharedConformance/gradientInheritance
+=== RUN   TestSharedConformance/css
+=== RUN   TestSharedConformance/inlineCss
+=== RUN   TestSharedConformance/animation
+=== RUN   TestSharedConformance/text
+=== RUN   TestSharedConformance/notFinite
+=== RUN   TestSharedConformance/coordinateTooLarge
+=== RUN   TestSharedConformance/wrongArcFlag
+=== RUN   TestSharedConformance/pathMissingArguments
+=== RUN   TestSharedConformance/strayText
+=== RUN   TestSharedConformance/unknownAttribute
+=== RUN   TestSharedConformance/doctype
+=== RUN   TestSharedConformance/processingInstruction
+=== RUN   TestSharedConformance/wrongNamespace
+=== RUN   TestSharedConformance/sizeAtLimit
+=== RUN   TestSharedConformance/sizeOverLimit
+=== RUN   TestSharedConformance/multibyteOverLimit
+=== RUN   TestSharedConformance/depthAtLimit
+=== RUN   TestSharedConformance/depthOverLimit
+=== RUN   TestSharedConformance/elementsAtLimit
+=== RUN   TestSharedConformance/elementsOverLimit
+=== RUN   TestSharedConformance/segmentsAtLimit
+=== RUN   TestSharedConformance/segmentsOverLimit
+--- PASS: TestSharedConformance (0.11s)
+    --- PASS: TestSharedConformance/preparedAvatar (0.00s)
+    --- PASS: TestSharedConformance/preparedCover (0.00s)
+    --- PASS: TestSharedConformance/localGradient (0.00s)
+    --- PASS: TestSharedConformance/simpleTransform (0.00s)
+    --- PASS: TestSharedConformance/script (0.00s)
+    --- PASS: TestSharedConformance/handler (0.00s)
+    --- PASS: TestSharedConformance/foreignObject (0.00s)
+    --- PASS: TestSharedConformance/externalImage (0.00s)
+    --- PASS: TestSharedConformance/dataImage (0.00s)
+    --- PASS: TestSharedConformance/externalPaint (0.00s)
+    --- PASS: TestSharedConformance/missingGradient (0.00s)
+    --- PASS: TestSharedConformance/duplicateGradient (0.00s)
+    --- PASS: TestSharedConformance/gradientInheritance (0.00s)
+    --- PASS: TestSharedConformance/css (0.00s)
+    --- PASS: TestSharedConformance/inlineCss (0.00s)
+    --- PASS: TestSharedConformance/animation (0.00s)
+    --- PASS: TestSharedConformance/text (0.00s)
+    --- PASS: TestSharedConformance/notFinite (0.00s)
+    --- PASS: TestSharedConformance/coordinateTooLarge (0.00s)
+    --- PASS: TestSharedConformance/wrongArcFlag (0.00s)
+    --- PASS: TestSharedConformance/pathMissingArguments (0.00s)
+    --- PASS: TestSharedConformance/strayText (0.00s)
+    --- PASS: TestSharedConformance/unknownAttribute (0.00s)
+    --- PASS: TestSharedConformance/doctype (0.00s)
+    --- PASS: TestSharedConformance/processingInstruction (0.00s)
+    --- PASS: TestSharedConformance/wrongNamespace (0.00s)
+    --- PASS: TestSharedConformance/sizeAtLimit (0.05s)
+    --- PASS: TestSharedConformance/sizeOverLimit (0.00s)
+    --- PASS: TestSharedConformance/multibyteOverLimit (0.00s)
+    --- PASS: TestSharedConformance/depthAtLimit (0.00s)
+    --- PASS: TestSharedConformance/depthOverLimit (0.00s)
+    --- PASS: TestSharedConformance/elementsAtLimit (0.01s)
+    --- PASS: TestSharedConformance/elementsOverLimit (0.00s)
+    --- PASS: TestSharedConformance/segmentsAtLimit (0.01s)
+    --- PASS: TestSharedConformance/segmentsOverLimit (0.01s)
+=== RUN   TestSharedPolicyParity
+--- PASS: TestSharedPolicyParity (0.00s)
+=== RUN   TestXMLBoundaries
+=== RUN   TestXMLBoundaries/0
+=== RUN   TestXMLBoundaries/1
+=== RUN   TestXMLBoundaries/2
+=== RUN   TestXMLBoundaries/3
+=== RUN   TestXMLBoundaries/4
+=== RUN   TestXMLBoundaries/5
+=== RUN   TestXMLBoundaries/6
+=== RUN   TestXMLBoundaries/7
+=== RUN   TestXMLBoundaries/8
+=== RUN   TestXMLBoundaries/9
+=== RUN   TestXMLBoundaries/10
+=== RUN   TestXMLBoundaries/11
+=== RUN   TestXMLBoundaries/12
+=== RUN   TestXMLBoundaries/13
+=== RUN   TestXMLBoundaries/14
+=== RUN   TestXMLBoundaries/15
+=== RUN   TestXMLBoundaries/16
+=== RUN   TestXMLBoundaries/17
+=== RUN   TestXMLBoundaries/18
+=== RUN   TestXMLBoundaries/19
+=== RUN   TestXMLBoundaries/20
+=== RUN   TestXMLBoundaries/21
+=== RUN   TestXMLBoundaries/22
+=== RUN   TestXMLBoundaries/23
+=== RUN   TestXMLBoundaries/24
+=== RUN   TestXMLBoundaries/25
+=== RUN   TestXMLBoundaries/26
+=== RUN   TestXMLBoundaries/27
+=== RUN   TestXMLBoundaries/28
+=== RUN   TestXMLBoundaries/29
+--- PASS: TestXMLBoundaries (0.01s)
+    --- PASS: TestXMLBoundaries/0 (0.00s)
+    --- PASS: TestXMLBoundaries/1 (0.00s)
+    --- PASS: TestXMLBoundaries/2 (0.00s)
+    --- PASS: TestXMLBoundaries/3 (0.00s)
+    --- PASS: TestXMLBoundaries/4 (0.00s)
+    --- PASS: TestXMLBoundaries/5 (0.00s)
+    --- PASS: TestXMLBoundaries/6 (0.00s)
+    --- PASS: TestXMLBoundaries/7 (0.00s)
+    --- PASS: TestXMLBoundaries/8 (0.00s)
+    --- PASS: TestXMLBoundaries/9 (0.00s)
+    --- PASS: TestXMLBoundaries/10 (0.00s)
+    --- PASS: TestXMLBoundaries/11 (0.00s)
+    --- PASS: TestXMLBoundaries/12 (0.00s)
+    --- PASS: TestXMLBoundaries/13 (0.00s)
+    --- PASS: TestXMLBoundaries/14 (0.00s)
+    --- PASS: TestXMLBoundaries/15 (0.00s)
+    --- PASS: TestXMLBoundaries/16 (0.00s)
+    --- PASS: TestXMLBoundaries/17 (0.00s)
+    --- PASS: TestXMLBoundaries/18 (0.00s)
+    --- PASS: TestXMLBoundaries/19 (0.00s)
+    --- PASS: TestXMLBoundaries/20 (0.00s)
+    --- PASS: TestXMLBoundaries/21 (0.00s)
+    --- PASS: TestXMLBoundaries/22 (0.00s)
+    --- PASS: TestXMLBoundaries/23 (0.00s)
+    --- PASS: TestXMLBoundaries/24 (0.00s)
+    --- PASS: TestXMLBoundaries/25 (0.00s)
+    --- PASS: TestXMLBoundaries/26 (0.00s)
+    --- PASS: TestXMLBoundaries/27 (0.00s)
+    --- PASS: TestXMLBoundaries/28 (0.00s)
+    --- PASS: TestXMLBoundaries/29 (0.00s)
+=== RUN   TestAttributeGrammar
+--- PASS: TestAttributeGrammar (0.00s)
+=== RUN   TestPathGrammar
+--- PASS: TestPathGrammar (0.00s)
+=== RUN   TestTransformGrammar
+--- PASS: TestTransformGrammar (0.00s)
+=== RUN   TestComplexityBoundaries
+=== RUN   TestComplexityBoundaries/attributeBytes0
+=== RUN   TestComplexityBoundaries/attributeBytes1
+--- PASS: TestComplexityBoundaries (0.19s)
+    --- PASS: TestComplexityBoundaries/attributeBytes0 (0.02s)
+    --- PASS: TestComplexityBoundaries/attributeBytes1 (0.01s)
+=== RUN   TestNormalizedSizeBoundary
+--- PASS: TestNormalizedSizeBoundary (0.08s)
+=== RUN   TestCanonicalSerialization
+--- PASS: TestCanonicalSerialization (0.00s)
+=== RUN   TestRenderingSamples
+    svg_test.go:389: set RYADOM_SVG_RENDER_DIR to export rendering samples
+--- SKIP: TestRenderingSamples (0.00s)
+=== RUN   FuzzNormalize
+=== RUN   FuzzNormalize/seed#0
+=== RUN   FuzzNormalize/seed#1
+=== RUN   FuzzNormalize/seed#2
+=== RUN   FuzzNormalize/seed#3
+=== RUN   FuzzNormalize/seed#4
+=== RUN   FuzzNormalize/seed#5
+--- PASS: FuzzNormalize (0.00s)
+    --- PASS: FuzzNormalize/seed#0 (0.00s)
+    --- PASS: FuzzNormalize/seed#1 (0.00s)
+    --- PASS: FuzzNormalize/seed#2 (0.00s)
+    --- PASS: FuzzNormalize/seed#3 (0.00s)
+    --- PASS: FuzzNormalize/seed#4 (0.00s)
+    --- PASS: FuzzNormalize/seed#5 (0.00s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/platform/svg	1.472s
+=== RUN   TestRun
+--- PASS: TestRun (0.01s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/platform/svg/cmd/checksvg	1.091s
+=== RUN   TestAccessPoliciesAndOrder
+=== RUN   TestAccessPoliciesAndOrder/public_ignores_cookie
+=== RUN   TestAccessPoliciesAndOrder/optional_guest
+=== RUN   TestAccessPoliciesAndOrder/optional_account
+=== RUN   TestAccessPoliciesAndOrder/session_missing
+=== RUN   TestAccessPoliciesAndOrder/session
+=== RUN   TestAccessPoliciesAndOrder/event_owner
+=== RUN   TestAccessPoliciesAndOrder/organization_owner
+=== RUN   TestAccessPoliciesAndOrder/admin
+=== RUN   TestAccessPoliciesAndOrder/user_cannot_admin
+=== RUN   TestAccessPoliciesAndOrder/empty_cookie_is_presented
+--- PASS: TestAccessPoliciesAndOrder (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/public_ignores_cookie (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/optional_guest (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/optional_account (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/session_missing (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/session (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/event_owner (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/organization_owner (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/admin (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/user_cannot_admin (0.00s)
+    --- PASS: TestAccessPoliciesAndOrder/empty_cookie_is_presented (0.00s)
+=== RUN   TestFailureNeverCommitsOrRetries
+=== RUN   TestFailureNeverCommitsOrRetries/barrier
+=== RUN   TestFailureNeverCommitsOrRetries/guard
+=== RUN   TestFailureNeverCommitsOrRetries/handler
+=== RUN   TestFailureNeverCommitsOrRetries/commit
+--- PASS: TestFailureNeverCommitsOrRetries (0.00s)
+    --- PASS: TestFailureNeverCommitsOrRetries/barrier (0.00s)
+    --- PASS: TestFailureNeverCommitsOrRetries/guard (0.00s)
+    --- PASS: TestFailureNeverCommitsOrRetries/handler (0.00s)
+    --- PASS: TestFailureNeverCommitsOrRetries/commit (0.00s)
+=== RUN   TestExclusiveBarrier
+--- PASS: TestExclusiveBarrier (0.00s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/platform/transaction	1.048s
+=== RUN   TestHealthDoesNotUseBarrier
+--- PASS: TestHealthDoesNotUseBarrier (0.56s)
+=== RUN   TestContractValidationBeforeTransaction
+=== RUN   TestContractValidationBeforeTransaction/missing_origin
+=== RUN   TestContractValidationBeforeTransaction/foreign_origin
+=== RUN   TestContractValidationBeforeTransaction/null_origin
+=== RUN   TestContractValidationBeforeTransaction/wrong_media
+=== RUN   TestContractValidationBeforeTransaction/compression
+=== RUN   TestContractValidationBeforeTransaction/malformed_JSON
+=== RUN   TestContractValidationBeforeTransaction/two_JSON_objects
+=== RUN   TestContractValidationBeforeTransaction/missing_fields
+=== RUN   TestContractValidationBeforeTransaction/null_body
+=== RUN   TestContractValidationBeforeTransaction/unknown_property
+=== RUN   TestContractValidationBeforeTransaction/unknown_query
+=== RUN   TestContractValidationBeforeTransaction/too_large_known
+=== RUN   TestContractValidationBeforeTransaction/too_large_chunked
+--- PASS: TestContractValidationBeforeTransaction (0.52s)
+    --- PASS: TestContractValidationBeforeTransaction/missing_origin (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/foreign_origin (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/null_origin (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/wrong_media (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/compression (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/malformed_JSON (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/two_JSON_objects (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/missing_fields (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/null_body (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/unknown_property (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/unknown_query (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/too_large_known (0.00s)
+    --- PASS: TestContractValidationBeforeTransaction/too_large_chunked (0.00s)
+=== RUN   TestParametersAndMediaBodyLimit
+--- PASS: TestParametersAndMediaBodyLimit (0.66s)
+=== RUN   TestCommitFailureAndRecovery
+--- PASS: TestCommitFailureAndRecovery (0.52s)
+=== RUN   TestOptionalSessionAndCookieCleanup
+--- PASS: TestOptionalSessionAndCookieCleanup (0.50s)
+=== RUN   TestStaticCatalogSkipsBarrier
+--- PASS: TestStaticCatalogSkipsBarrier (0.51s)
+=== RUN   TestProtectedFieldsFollowAuthentication
+--- PASS: TestProtectedFieldsFollowAuthentication (0.50s)
+PASS
+ok  	github.com/LeonovProject/ryadom/apps/api/internal/transport/httpapi	4.821s
+?   	github.com/LeonovProject/ryadom/apps/api/internal/transport/openapi	[no test files]
+ Container ryadom-qa01-go-405dff4f-go-check-run-d66c673193a9 Creating
+ Container ryadom-qa01-go-405dff4f-go-check-run-d66c673193a9 Created
+ Container ryadom-qa01-go-405dff4f-db-1 Stopping
+ Container ryadom-qa01-go-405dff4f-db-1 Stopped
+ Container ryadom-qa01-go-405dff4f-db-1 Removing
+ Container ryadom-qa01-go-405dff4f-db-1 Removed
+ Network ryadom-qa01-go-405dff4f_default Removing
+ Network ryadom-qa01-go-405dff4f_default Removed
