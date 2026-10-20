@@ -24,7 +24,8 @@ FROM organizations o LEFT JOIN organization_applications a ON a.organization_id 
 WHERE o.owner_account_id = $1 ORDER BY o.created_at, o.id;
 
 -- name: EventOwnedBy :one
-SELECT EXISTS(SELECT 1 FROM events WHERE id = $1 AND created_by_account_id = $2);
+SELECT EXISTS(SELECT 1 FROM events e LEFT JOIN organizations o ON o.id=e.organization_id
+ WHERE e.id=sqlc.arg(id)::uuid AND coalesce(o.owner_account_id,e.organizer_account_id)=sqlc.arg(created_by_account_id)::uuid);
 
 -- name: OrganizationOwnedBy :one
 SELECT EXISTS(SELECT 1 FROM organizations WHERE id = $1 AND owner_account_id = $2);

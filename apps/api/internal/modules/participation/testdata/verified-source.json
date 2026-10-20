@@ -1,0 +1,19 @@
+{
+  "baseCommit": "a9764275479f04cf4e40716c197bb5776178728c",
+  "card": "BE-07",
+  "files": {
+    "apps/api/cmd/api/main.go": "4939ab080225db68ed1bb559b3b58a105e3ed6c38e415895da39948441b9eef7",
+    "apps/api/db/queries/accounts.sql": "1ca2600864c24bbb60583313a02c6bf25407d449bd1966485a120e7940c26479",
+    "apps/api/db/queries/participations.sql": "42de40ec3128c650ccb51a1ecc47b05463e6bb57eadc7d4cf4ce51960854a589",
+    "apps/api/internal/db/accounts.sql.go": "3eb90c61f10222702e9283349c2283a1252272a887f97e0a7f99c108c5c72a30",
+    "apps/api/internal/db/participations.sql.go": "493eaca9b88015990d259cd416ec7d9fbc0e948beeaff4ed43f8f6d6c525be5c",
+    "apps/api/internal/modules/auth/guard.go": "cf51fa354c0aa4d25dd397809097b9d9dd9b40d7d88d8c7c5761f5d0570c5bf5",
+    "apps/api/internal/modules/events/events.go": "8a7305c6eee27ac35cc7d0503f5521e50c296c90b2a0648b1805369979d1bf72",
+    "apps/api/internal/modules/participation/cursor.go": "b0994567ad716a844455b4b4f2494cd72726c6928a64ba49bdcd110f5f38d030",
+    "apps/api/internal/modules/participation/integration_test.go": "8a94170f0635fc8ef175b0d6c7cc75e739e939a38afbf2784369a41664d8df7f",
+    "apps/api/internal/modules/participation/lists.go": "15ad0db9730eb9d1ded4eecf1aae6353f8ed5ec15a78ec73214a59d57b8fddc4",
+    "apps/api/internal/modules/participation/participation.go": "05a3172d87169e9bf78ec7cadb9ca0df494fef5470cda282e8668dff2346fda8",
+    "apps/api/internal/modules/participation/scenarios_test.go": "d607cdf14d3911a63d4f8036f599ae5e1c30119b7961b2847e63860ef18df0c4",
+    "apps/api/internal/modules/participation/testdata/http_accept.py": "4f5bd43e62aa60b475f91f66390b0cc8d87e7a2d057ce1d47844276b8eab6a23"
+  }
+}

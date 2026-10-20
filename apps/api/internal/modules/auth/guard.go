@@ -67,11 +67,19 @@ func (s *Service) Authorize(ctx context.Context, tx pgx.Tx, access transaction.A
 	var owned bool
 	switch access {
 	case transaction.EventOwner:
-		id, e := uuid.Parse(r.PathParams["eventId"])
-		if e != nil {
-			return e
+		if value, ok := r.PathParams["participationId"]; ok {
+			id, e := uuid.Parse(value)
+			if e != nil {
+				return e
+			}
+			owned, err = db.New(tx).ParticipationOwnedBy(ctx, db.ParticipationOwnedByParams{ParticipationID: id, OwnerID: account})
+		} else {
+			id, e := uuid.Parse(r.PathParams["eventId"])
+			if e != nil {
+				return e
+			}
+			owned, err = db.New(tx).EventOwnedBy(ctx, db.EventOwnedByParams{ID: id, CreatedByAccountID: account})
 		}
-		owned, err = db.New(tx).EventOwnedBy(ctx, db.EventOwnedByParams{ID: id, CreatedByAccountID: account})
 	case transaction.OrganizationOwner:
 		id, e := uuid.Parse(r.PathParams["organizationId"])
 		if e != nil {
