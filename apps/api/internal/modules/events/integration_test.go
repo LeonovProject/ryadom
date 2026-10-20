@@ -36,12 +36,14 @@ const origin = "http://localhost:8080"
 const password = "A real test password 2026!"
 
 type fixture struct {
-	pool   *pgxpool.Pool
-	server *httpapi.Server
-	runner *transaction.Runner
-	now    atomic.Int64
-	schema string
-	tokens *authn.Tokens
+	accountService *accounts.Service
+	eventService   *events.Service
+	pool           *pgxpool.Pool
+	server         *httpapi.Server
+	runner         *transaction.Runner
+	now            atomic.Int64
+	schema         string
+	tokens         *authn.Tokens
 }
 
 func newFixture(t *testing.T, empty bool) *fixture {
@@ -136,6 +138,8 @@ func newFixture(t *testing.T, empty bool) *fixture {
 	if err = activitytypes.Register(f.server); err != nil {
 		t.Fatal(err)
 	}
+	f.accountService = accountService
+	f.eventService = reads
 	return f
 }
 func (f *fixture) call(method, path string, input any, token string) *httptest.ResponseRecorder {

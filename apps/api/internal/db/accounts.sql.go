@@ -55,7 +55,8 @@ func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (u
 }
 
 const eventOwnedBy = `-- name: EventOwnedBy :one
-SELECT EXISTS(SELECT 1 FROM events WHERE id = $1 AND created_by_account_id = $2)
+SELECT EXISTS(SELECT 1 FROM events e LEFT JOIN organizations o ON o.id=e.organization_id
+ WHERE e.id=$1::uuid AND coalesce(o.owner_account_id,e.organizer_account_id)=$2::uuid)
 `
 
 type EventOwnedByParams struct {

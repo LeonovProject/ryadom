@@ -85,7 +85,7 @@ func (s *Service) list(ctx context.Context, r httpapi.Request) (httpapi.Response
 		rows = rows[:limit]
 	}
 	for _, row := range rows {
-		summary, err := s.summary(ctx, r.Tx, db.ReadEventRow(row))
+		summary, err := s.Summary(ctx, r.Tx, db.ReadEventRow(row))
 		if err != nil {
 			return httpapi.Response{}, err
 		}
@@ -130,7 +130,7 @@ func (s *Service) listMine(ctx context.Context, r httpapi.Request) (httpapi.Resp
 	for _, row := range rows {
 		var event openapi.EventSummary
 		if row.Event.PublicationStatus == "PUBLISHED" {
-			summary, err := s.summary(ctx, r.Tx, db.ReadEventRow(row))
+			summary, err := s.Summary(ctx, r.Tx, db.ReadEventRow(row))
 			if err != nil {
 				return httpapi.Response{}, err
 			}
@@ -174,7 +174,7 @@ func (s *Service) get(ctx context.Context, r httpapi.Request) (httpapi.Response,
 		}
 		return httpapi.Response{Body: openapi.UnavailableEventDetail{Id: id, Title: row.Event.Title, PublicationStatus: "UNPUBLISHED", MyParticipation: participation, UnpublishReason: reason}}, nil
 	}
-	summary, err := s.summary(ctx, r.Tx, row)
+	summary, err := s.Summary(ctx, r.Tx, row)
 	if err != nil {
 		return httpapi.Response{}, err
 	}
@@ -212,7 +212,9 @@ func capabilities(now, startsAt time.Time, authenticated, owner, participating b
 	c.JoinBlockedReason = &reason
 	return c
 }
-func (s *Service) summary(ctx context.Context, tx pgx.Tx, row db.ReadEventRow) (openapi.PublishedEventSummary, error) {
+
+// Summary projects the canonical published DTO from one SQL snapshot, including other modules' listings.
+func (s *Service) Summary(ctx context.Context, tx pgx.Tx, row db.ReadEventRow) (openapi.PublishedEventSummary, error) {
 	e := row.Event
 	var organizer openapi.Organizer
 	if e.OrganizationID.Valid {

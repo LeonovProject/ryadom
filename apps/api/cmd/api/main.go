@@ -13,9 +13,13 @@ import (
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/auth"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/discussion"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/events"
+	eventmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/events"
+	messagemoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/messages"
 	orgmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/organizations"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/participation"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/authn"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/avatarpresets"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/config"
@@ -89,6 +93,26 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	if err = orgmoderation.Register(handler, orgService); err != nil {
+		return err
+	}
+	participationService, err := participation.New(accountService, eventService, cfg.JWTSecret, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = participationService.Register(handler); err != nil {
+		return err
+	}
+	discussionService, err := discussion.New(accountService, cfg.JWTSecret, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = discussionService.Register(handler); err != nil {
+		return err
+	}
+	if err = messagemoderation.Register(handler, discussionService); err != nil {
+		return err
+	}
+	if err = eventmoderation.Register(handler, eventService); err != nil {
 		return err
 	}
 	server := &http.Server{Addr: cfg.Address, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16384}

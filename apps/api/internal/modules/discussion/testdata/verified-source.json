@@ -1,0 +1,16 @@
+{
+  "baseCommit": "c81b00b3098453ca9525290035611823d7e3770c",
+  "card": "BE-08",
+  "files": {
+    "apps/api/cmd/api/main.go": "e144f19f3a4634d2e1a6706a8ddc291aa3cd3ea5595956ebf0822f646e4ae33a",
+    "apps/api/db/queries/messages.sql": "f0f4c597c9f6e2f339410cd38578cacf603a651d054bb5a679df76edfcb1d97b",
+    "apps/api/internal/db/messages.sql.go": "7d0e1563e72e0883f6cb03246cb9e87d71b6c41f37da97e6a69ef7f64725ef9e",
+    "apps/api/internal/modules/discussion/cursor.go": "d50d3583d6ce99c484882ab1afd2c80a1994936a5aed7fd849c3b6115003432e",
+    "apps/api/internal/modules/discussion/discussion.go": "5d11c5827a802bf9c0df6734added84e782d5248db100316a8bda2bd5d84d599",
+    "apps/api/internal/modules/discussion/integration_test.go": "ac77b38ad41de1ee8e2a8ecc2bcff69751e0f56e041dd57f71b3e36e8da5d82c",
+    "apps/api/internal/modules/discussion/lists.go": "b1d7310ed24e530bc7fad938f77b67ae1bd6629a88397515285031b5d479ab0c",
+    "apps/api/internal/modules/discussion/scenarios_test.go": "426fcb6b956d458e842276c141d886502b113df72c26a470bb3db8e85ac9b557",
+    "apps/api/internal/modules/discussion/testdata/http_accept.py": "c62056f27a1dedddfe7994ccfc973a38c138c74608a2bf063484aa1e5d009a22",
+    "apps/api/internal/modules/moderation/messages/messages.go": "be1f96509a484b1c7cce1390b6edd00f11942ac385ba2095aa2a1e5a42a731e0"
+  }
+}
