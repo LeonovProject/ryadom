@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { api, type operations } from '../../../shared/api/client';
 import { operationFailure, requestSignal, uuid } from '../../../shared/api/operation';
 import { sessionEpoch } from '../../../shared/api/session-boundary';
@@ -17,6 +17,7 @@ export function EventListPage() { return <AdminBoundary title="Модераци�
 function EventList() {
   const [params, setParams] = useSearchParams(), { token, refresh } = useRefreshToken();
   const [q, setQ] = useState(params.get('q') ?? '');
+  useEffect(() => setQ(params.get('q') ?? ''), [params.get('q')]);
   const status = params.get('publicationStatus') ?? '', reports = params.get('hasOpenReports') ?? '';
   const organizationId = params.get('organizationId') ?? undefined, activityTypeId = params.get('activityTypeId') ?? undefined;
   const valid = ['', 'PUBLISHED', 'UNPUBLISHED'].includes(status) && ['', 'true', 'false'].includes(reports) && (!organizationId || uuid(organizationId)) && (!activityTypeId || uuid(activityTypeId)) && [...(params.get('q') ?? '')].length <= 200;

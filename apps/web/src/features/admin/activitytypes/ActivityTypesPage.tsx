@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
 import { api, type components } from '../../../shared/api/client';
@@ -19,6 +19,7 @@ async function readActivity(id: string, signal: AbortSignal) { const result = aw
 export function ActivityTypesPage() { return <AdminBoundary title="Спортивные направления"><Activities /></AdminBoundary>; }
 function Activities() {
   const [params, setParams] = useSearchParams(), [q, setQ] = useState(params.get('q') ?? '');
+  useEffect(() => setQ(params.get('q') ?? ''), [params.get('q')]);
   const status = params.get('catalogStatus') ?? 'PENDING', selected = params.get('id');
   const { token, refresh } = useRefreshToken();
   const valid = ['', 'PENDING', 'APPROVED', 'REJECTED'].includes(status) && [...(params.get('q') ?? '')].length <= 200;

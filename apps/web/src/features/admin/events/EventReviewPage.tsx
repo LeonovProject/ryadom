@@ -1,3 +1,4 @@
+import { EventReports } from '../../reports/EventReports';
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
@@ -51,31 +52,62 @@ function Review({ id }: { id: string }) {
         {event.canUnpublish && <><TextAreaField id="unpublish-reason" label="Причина снятия" required value={reason} error={error} disabled={disabled} onChange={(e) => { setReason(e.target.value); setError(''); }} /><Button variant="danger" disabled={disabled} pending={action.pending} onClick={() => void unpublish()}>Снять с публикации</Button></>}
         {action.notice && <p role="status" className={styles.notice}>{action.notice}</p>}<Button variant="quiet" pending={action.pending} onClick={() => void action.check()}>Перечитать встречу</Button>
       </section>
+      <EventReports event={event} refreshing={resource.isFetching} reload={async () => !(await resource.refetch()).isError} />
       <AdminMessages eventId={id} />
     </>}
   </div>;
 }
 export function AdminMessages({ eventId }: { eventId: string }) {
   const { token, refresh } = useRefreshToken();
-  const feed = useInfiniteQuery({ queryKey: ['admin-messages', sessionEpoch(), eventId, token], initialPageParam: undefined as string | undefined,
-    queryFn: async ({ pageParam, signal }) => { const result = await api.GET('/admin/events/{eventId}/messages', { params: { path: { eventId }, query: { limit: 20, cursor: pageParam } }, signal: requestSignal(signal), cache: 'no-store' }); if (result.response.status !== 200 || !result.data) throw operationFailure(result); return result.data; },
+  const [params, setParams] = useSearchParams();
+  const filter = params.get('messageReports') ?? '';
+  const [pinned, setPinned] = useState<Message | null>(null);
+  const feed = useInfiniteQuery({ queryKey: ['admin-messages', sessionEpoch(), eventId, token, filter], enabled: ['', 'true', 'false'].includes(filter), initialPageParam: undefined as string | undefined,
+    queryFn: async ({ pageParam, signal }) => { const result = await api.GET('/admin/events/{eventId}/messages', { params: { path: { eventId }, query: { limit: 20, cursor: pageParam, hasOpenReports: filter ? filter === 'true' : undefined } }, signal: requestSignal(signal), cache: 'no-store' }); if (result.response.status !== 200 || !result.data) throw operationFailure(result); return result.data; },
     getNextPageParam: (last, _pages, previous, all) => last.nextCursor && last.nextCursor !== previous && !all.includes(last.nextCursor) ? last.nextCursor : undefined, gcTime: 0, refetchOnWindowFocus: false });
   const messages = [...new Map((feed.data?.pages.flatMap((page) => page.items) ?? []).map((item) => [item.id, item])).values()];
-  return <section className={styles.stack} aria-label="Административное обсуждение"><h2>Сообщения встречи</h2><p>Оригиналы видны только администратору. Публичное обсуждение скрытых текстов не раскрывает.</p><Button variant="quiet" onClick={refresh}>Обновить сообщения</Button>
+  async function reloadOne(id: string) {
+    const result = await api.GET('/admin/messages/{messageId}', { params: { path: { messageId: id } }, signal: AbortSignal.timeout(15_000), cache: 'no-store' });
+    if (result.response.status === 200 && result.data && sameId(result.data.id, id) && sameId(result.data.eventId, eventId)) { setPinned(result.data); await feed.refetch(); return true; }
+    // BE-08 already supplies originals in the list; direct GET arrives with BE-11.
+    if (result.response.status === 404) {
+      const current = await feed.refetch();
+      if (current.isError) return false;
+      const row = current.data?.pages.flatMap((page) => page.items).find((item) => sameId(item.id, id));
+      if (row) { setPinned(row); return true; }
+    }
+    return false;
+  }
+  return <section className={styles.stack} aria-label="Административное обсуждение"><h2>Сообщения встречи</h2><p>Оригиналы видны только администратору. Публичное обсуждение скрытых текстов не раскрывает.</p><label className={styles.select}>Жалобы на сообщения<select value={filter} onChange={(e) => { const next = new URLSearchParams(params); if (e.target.value) next.set('messageReports', e.target.value); else next.delete('messageReports'); setPinned(null); setParams(next); }}><option value="">Все сообщения</option><option value="true">Есть открытые жалобы</option><option value="false">Нет открытых жалоб</option></select></label><Button variant="quiet" onClick={() => { setPinned(null); refresh(); }}>Обновить сообщения</Button>
+    {!['', 'true', 'false'].includes(filter) && <StatePanel kind="error" title="Неизвестный фильтр сообщений">Выбери фильтр из списка.</StatePanel>}
+    {pinned && <p className={styles.notice}>Выбранное сообщение перечитывается по ID независимо от фильтра.</p>}
     {feed.isError && !feed.isFetchNextPageError ? <StatePanel kind="error" title="Сообщения не загрузились" action={<Button onClick={refresh}>Перечитать сообщения</Button>}>Оригиналы скрыты до успешного чтения.</StatePanel> : feed.isPending ? <StatePanel kind="loading" title="Загружаем сообщения" /> : <>
-      {!messages.length && <p>По этим условиям сообщений нет.</p>}
-      {messages.map((message) => <MessageCard key={message.id} message={message} refreshing={feed.isFetching} reload={async () => !(await feed.refetch()).isError} />)}
+      {!messages.length && !pinned && <p>По этим условиям сообщений нет.</p>}
+      {(pinned ? [pinned, ...messages.filter((message) => message.id !== pinned.id)] : messages).map((message) => <MessageCard key={message.id} message={message} refreshing={feed.isFetching} pin={() => setPinned(message)} reload={() => reloadOne(message.id)} />)}
       {feed.isFetchNextPageError ? <Button onClick={refresh}>Читать сообщения заново</Button> : feed.hasNextPage && <Button pending={feed.isFetchingNextPage} onClick={() => void feed.fetchNextPage()}>Ещё сообщения</Button>}
     </>}
   </section>;
 }
-function MessageCard({ message, refreshing, reload }: { message: Message; refreshing: boolean; reload: () => Promise<boolean> }) {
+function MessageCard({ message, refreshing, reload, pin }: { message: Message; refreshing: boolean; reload: () => Promise<boolean>; pin: () => void }) {
   const action = useAdminAction(reload);
   async function hide() { if (refreshing || action.pending || action.locked) return;
+    pin();
     await action.run(async (signal) => confirmed(await api.POST('/admin/messages/{messageId}/hide', { params: { path: { messageId: message.id } }, body: { expectedRevision: message.moderationRevision }, signal }), (row) => sameId(row.id, message.id) && row.status === 'HIDDEN'), 'Сервер подтвердил скрытие сообщения.');
+  }
+  async function restore() { if (refreshing || action.pending || action.locked) return;
+    pin();
+    await action.run(async (signal) => confirmed(await api.POST('/admin/messages/{messageId}/restore', { params: { path: { messageId: message.id } }, body: { expectedRevision: message.moderationRevision }, signal }), (row) => sameId(row.id, message.id) && row.status === 'VISIBLE'), 'Сервер подтвердил восстановление сообщения.');
+  }
+  async function dismiss() { if (refreshing || action.pending || action.locked) return;
+    pin();
+    await action.run(async (signal) => confirmed(await api.POST('/admin/messages/{messageId}/reports/dismiss', { params: { path: { messageId: message.id } }, body: { expectedReportsRevision: message.reportsRevision }, signal }), (row) => sameId(row.id, message.id) && row.openReportsCount === 0), 'Сервер подтвердил отклонение жалоб на сообщение.');
   }
   return <article className={styles.card}><div className={styles.row}><Link to={`/people/${message.author.id}`}>{message.author.displayName}</Link>{message.authorIsOrganizer && <strong>Организатор</strong>}<span>{message.status === 'HIDDEN' ? 'Скрыто' : 'Видимо'}</span></div><p className={styles.text}>{message.body}</p>
     {message.status === 'VISIBLE' && <Button variant="danger" pending={action.pending} disabled={refreshing || action.locked} onClick={() => void hide()}>Скрыть сообщение</Button>}
+    <p>Открытых жалоб: {message.openReportsCount}</p>
+    {message.status === 'HIDDEN' && <Button variant="secondary" disabled={refreshing || action.locked} pending={action.pending} onClick={() => void restore()}>Восстановить сообщение</Button>}
+    {message.openReportsCount > 0 && <Button variant="secondary" disabled={refreshing || action.locked} pending={action.pending} onClick={() => void dismiss()}>Отклонить жалобы на сообщение</Button>}
+    <Button variant="quiet" disabled={action.pending} onClick={() => void action.check()}>Прочитать сообщение по ID</Button>
     {action.notice && <p role="status" className={styles.notice}>{action.notice}</p>}{action.locked && <Button pending={action.pending} onClick={() => void action.check()}>Перечитать сообщение</Button>}
   </article>;
 }

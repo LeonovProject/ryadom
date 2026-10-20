@@ -23,7 +23,7 @@ export function useAdminAction(reload: () => Promise<boolean>) {
       if (!mounted.current || epoch !== sessionEpoch()) return;
       setNotice(success); setLocked(true);
       await client.invalidateQueries({ predicate: (query) => ['public', 'resource', 'private-events', 'personal-plans', 'participants', 'messages', 'admin-events', 'admin-messages', 'admin-types'].includes(String(query.queryKey[0])) });
-      const ok = await reload();
+      const ok = await reload().catch(() => false);
       if (mounted.current && epoch === sessionEpoch()) setLocked(!ok);
     } catch (problem) {
       if (!mounted.current || epoch !== sessionEpoch() || controller.signal.aborted) return;
@@ -36,7 +36,7 @@ export function useAdminAction(reload: () => Promise<boolean>) {
     if (lock.current) return;
     lock.current = true; setPending(true); const epoch = sessionEpoch();
     try {
-      const ok = await reload();
+      const ok = await reload().catch(() => false);
       if (mounted.current && epoch === sessionEpoch()) { setLocked(!ok); setNotice(ok ? 'Сведения перечитаны. Это текущее состояние, а не доказательство потерянного ответа. Новое действие требует отдельного нажатия.' : 'Не удалось перечитать сведения. Действия остаются заблокированными.'); }
     } finally { lock.current = false; if (mounted.current && epoch === sessionEpoch()) setPending(false); }
   }
