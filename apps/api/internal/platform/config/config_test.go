@@ -13,7 +13,7 @@ func TestLoad(t *testing.T) {
 		t.Fatalf("invalid config: %v", err)
 	}
 	for _, test := range []struct{ key, value string }{
-		{"DATABASE_URL", ""}, {"DATABASE_URL", "http://wrong/database"}, {"DATABASE_SCHEMA_VERSION", "0"}, {"API_ADDR", "localhost"},
+		{"DEMO_MODE", "invalid"}, {"DATABASE_URL", ""}, {"DATABASE_URL", "http://wrong/database"}, {"DATABASE_SCHEMA_VERSION", "0"}, {"API_ADDR", "localhost"},
 		{"WEB_ORIGIN", "null"}, {"WEB_ORIGIN", "https://ryadom.example/"}, {"WEB_ORIGIN", "https://ryadom.example?"}, {"WEB_ORIGIN", "https://user@ryadom.example"},
 		{"AUTH_JWT_SECRET", "bad-secret"}, {"AUTH_JWT_SECRET", base64.StdEncoding.EncodeToString([]byte(strings.Repeat("s", 31)))}, {"COOKIE_SECURE", "false"}, {"WEB_ORIGIN", "http://localhost:8080"},
 	} {

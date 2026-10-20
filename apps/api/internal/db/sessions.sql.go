@@ -50,6 +50,15 @@ func (q *Queries) DeletePresentedSession(ctx context.Context, arg DeletePresente
 	return err
 }
 
+const revokeAccountSessions = `-- name: RevokeAccountSessions :exec
+DELETE FROM sessions WHERE account_id=$1
+`
+
+func (q *Queries) RevokeAccountSessions(ctx context.Context, accountID uuid.UUID) error {
+	_, err := q.db.Exec(ctx, revokeAccountSessions, accountID)
+	return err
+}
+
 const sessionMatches = `-- name: SessionMatches :one
 SELECT EXISTS(SELECT 1 FROM sessions
 WHERE id = $1 AND account_id = $2

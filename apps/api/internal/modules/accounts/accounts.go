@@ -38,6 +38,11 @@ func (s *Service) Public(ctx context.Context, tx pgx.Tx, id uuid.UUID) (openapi.
 	if err != nil {
 		return openapi.PublicAccount{}, err
 	}
+	return s.PublicFromRow(row), nil
+}
+
+// PublicFromRow reuses the canonical avatar projection from one SQL snapshot.
+func (s *Service) PublicFromRow(row db.ReadPublicAccountRow) openapi.PublicAccount {
 	var url *string
 	if row.AvatarSource == "PRESET" && row.AvatarStatus == "APPROVED" && row.PresetID.Valid {
 		if value, ok := s.catalog.URL(row.PresetID.String); ok {
@@ -45,10 +50,10 @@ func (s *Service) Public(ctx context.Context, tx pgx.Tx, id uuid.UUID) (openapi.
 		}
 	}
 	if row.AvatarSource == "CUSTOM" && row.AvatarStatus == "APPROVED" && row.AvatarRevision > 0 {
-		value := fmt.Sprintf("/api/v1/accounts/%s/avatar?revision=%d", id, row.AvatarRevision)
+		value := fmt.Sprintf("/api/v1/accounts/%s/avatar?revision=%d", row.ID, row.AvatarRevision)
 		url = &value
 	}
-	return openapi.PublicAccount{Id: row.ID, DisplayName: row.DisplayName, IsBlocked: row.IsBlocked, AvatarUrl: url}, nil
+	return openapi.PublicAccount{Id: row.ID, DisplayName: row.DisplayName, IsBlocked: row.IsBlocked, AvatarUrl: url}
 }
 func (s *Service) Me(ctx context.Context, tx pgx.Tx, id uuid.UUID, expires time.Time) (openapi.Me, error) {
 	account, err := s.Public(ctx, tx, id)

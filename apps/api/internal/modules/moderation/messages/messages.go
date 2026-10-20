@@ -10,7 +10,7 @@ func Register(server *httpapi.Server, service *discussion.Service) error {
 	for _, b := range []struct {
 		id      string
 		handler httpapi.Handler
-	}{{"adminListMessages", service.AdminList}, {"adminHideMessage", service.Hide}} {
+	}{{"adminListMessages", service.AdminList}, {"adminHideMessage", service.Hide}, {"adminGetMessage", service.AdminGet}, {"adminRestoreMessage", service.Restore}} {
 		if err := server.Register(b.id, b.handler); err != nil {
 			return err
 		}

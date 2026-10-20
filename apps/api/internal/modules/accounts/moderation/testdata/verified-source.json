@@ -1,0 +1,16 @@
+{
+  "baseCommit": "41ca3570fa8212d576cef81cd401b607e90bfcb4",
+  "card": "BE-13",
+  "files": {
+    "apps/api/cmd/api/main.go": "b2c1d67927c9887acc153d1d6547ca47d7be866a50a8f11d41e9a924d1a3c14c",
+    "apps/api/db/queries/accounts_moderation.sql": "15d37863c09c53637e5a041f043c0db73607feed092d8db55648f7666b77075e",
+    "apps/api/db/queries/sessions.sql": "eb3100dd54c6ed655813b3553ce57ea27eb6cba7e3e6fba7626b0e77a6c7adad",
+    "apps/api/internal/db/accounts_moderation.sql.go": "008172d989202a72a8edbbc118aa090763e4a0b9e0e241b922e59a3df7f4bdba",
+    "apps/api/internal/db/sessions.sql.go": "dad06416587f4c0f3e5db19ed5d1558991351c7be0bdb9e3a79ec736f1fefed2",
+    "apps/api/internal/modules/accounts/accounts.go": "727e6e6c38926f5e0c003a7a3b02de965db48d17d3cf9f8ef47b3834b38a1a2d",
+    "apps/api/internal/modules/accounts/moderation/cursor.go": "ad07be3e6c1d93ebf54b17092adc18dec3a1207eb6abdda2a8726d771d8ae1ee",
+    "apps/api/internal/modules/accounts/moderation/moderation.go": "3a3a742fd678e22607f47651649c6e05379f8dd8c42adb2e7159bfb88ed97246",
+    "apps/api/internal/modules/accounts/moderation/testdata/http_accept.py": "3bfbe4ff9d8ce39038429977c7bc6c31004c44309433ef33cd804ac017193c0e",
+    "apps/api/internal/modules/events/account_moderation_test.go": "ed8861f6f0fbf76af1f0fb27ab0ebacb2207cd74f69ca1a447854c5713d4a6d8"
+  }
+}

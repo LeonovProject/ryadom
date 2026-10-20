@@ -11,6 +11,7 @@ import (
 )
 
 type Config struct {
+	DemoMode          bool
 	Address           string
 	DatabaseURL       string
 	SchemaVersion     int64
@@ -66,6 +67,12 @@ func Load(getenv func(string) string) (Config, error) {
 	c.AvatarPresetsFile = getenv("AVATAR_PRESETS_FILE")
 	if c.AvatarPresetsFile == "" {
 		c.AvatarPresetsFile = "../../packages/contracts/avatar-presets.json"
+	}
+	if raw := getenv("DEMO_MODE"); raw != "" {
+		c.DemoMode, err = strconv.ParseBool(raw)
+		if err != nil {
+			return Config{}, fmt.Errorf("DEMO_MODE must be a boolean")
+		}
 	}
 	if raw := getenv("TRUSTED_PROXY_CIDRS"); raw != "" {
 		for _, item := range strings.Split(raw, ",") {

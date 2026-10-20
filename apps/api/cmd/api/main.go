@@ -11,7 +11,10 @@ import (
 	"time"
 
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts"
+	accountmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts/moderation"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes"
+	activityreview "github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes/review"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/admin/demoreset"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/auth"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/discussion"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/events"
@@ -20,6 +23,7 @@ import (
 	orgmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/participation"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/reports"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/authn"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/avatarpresets"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/config"
@@ -113,6 +117,38 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	if err = eventmoderation.Register(handler, eventService); err != nil {
+		return err
+	}
+	activityReview, err := activityreview.New(accountService, cfg.JWTSecret, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = activityReview.Register(handler); err != nil {
+		return err
+	}
+	reportService, err := reports.New(eventService, discussionService, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = reportService.Register(handler); err != nil {
+		return err
+	}
+	preset := ""
+	if items := catalog.Items(); len(items) > 0 {
+		preset = items[0].Id
+	}
+	demoReset, err := demoreset.New(cfg.DemoMode, cfg.CookieSecure, preset, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = demoReset.Register(handler); err != nil {
+		return err
+	}
+	accountModeration, err := accountmoderation.New(accountService, cfg.JWTSecret, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = accountModeration.Register(handler); err != nil {
 		return err
 	}
 	server := &http.Server{Addr: cfg.Address, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16384}
