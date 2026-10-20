@@ -137,7 +137,7 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
               : failure.code === 'CSRF_REJECTED' ? 'Сервер не принял запрос с этой страницы. Проверь текущий вход перед новой попыткой.'
                 : 'Не удалось опубликовать встречу. Проверь указанные поля и попробуй снова.'}</p>
       </div>}
-      {uncertain && <div className={styles.notice} role="status"><p>Повторная отправка заблокирована, чтобы не создать дубль. Сначала проверь свои встречи. Совпадение названия не подтверждает результат этого запроса.</p><Link to="/me/events?tab=created">Перейти к моим встречам</Link><p>Этот раздел ещё в разработке. Перезагрузка удалит форму из памяти и не отменит возможную публикацию.</p></div>}
+      {uncertain && <div className={styles.notice} role="status"><p>Повторная отправка заблокирована, чтобы не создать дубль. Сначала проверь свои встречи. Совпадение названия не подтверждает результат этого запроса.</p><Link to="/me/events?tab=created">Перейти к моим встречам</Link><p>Перезагрузка удалит форму из памяти и не отменит возможную публикацию.</p></div>}
       <fieldset className={styles.fields} disabled={pending || uncertain}>
         {step === 0 ? <BasicsStep values={values} errors={errors} change={change} me={me} /> : step === 1 ? <ParticipationStep values={values} errors={errors} change={change} /> : <ReviewStep values={values} me={me} edit={editReview} />}
       </fieldset>

@@ -7,6 +7,7 @@ import { AuthPage } from '../features/auth/AuthPage';
 import { demoAccessEnabled } from '../features/demo/demo-access';
 import { PrivateAccountPage } from '../accounts/private/PrivateAccountPage';
 import { CatalogPage } from '../features/events/catalog/CatalogPage';
+import { PersonalPlans } from '../features/participation/home/PersonalPlans';
 import { HomePage } from '../home/HomePage';
 import { EventPage } from '../features/events/detail/EventPage';
 import { PublicAccountPage } from '../accounts/public/PublicAccountPage';
@@ -25,13 +26,14 @@ const router = createBrowserRouter([{
   errorElement: <RouteErrorPage />,
   children: [
     ...screenRoutes.map((route) => {
+      if (route.path === '/me/events') return { path: route.path, lazy: async () => ({ Component: (await import('../features/events/mine/MyEventsPage')).MyEventsPage }) };
       if (route.path === '/admin/organizations') return { path: route.path, lazy: async () => ({ Component: (await import('../features/admin/organizations/OrganizationListPage')).OrganizationListPage }) };
       if (route.path === '/admin/organizations/:organizationId') return { path: route.path, lazy: async () => ({ Component: (await import('../features/admin/organizations/OrganizationReviewPage')).OrganizationReviewPage }) };
       if (route.path === '/organizations/new') return { path: route.path, lazy: async () => ({ Component: (await import('../features/organizations/create/CreateOrganizationPage')).CreateOrganizationPage }) };
       if (route.path === '/me/organizations') return { path: route.path, lazy: async () => ({ Component: (await import('../features/organizations/private/MyOrganizationsPage')).MyOrganizationsPage }) };
       if (route.path === '/me/organizations/:organizationId') return { path: route.path, lazy: async () => ({ Component: (await import('../features/organizations/private/OrganizationCabinetPage')).OrganizationCabinetPage }) };
       return { path: route.path, element:
-      route.path === '/' ? <HomePage />
+      route.path === '/' ? <HomePage personalPlans={<PersonalPlans />} />
         : route.path === '/events' ? <CatalogPage />
         : route.path === '/events/new' ? <CreateEventPage />
         : route.path === '/events/:eventId' ? <EventPage />
