@@ -5,7 +5,7 @@
   "openapiSha256": "77df5d7003dccc914c05073e417b2fd65553a559ce297e0f9d8b077bfe1562a4",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "Role ownership is fixed; no worker agents have been started.",
+  "assignmentMode": "Role ownership remains fixed; user assigned OPS-01/common files to the backend agent on 2026-10-20. Local uncommitted integration verified in a disposable combined source snapshot.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -33,35 +33,49 @@
     },
     "DB-01": {
       "ownerRole": "DATABASE",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/db/migrations/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "DB-02": {
       "ownerRole": "DATABASE",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/db/seed/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "BE-01": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/cmd/api/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "FE-01": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "scope": "Separate codex/fe-01-shell worktree; source-only combined build and browser verification in OPS-01"
     },
     "OPS-01": {
       "ownerRole": "COORDINATOR",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "infra/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "DOCS-01": {
       "ownerRole": "COORDINATOR",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Local UI/assets/schema and browser smoke included in OPS-01; separate documentation handoff remains"
     },
     "AUTH-01": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/internal/platform/authn/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "BE-02": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/internal/modules/auth/README.md",
+      "scope": "Real Go/PostgreSQL auth, HTTPS cookie persistence and browser registration/login verified against the earlier accepted FE-01–04 snapshot; newer frontend worktree not accepted"
     },
     "BE-03": {
       "ownerRole": "BACKEND",
@@ -105,15 +119,18 @@
     },
     "FE-02": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "HTTP fixtures plus real BE-02 registration/reload/logout/login verified in prior FE-01–04 snapshot; owner acceptance of latest frontend remains"
     },
     "FE-03": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Implemented in separate frontend worktree on HTTP fixtures; real API integration pending"
     },
     "FE-04": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Implemented in separate frontend worktree on HTTP fixtures; real API integration pending"
     },
     "FE-05": {
       "ownerRole": "FRONTEND",
@@ -169,7 +186,9 @@
     },
     "MEDIA-00": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/internal/platform/svg/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "MEDIA-01A": {
       "ownerRole": "BACKEND",
@@ -193,7 +212,8 @@
     },
     "MEDIA-01F": {
       "ownerRole": "COORDINATOR",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Common SVG validator/assets and real explicit-preset registration verified in BE-02; separate final handoff/FE owner acceptance remains"
     },
     "DELIVERY-01A": {
       "ownerRole": "COORDINATOR",
@@ -205,9 +225,10 @@
     }
   },
   "nextAssignments": [
-    "BE-01",
-    "DB-01",
-    "FE-01"
+    "BE-03",
+    "BE-05",
+    "BE-13",
+    "DOCS-01"
   ],
   "firstIntegration": {
     "foundation": [

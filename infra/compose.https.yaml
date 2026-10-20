@@ -1,0 +1,16 @@
+# docker compose -f compose.yaml -f infra/compose.https.yaml ...
+# Requires Compose 2.24.4+ for !override. No public binding is enabled implicitly.
+services:
+  web:
+    ports: !override
+      - "${WEB_BIND:-127.0.0.1}:${WEB_TLS_PORT:-8443}:8443"
+    command: ["-c", "/etc/nginx/nginx-https.conf", "-g", "daemon off;"]
+    volumes:
+      - type: bind
+        source: ${TLS_CERT_PATH:?Set TLS_CERT_PATH to a readable certificate file}
+        target: /etc/nginx/tls/cert.pem
+        read_only: true
+      - type: bind
+        source: ${TLS_KEY_PATH:?Set TLS_KEY_PATH to a key readable by container UID 101}
+        target: /etc/nginx/tls/key.pem
+        read_only: true

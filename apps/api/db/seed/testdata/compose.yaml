@@ -1,0 +1,7 @@
+# Extend DB-01's isolated test environment; no deployed database is used.
+services:
+  go-check:
+    build:
+      dockerfile: apps/api/db/seed/testdata/Dockerfile
+    environment:
+      RYADOM_SEED_TEST_DATABASE_URL: postgres://foundation:foundation-local-check-only@db:5432/ryadom_foundation?sslmode=disable
