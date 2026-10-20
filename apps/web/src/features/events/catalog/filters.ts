@@ -83,15 +83,22 @@ export function draftFromSearch(search: string): FilterDraft {
 
 export function applyDraft(search: string, draft: FilterDraft, defaultFrom: string): string {
   const params = new URLSearchParams(search);
-  for (const key of [...visibleKeys, 'cursor']) params.delete(key);
+  const previous = draftFromSearch(search);
+  const datesChanged = draft.firstDay !== previous.firstDay || draft.lastDay !== previous.lastDay;
+  for (const key of ['q', 'city', 'activityTypeId', 'joinMode', 'cursor']) params.delete(key);
   for (const key of ['q', 'city', 'activityTypeId', 'joinMode'] as const) {
     const value = draft[key].trim();
     if (value) params.set(key, value);
   }
   if (draft.firstDay && !isCalendarDate(draft.firstDay) || draft.lastDay && !isCalendarDate(draft.lastDay)) throw new RangeError('Укажи существующие даты.');
   if (draft.firstDay && draft.lastDay && draft.lastDay < draft.firstDay) throw new RangeError('Последний день не может быть раньше первого.');
-  if (draft.firstDay) params.set('dateFrom', draft.firstDay);
-  if (draft.lastDay || draft.firstDay) params.set('dateTo', adjacentDay(draft.lastDay || draft.firstDay, 1));
+  // A link may contain only a lower/upper bound. Searching must not silently
+  // narrow that range to one day; the single-day UI rule applies to date edits.
+  if (datesChanged) {
+    params.delete('dateFrom'); params.delete('dateTo');
+    if (draft.firstDay) params.set('dateFrom', draft.firstDay);
+    if (draft.lastDay || draft.firstDay) params.set('dateTo', adjacentDay(draft.lastDay || draft.firstDay, 1));
+  }
   if (!params.has('from')) params.set('from', defaultFrom);
   const parsed = parseCatalogSearch(params.toString(), defaultFrom);
   if (parsed.error) throw new RangeError(parsed.error);

@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useId, useState, type FormEvent, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSession } from '../features/auth/SessionProvider';
 import { authLink } from '../features/auth/return-to';
@@ -16,11 +16,20 @@ export function HomePage({ personalPlans }: { personalPlans?: ReactNode }) {
   const [q, setQ] = useState('');
   const [city, setCity] = useState('');
   const [from, setFrom] = useState(() => new Date().toISOString());
-  const [searchError, setSearchError] = useState<string | null>(null);
+  const [searchErrors, setSearchErrors] = useState<{ q?: string; city?: string }>({});
+  const searchId = useId();
   const types = useActivityTypes();
+  useEffect(() => {
+    const refresh = () => { if (document.visibilityState === 'visible') setFrom(new Date().toISOString()); };
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', refresh);
+    return () => { window.removeEventListener('focus', refresh); document.removeEventListener('visibilitychange', refresh); };
+  }, []);
   function find(event: FormEvent) {
     event.preventDefault();
-    if (Array.from(q.trim()).length > 200 || Array.from(city.trim()).length > 120) { setSearchError('Сократи название города или поисковый запрос.'); return; }
+    const errors = { q: Array.from(q.trim()).length > 200 ? 'Поиск — не более 200 символов.' : undefined, city: Array.from(city.trim()).length > 120 ? 'Город — не более 120 символов.' : undefined };
+    setSearchErrors(errors);
+    if (errors.q || errors.city) { document.getElementById(`${searchId}-${errors.q ? 'q' : 'city'}`)?.focus(); return; }
     const params = new URLSearchParams({ from: new Date().toISOString() });
     if (q.trim()) params.set('q', q.trim());
     if (city.trim()) params.set('city', city.trim());
@@ -42,17 +51,16 @@ export function HomePage({ personalPlans }: { personalPlans?: ReactNode }) {
     <section id="find-meeting" className={styles.searchSection}>
       <h2>{session.me ? 'Найти новую встречу' : 'Что хочется попробовать?'}</h2>
       <form className={styles.search} onSubmit={find} noValidate aria-label="Поиск на главной">
-        <TextField label="Спорт или название" type="search" value={q} placeholder="Например, бег или шахматы" onChange={(event) => { setQ(event.target.value); setSearchError(null); }} />
-        <TextField label="Город" value={city} placeholder="Все города" onChange={(event) => { setCity(event.target.value); setSearchError(null); }} />
+        <TextField id={`${searchId}-q`} label="Спорт или название" type="search" value={q} error={searchErrors.q} placeholder="Например, бег или шахматы" onChange={(event) => { setQ(event.target.value); setSearchErrors((previous) => ({ ...previous, q: undefined })); }} />
+        <TextField id={`${searchId}-city`} label="Город" value={city} error={searchErrors.city} placeholder="Все города" onChange={(event) => { setCity(event.target.value); setSearchErrors((previous) => ({ ...previous, city: undefined })); }} />
         <Button type="submit">Найти встречи</Button>
       </form>
-      {searchError && <p role="alert" className={styles.error}>{searchError}</p>}
       {types.isPending && <p role="status" className={styles.muted}>Загружаем направления…</p>}
       {types.isError && <div className={styles.typeError}><p>Направления не загрузились. Можно искать по названию.</p><Button variant="quiet" onClick={() => void types.refetch()}>Повторить загрузку направлений</Button></div>}
-      {!!types.data?.length && <ul className={styles.types} aria-label="Направления">{types.data.map((item) => <li key={item.id}><Link to={`/events?${new URLSearchParams({ activityTypeId: item.id, from })}`}>{item.name}</Link></li>)}</ul>}
+      {!types.isError && !!types.data?.length && <ul className={styles.types} aria-label="Направления">{types.data.map((item) => <li key={item.id}><Link to={`/events?${new URLSearchParams({ activityTypeId: item.id, from })}`}>{item.name}</Link></li>)}</ul>}
     </section>
     <section className={styles.meetings}>
-      <div className={styles.sectionHeader}><div><p className={styles.eyebrow}>Встречаемся и пробуем</p><h2>Ближайшие встречи</h2></div><ButtonLink to={`/events?${new URLSearchParams({ from })}`} variant="quiet">Все встречи →</ButtonLink></div>
+      <div className={styles.sectionHeader}><div><p className={styles.eyebrow}>Встречаемся и пробуем</p><h2>Ближайшие встречи</h2></div><div className={styles.meetingActions}><Button variant="quiet" aria-label="Обновить ближайшие встречи" onClick={() => setFrom(new Date().toISOString())}>Обновить</Button><ButtonLink to={`/events?${new URLSearchParams({ from })}`} variant="quiet">Все встречи →</ButtonLink></div></div>
       <EventFeed query={{ limit: 6, from }} preview onRestart={() => setFrom(new Date().toISOString())} />
     </section>
     {!session.me && <section className={styles.steps} aria-label="Как это работает">

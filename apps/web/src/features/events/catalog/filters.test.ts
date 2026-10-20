@@ -55,4 +55,20 @@ describe('catalog filters and cursor scope', () => {
   it('rejects a reversed UI range', () => {
     expect(() => applyDraft('', { ...draftFromSearch(''), firstDay: '2026-11-09', lastDay: '2026-11-07' }, from)).toThrow(RangeError);
   });
+  it.each([
+    'dateFrom=2026-11-07', 'dateTo=2026-11-08',
+    'dateFrom=2026-11-07&dateTo=2026-11-10', 'dateTo=0001-01-01',
+  ])('preserves the exact calendar window of a URL during text-only search: %s', (search) => {
+    const before = new URLSearchParams(search);
+    const after = new URLSearchParams(applyDraft(search, { ...draftFromSearch(search), q: 'шахматы', city: 'Красноярск' }, from));
+    expect(after.get('dateFrom')).toBe(before.get('dateFrom'));
+    expect(after.get('dateTo')).toBe(before.get('dateTo'));
+  });
+  it('lets an explicit date edit replace a lower-only URL range by one day and then clear dates', () => {
+    const search = 'dateFrom=2026-11-07';
+    const single = applyDraft(search, { ...draftFromSearch(search), lastDay: '2026-11-07' }, from);
+    expect(new URLSearchParams(single).get('dateTo')).toBe('2026-11-08');
+    const cleared = new URLSearchParams(applyDraft(single, { ...draftFromSearch(single), firstDay: '', lastDay: '' }, from));
+    expect(cleared.has('dateFrom')).toBe(false); expect(cleared.has('dateTo')).toBe(false);
+  });
 });

@@ -15,7 +15,7 @@ export function EventCard({ event, returnTo }: { event: components['schemas']['P
   const blocked = organizer.type === 'PERSONAL' ? organizer.account.isBlocked : organizer.ownerIsBlocked;
   const target = `/events/${encodeURIComponent(event.id)}`;
   const state = returnTo ? { catalogReturnTo: returnTo } : undefined;
-  return <article className={styles.eventCard}>
+  return <article className={styles.eventCard} data-event-id={event.id.toLowerCase()}>
     <div className={styles.cover}>
       {event.coverUrl && failedCover !== event.coverUrl ? <img src={event.coverUrl} alt="" loading="lazy" onError={() => setFailedCover(event.coverUrl)} /> : <img className={styles.coverMark} src={markUrl} alt="" />}
       <span className={styles.activity}>{event.activityType.name}</span>
