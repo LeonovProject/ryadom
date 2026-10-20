@@ -1,4 +1,4 @@
-// Package events implements read operations against the shared transaction/guard.
+// Package events implements publication and read operations against the shared transaction/guard.
 package events
 
 import (
@@ -39,7 +39,7 @@ func (s *Service) Register(server *httpapi.Server) error {
 		id      string
 		handler httpapi.Handler
 	}{
-		{"listEvents", s.list}, {"getEvent", s.get}, {"listMyEvents", s.listMine},
+		{"createEvent", s.create}, {"listEvents", s.list}, {"getEvent", s.get}, {"listMyEvents", s.listMine},
 	} {
 		if err := server.Register(binding.id, binding.handler); err != nil {
 			return err

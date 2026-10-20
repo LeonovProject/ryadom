@@ -7,10 +7,52 @@ package db
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
+
+const insertEvent = `-- name: InsertEvent :one
+INSERT INTO events (created_by_account_id,organizer_account_id,organization_id,activity_type_id,
+ title,description,starts_at,timezone,city,location_text,conditions,join_mode)
+VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id
+`
+
+type InsertEventParams struct {
+	CreatedByAccountID uuid.UUID
+	OrganizerAccountID pgtype.UUID
+	OrganizationID     pgtype.UUID
+	ActivityTypeID     uuid.UUID
+	Title              string
+	Description        string
+	StartsAt           time.Time
+	Timezone           string
+	City               string
+	LocationText       string
+	Conditions         string
+	JoinMode           string
+}
+
+func (q *Queries) InsertEvent(ctx context.Context, arg InsertEventParams) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, insertEvent,
+		arg.CreatedByAccountID,
+		arg.OrganizerAccountID,
+		arg.OrganizationID,
+		arg.ActivityTypeID,
+		arg.Title,
+		arg.Description,
+		arg.StartsAt,
+		arg.Timezone,
+		arg.City,
+		arg.LocationText,
+		arg.Conditions,
+		arg.JoinMode,
+	)
+	var id uuid.UUID
+	err := row.Scan(&id)
+	return id, err
+}
 
 const listCatalogEvents = `-- name: ListCatalogEvents :many
 SELECT e.id, e.created_by_account_id, e.organizer_account_id, e.organization_id, e.activity_type_id, e.title, e.description, e.starts_at, e.timezone, e.city, e.location_text, e.conditions, e.cover_svg, e.join_mode, e.publication_status, e.unpublished_by, e.unpublished_at, e.unpublish_reason, e.reports_revision, e.created_at, e.updated_at, t.id, t.name, t.normalized_name, t.is_seeded, t.catalog_status, t.created_by_account_id, t.reviewed_by_account_id, t.reviewed_at, t.rejection_reason, t.created_at, t.updated_at, coalesce(o.name, '')::text AS organization_name,
@@ -259,6 +301,33 @@ func (q *Queries) ListOwnedEvents(ctx context.Context, arg ListOwnedEventsParams
 		return nil, err
 	}
 	return items, nil
+}
+
+const lockPublishingApproval = `-- name: LockPublishingApproval :one
+SELECT status FROM organization_applications WHERE organization_id = $1 FOR SHARE
+`
+
+func (q *Queries) LockPublishingApproval(ctx context.Context, organizationID uuid.UUID) (string, error) {
+	row := q.db.QueryRow(ctx, lockPublishingApproval, organizationID)
+	var status string
+	err := row.Scan(&status)
+	return status, err
+}
+
+const lockPublishingOrganization = `-- name: LockPublishingOrganization :one
+SELECT id, owner_account_id FROM organizations WHERE id = $1 FOR SHARE
+`
+
+type LockPublishingOrganizationRow struct {
+	ID             uuid.UUID
+	OwnerAccountID uuid.UUID
+}
+
+func (q *Queries) LockPublishingOrganization(ctx context.Context, id uuid.UUID) (LockPublishingOrganizationRow, error) {
+	row := q.db.QueryRow(ctx, lockPublishingOrganization, id)
+	var i LockPublishingOrganizationRow
+	err := row.Scan(&i.ID, &i.OwnerAccountID)
+	return i, err
 }
 
 const readEvent = `-- name: ReadEvent :one
