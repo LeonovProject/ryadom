@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts/avatar"
 	accountmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts/moderation"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes"
 	activityreview "github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes/review"
@@ -149,6 +150,13 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	if err = accountModeration.Register(handler); err != nil {
+		return err
+	}
+	avatars, err := avatar.New(accountService, catalog, cfg.JWTSecret, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = avatars.Register(handler); err != nil {
 		return err
 	}
 	server := &http.Server{Addr: cfg.Address, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16384}

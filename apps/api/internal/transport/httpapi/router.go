@@ -35,9 +35,10 @@ type Request struct {
 	PathParams map[string]string
 }
 type Response struct {
-	Status int
-	Body   any
-	Header http.Header
+	Status  int
+	Body    any
+	RawBody []byte
+	Header  http.Header
 }
 type Handler func(context.Context, Request) (Response, error)
 type operation struct {
@@ -155,13 +156,18 @@ func (s *Server) bind(id string, transactional bool, handler Handler) error {
 			return
 		}
 		// Encode before writing headers to avoid a successful partial JSON response.
-		var data []byte
+		var data = response.RawBody
+		if response.Body != nil && response.RawBody != nil {
+			s.writeError(w, r, fmt.Errorf("ambiguous response body"))
+			return
+		}
 		if response.Body != nil {
 			data, err = json.Marshal(response.Body)
 			if err != nil {
 				s.writeError(w, r, err)
 				return
 			}
+			data = append(data, '\n')
 		}
 		for name, values := range response.Header {
 			if strings.EqualFold(name, "X-Request-ID") || strings.EqualFold(name, "Cache-Control") {
@@ -177,7 +183,7 @@ func (s *Server) bind(id string, transactional bool, handler Handler) error {
 		}
 		w.WriteHeader(response.Status)
 		if data != nil {
-			_, _ = w.Write(append(data, '\n'))
+			_, _ = w.Write(data)
 		}
 	})
 	return nil

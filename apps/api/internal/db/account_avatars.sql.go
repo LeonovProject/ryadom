@@ -7,6 +7,7 @@ package db
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
@@ -24,5 +25,217 @@ type CreateInitialPresetAvatarParams struct {
 
 func (q *Queries) CreateInitialPresetAvatar(ctx context.Context, arg CreateInitialPresetAvatarParams) error {
 	_, err := q.db.Exec(ctx, createInitialPresetAvatar, arg.AccountID, arg.PresetID)
+	return err
+}
+
+const ensureEmptyAvatar = `-- name: EnsureEmptyAvatar :exec
+INSERT INTO account_avatars(account_id,created_at,updated_at)
+SELECT id,created_at,created_at FROM accounts WHERE id=$1 ON CONFLICT DO NOTHING
+`
+
+func (q *Queries) EnsureEmptyAvatar(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.Exec(ctx, ensureEmptyAvatar, id)
+	return err
+}
+
+const listAdminAvatars = `-- name: ListAdminAvatars :many
+SELECT v.account_id, v.source, v.preset_id, v.svg, v.status, v.revision, v.uploaded_at, v.reviewed_at, v.reviewed_by, v.created_at, v.updated_at, a.display_name, (a.status='BLOCKED')::boolean AS is_blocked
+FROM account_avatars v JOIN accounts a ON a.id=v.account_id
+WHERE v.source='CUSTOM' AND ($1::text='' OR v.status=$1::text)
+ AND ($2::text='' OR strpos(lower(btrim(regexp_replace(a.display_name, U&'[[:space:]\0085\00a0\1680\2000-\200a\2028\2029\202f\205f\3000]+',' ','g'))),$2::text)>0)
+ AND ($3::timestamptz IS NULL OR (v.uploaded_at,v.account_id)>($3::timestamptz,$4::uuid))
+ORDER BY v.uploaded_at ASC,v.account_id ASC LIMIT $5
+`
+
+type ListAdminAvatarsParams struct {
+	AvatarStatus string
+	SearchQuery  string
+	CursorTime   pgtype.Timestamptz
+	CursorID     pgtype.UUID
+	PageSize     int32
+}
+
+type ListAdminAvatarsRow struct {
+	AccountAvatar AccountAvatar
+	DisplayName   string
+	IsBlocked     bool
+}
+
+func (q *Queries) ListAdminAvatars(ctx context.Context, arg ListAdminAvatarsParams) ([]ListAdminAvatarsRow, error) {
+	rows, err := q.db.Query(ctx, listAdminAvatars,
+		arg.AvatarStatus,
+		arg.SearchQuery,
+		arg.CursorTime,
+		arg.CursorID,
+		arg.PageSize,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ListAdminAvatarsRow{}
+	for rows.Next() {
+		var i ListAdminAvatarsRow
+		if err := rows.Scan(
+			&i.AccountAvatar.AccountID,
+			&i.AccountAvatar.Source,
+			&i.AccountAvatar.PresetID,
+			&i.AccountAvatar.Svg,
+			&i.AccountAvatar.Status,
+			&i.AccountAvatar.Revision,
+			&i.AccountAvatar.UploadedAt,
+			&i.AccountAvatar.ReviewedAt,
+			&i.AccountAvatar.ReviewedBy,
+			&i.AccountAvatar.CreatedAt,
+			&i.AccountAvatar.UpdatedAt,
+			&i.DisplayName,
+			&i.IsBlocked,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const lockAvatar = `-- name: LockAvatar :one
+SELECT account_id, source, preset_id, svg, status, revision, uploaded_at, reviewed_at, reviewed_by, created_at, updated_at FROM account_avatars WHERE account_id=$1 FOR UPDATE
+`
+
+func (q *Queries) LockAvatar(ctx context.Context, accountID uuid.UUID) (AccountAvatar, error) {
+	row := q.db.QueryRow(ctx, lockAvatar, accountID)
+	var i AccountAvatar
+	err := row.Scan(
+		&i.AccountID,
+		&i.Source,
+		&i.PresetID,
+		&i.Svg,
+		&i.Status,
+		&i.Revision,
+		&i.UploadedAt,
+		&i.ReviewedAt,
+		&i.ReviewedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const moderateAvatar = `-- name: ModerateAvatar :exec
+UPDATE account_avatars SET status=$2,revision=revision+1,reviewed_at=$3,reviewed_by=$4,updated_at=$3
+WHERE account_id=$1
+`
+
+type ModerateAvatarParams struct {
+	AccountID  uuid.UUID
+	Status     string
+	ReviewedAt pgtype.Timestamptz
+	ReviewedBy pgtype.UUID
+}
+
+func (q *Queries) ModerateAvatar(ctx context.Context, arg ModerateAvatarParams) error {
+	_, err := q.db.Exec(ctx, moderateAvatar,
+		arg.AccountID,
+		arg.Status,
+		arg.ReviewedAt,
+		arg.ReviewedBy,
+	)
+	return err
+}
+
+const readAdminAvatar = `-- name: ReadAdminAvatar :one
+SELECT v.account_id, v.source, v.preset_id, v.svg, v.status, v.revision, v.uploaded_at, v.reviewed_at, v.reviewed_by, v.created_at, v.updated_at, a.display_name, (a.status='BLOCKED')::boolean AS is_blocked
+FROM account_avatars v JOIN accounts a ON a.id=v.account_id WHERE v.account_id=$1 AND v.source='CUSTOM'
+`
+
+type ReadAdminAvatarRow struct {
+	AccountAvatar AccountAvatar
+	DisplayName   string
+	IsBlocked     bool
+}
+
+func (q *Queries) ReadAdminAvatar(ctx context.Context, accountID uuid.UUID) (ReadAdminAvatarRow, error) {
+	row := q.db.QueryRow(ctx, readAdminAvatar, accountID)
+	var i ReadAdminAvatarRow
+	err := row.Scan(
+		&i.AccountAvatar.AccountID,
+		&i.AccountAvatar.Source,
+		&i.AccountAvatar.PresetID,
+		&i.AccountAvatar.Svg,
+		&i.AccountAvatar.Status,
+		&i.AccountAvatar.Revision,
+		&i.AccountAvatar.UploadedAt,
+		&i.AccountAvatar.ReviewedAt,
+		&i.AccountAvatar.ReviewedBy,
+		&i.AccountAvatar.CreatedAt,
+		&i.AccountAvatar.UpdatedAt,
+		&i.DisplayName,
+		&i.IsBlocked,
+	)
+	return i, err
+}
+
+const readAvatar = `-- name: ReadAvatar :one
+SELECT account_id, source, preset_id, svg, status, revision, uploaded_at, reviewed_at, reviewed_by, created_at, updated_at FROM account_avatars WHERE account_id=$1
+`
+
+func (q *Queries) ReadAvatar(ctx context.Context, accountID uuid.UUID) (AccountAvatar, error) {
+	row := q.db.QueryRow(ctx, readAvatar, accountID)
+	var i AccountAvatar
+	err := row.Scan(
+		&i.AccountID,
+		&i.Source,
+		&i.PresetID,
+		&i.Svg,
+		&i.Status,
+		&i.Revision,
+		&i.UploadedAt,
+		&i.ReviewedAt,
+		&i.ReviewedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const readAvatarOrigin = `-- name: ReadAvatarOrigin :one
+SELECT created_at FROM accounts WHERE id=$1
+`
+
+func (q *Queries) ReadAvatarOrigin(ctx context.Context, id uuid.UUID) (time.Time, error) {
+	row := q.db.QueryRow(ctx, readAvatarOrigin, id)
+	var created_at time.Time
+	err := row.Scan(&created_at)
+	return created_at, err
+}
+
+const replaceAvatar = `-- name: ReplaceAvatar :exec
+UPDATE account_avatars SET source=$2,preset_id=$3,svg=$4,status=$5,revision=revision+1,
+ uploaded_at=$6,reviewed_at=NULL,reviewed_by=NULL,updated_at=$7 WHERE account_id=$1
+`
+
+type ReplaceAvatarParams struct {
+	AccountID  uuid.UUID
+	Source     string
+	PresetID   pgtype.Text
+	Svg        pgtype.Text
+	Status     string
+	UploadedAt pgtype.Timestamptz
+	UpdatedAt  time.Time
+}
+
+func (q *Queries) ReplaceAvatar(ctx context.Context, arg ReplaceAvatarParams) error {
+	_, err := q.db.Exec(ctx, replaceAvatar,
+		arg.AccountID,
+		arg.Source,
+		arg.PresetID,
+		arg.Svg,
+		arg.Status,
+		arg.UploadedAt,
+		arg.UpdatedAt,
+	)
 	return err
 }

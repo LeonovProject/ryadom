@@ -12,6 +12,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/fault"
+	"github.com/LeonovProject/ryadom/apps/api/internal/platform/svg"
 	openapi "github.com/LeonovProject/ryadom/apps/api/internal/transport/openapi"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
@@ -108,6 +109,18 @@ func (s *Server) validate(w http.ResponseWriter, r *http.Request, op operation, 
 }
 
 func validateFields(op operation, value any) error {
+	// Byte limits take precedence over OpenAPI's character maxLength. Field
+	// validation still runs after authentication/authorization for protected input.
+	if strings.EqualFold(op.spec.OperationID, "uploadAvatar") || strings.EqualFold(op.spec.OperationID, "setEventCover") {
+		if object, ok := value.(map[string]any); ok {
+			if document, ok := object["svg"].(string); ok && len(document) > svg.MaxBytes {
+				e := fault.New(413, openapi.ErrorCodePAYLOADTOOLARGE, "SVG превышает 128 КиБ.")
+				e.Fields["/svg"] = []string{"Допустимо не более 131072 байт UTF-8."}
+				return e
+			}
+		}
+	}
+
 	schema := op.spec.RequestBody.Value.Content["application/json"].Schema.Value
 	if err := schema.VisitJSON(value, openapi3.MultiErrors(), openapi3.VisitAsRequest()); err != nil {
 		e := fault.New(422, openapi.ErrorCodeVALIDATIONERROR, "Проверьте поля запроса.")
