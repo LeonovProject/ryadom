@@ -288,3 +288,26 @@ for (const width of [320, 390, 768, 1280]) {
     expect(errors).toEqual([]);
   });
 }
+
+for (const organizer of ['PERSONAL', 'ORGANIZATION'] as const) {
+  test(`organizer profile returns to its event and filtered catalog (${organizer})`, async ({ page }) => {
+    const event = published();
+    if (organizer === 'ORGANIZATION') event.organizer = { type: 'ORGANIZATION', organization: { id: organizationId, name: 'Клуб «Темп»' }, ownerIsBlocked: false };
+    await page.route(`**/api/v1/events/${eventId}`, (route) => fulfillCase(route, 'getEventSuccess', { responseBody: event }));
+    const search = new URLSearchParams({ from: '2026-10-20T00:00:00Z', city: 'Красноярск', joinMode: 'OPEN' });
+    const catalog = `/events?${search}`;
+    await page.goto(catalog);
+    const open = page.getByRole('link', { name: 'Открыть встречу', exact: true });
+    await open.click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(event.title);
+    await page.getByRole('link', { name: organizer === 'PERSONAL' ? 'Открыть профиль' : 'Открыть страницу организации', exact: true }).click();
+    const back = page.getByRole('link', { name: '← К встрече', exact: true });
+    await expect(back).toHaveAttribute('href', eventPath);
+    await back.click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(event.title);
+    await page.getByRole('link', { name: '← К найденным встречам', exact: true }).click();
+    await expect(page).toHaveURL(catalog);
+    await expect(open).toBeFocused();
+    await expect(page.getByLabel('Город', { exact: true })).toHaveValue('Красноярск');
+  });
+}
