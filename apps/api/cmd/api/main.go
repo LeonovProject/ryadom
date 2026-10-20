@@ -14,6 +14,7 @@ import (
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/auth"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/events"
+	orgmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/authn"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/avatarpresets"
@@ -85,6 +86,9 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	if err = orgService.Register(handler); err != nil {
+		return err
+	}
+	if err = orgmoderation.Register(handler, orgService); err != nil {
 		return err
 	}
 	server := &http.Server{Addr: cfg.Address, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16384}

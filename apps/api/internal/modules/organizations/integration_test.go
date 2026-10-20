@@ -23,6 +23,7 @@ import (
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes"
 	authmodule "github.com/LeonovProject/ryadom/apps/api/internal/modules/auth"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/events"
+	orgmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/authn"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/avatarpresets"
@@ -142,6 +143,9 @@ func newFixture(t *testing.T, empty bool) *fixture {
 		t.Fatal(err)
 	}
 	if err = orgs.Register(f.server); err != nil {
+		t.Fatal(err)
+	}
+	if err = orgmoderation.Register(f.server, orgs); err != nil {
 		t.Fatal(err)
 	}
 	return f

@@ -36,6 +36,74 @@ func (q *Queries) InsertOrganization(ctx context.Context, arg InsertOrganization
 	return id, err
 }
 
+const listAdminOrganizations = `-- name: ListAdminOrganizations :many
+SELECT o.id, o.owner_account_id, o.name, o.description, o.sport_interests, o.created_at, o.updated_at, a.id AS application_id,a.status AS application_status,
+ a.created_at AS application_created_at,a.reviewed_at,a.reviewed_by,a.rejection_reason
+FROM organizations o LEFT JOIN organization_applications a ON a.organization_id=o.id
+WHERE ($1::text='' OR (strpos(lower(btrim(regexp_replace(o.name, U&'[[:space:]\0085\00a0\1680\2000-\200a\2028\2029\202f\205f\3000]+', ' ', 'g'))),$1::text)>0 OR strpos(lower(btrim(regexp_replace(o.description, U&'[[:space:]\0085\00a0\1680\2000-\200a\2028\2029\202f\205f\3000]+', ' ', 'g'))),$1::text)>0 OR strpos(lower(btrim(regexp_replace(o.sport_interests, U&'[[:space:]\0085\00a0\1680\2000-\200a\2028\2029\202f\205f\3000]+', ' ', 'g'))),$1::text)>0))
+ AND ($2::text='' OR coalesce(a.status,'NOT_SUBMITTED')=$2::text)
+ AND ($3::timestamptz IS NULL OR (o.created_at,o.id)>($3::timestamptz,$4::uuid))
+ORDER BY o.created_at,o.id LIMIT $5
+`
+
+type ListAdminOrganizationsParams struct {
+	SearchQuery   string
+	ApprovalState string
+	CursorTime    pgtype.Timestamptz
+	CursorID      pgtype.UUID
+	PageSize      int32
+}
+
+type ListAdminOrganizationsRow struct {
+	Organization         Organization
+	ApplicationID        pgtype.UUID
+	ApplicationStatus    pgtype.Text
+	ApplicationCreatedAt pgtype.Timestamptz
+	ReviewedAt           pgtype.Timestamptz
+	ReviewedBy           pgtype.UUID
+	RejectionReason      pgtype.Text
+}
+
+func (q *Queries) ListAdminOrganizations(ctx context.Context, arg ListAdminOrganizationsParams) ([]ListAdminOrganizationsRow, error) {
+	rows, err := q.db.Query(ctx, listAdminOrganizations,
+		arg.SearchQuery,
+		arg.ApprovalState,
+		arg.CursorTime,
+		arg.CursorID,
+		arg.PageSize,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ListAdminOrganizationsRow{}
+	for rows.Next() {
+		var i ListAdminOrganizationsRow
+		if err := rows.Scan(
+			&i.Organization.ID,
+			&i.Organization.OwnerAccountID,
+			&i.Organization.Name,
+			&i.Organization.Description,
+			&i.Organization.SportInterests,
+			&i.Organization.CreatedAt,
+			&i.Organization.UpdatedAt,
+			&i.ApplicationID,
+			&i.ApplicationStatus,
+			&i.ApplicationCreatedAt,
+			&i.ReviewedAt,
+			&i.ReviewedBy,
+			&i.RejectionReason,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listOwnedOrganizations = `-- name: ListOwnedOrganizations :many
 SELECT o.id, o.owner_account_id, o.name, o.description, o.sport_interests, o.created_at, o.updated_at, a.id AS application_id,a.status AS application_status,
  a.created_at AS application_created_at,a.reviewed_at,a.reviewed_by,a.rejection_reason
