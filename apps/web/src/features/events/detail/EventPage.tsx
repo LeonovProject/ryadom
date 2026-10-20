@@ -1,9 +1,11 @@
+import { readEvent } from './api';
+import { Discussion } from '../../discussion/Discussion';
 import { JoinControl } from '../../participation/user/JoinControl';
 import { useEventBoundary } from '../../participation/user/boundary';
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { api, type components } from '../../../shared/api/client';
-import { ResourceFailure, useResourceQuery } from '../../../shared/api/resource-query';
+import { type components } from '../../../shared/api/client';
+import { useResourceQuery } from '../../../shared/api/resource-query';
 import { formatEventStart } from '../../../shared/lib/event-time';
 import { Avatar } from '../../../shared/ui/Avatar';
 import { Button, ButtonLink } from '../../../shared/ui/Button';
@@ -14,12 +16,6 @@ import { useSession } from '../../auth/SessionProvider';
 import { catalogReturnTo } from './navigation';
 import styles from './detail.module.css';
 
-export async function readEvent(eventId: string, signal: AbortSignal) {
-  const result = await api.GET('/events/{eventId}', { params: { path: { eventId } }, signal, cache: 'no-store' });
-  if (!result.data || result.response.status !== 200) throw new ResourceFailure(result.response.status);
-  if (result.data.id.toLowerCase() !== eventId.toLowerCase()) throw new ResourceFailure(502);
-  return result.data;
-}
 
 export function EventPage() {
   const { eventId = '' } = useParams();
@@ -96,10 +92,11 @@ function PublishedEvent({ event, backTo, isAdmin, loggedIn, refreshing, refresh 
           {started && <p className={styles.notice}>Встреча уже началась. Запись и решения по заявкам закрыты.</p>}
           {event.capabilities.canManageParticipants && loggedIn && <ButtonLink to={`/events/${event.id}/manage`} variant="secondary">Участники и заявки</ButtonLink>}
           {isAdmin && <ButtonLink to={`/admin/events/${event.id}`} variant="secondary">Открыть модерацию</ButtonLink>}
-          <JoinControl event={event} refreshing={refreshing} /><p className={styles.muted}>Обсуждение появится в следующей части пакета.</p>
+          <JoinControl event={event} refreshing={refreshing} />
           <Button variant="quiet" pending={refreshing} onClick={refresh}>{refreshing ? 'Обновляем…' : 'Обновить сведения'}</Button>
         </section>
       </aside>
     </div>
+    <Discussion event={event} refreshingEvent={refreshing} />
   </>;
 }

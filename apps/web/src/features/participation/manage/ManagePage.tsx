@@ -6,7 +6,6 @@ import { useResourceQuery } from '../../../shared/api/resource-query';
 import { OperationFailure, operationFailure, requestSignal, sameId, uuid } from '../../../shared/api/operation';
 import { sessionEpoch } from '../../../shared/api/session-boundary';
 import { refreshEventData } from '../../../shared/api/event-cache';
-import { ResourceState } from '../../../shared/ui/ResourceState';
 import { Button } from '../../../shared/ui/Button';
 import { StatePanel } from '../../../shared/ui/StatePanel';
 import { PageTitle } from '../../../shared/ui/PageTitle';
@@ -15,14 +14,14 @@ import { StatusBadge } from '../../../shared/ui/StatusBadge';
 import { PrivateGate } from '../user/PrivateGate';
 import { useEventBoundary } from '../user/boundary';
 import { useRefreshToken } from '../user/queries';
-import { readEvent } from '../../events/detail/EventPage';
+import { readEvent } from '../../events/detail/api';
 import styles from '../user/participation.module.css';
 
 type Entry = components['schemas']['ParticipantEntry'];
 type Decision = components['schemas']['ParticipationDecisionInput']['decision'];
 export function ManagePage() {
   const { eventId = '' } = useParams();
-  return <PrivateGate><Manage key={`${sessionEpoch()}:${eventId}`} eventId={eventId} /></PrivateGate>;
+  return <div className={styles.page}><PageTitle title="Участники и заявки" /><PrivateGate><Manage key={`${sessionEpoch()}:${eventId}`} eventId={eventId} /></PrivateGate></div>;
 }
 function Manage({ eventId }: { eventId: string }) {
   const event = useResourceQuery('event', eventId, readEvent);
@@ -32,8 +31,8 @@ function Manage({ eventId }: { eventId: string }) {
   useEventBoundary(event.data?.publicationStatus === 'PUBLISHED' ? event.data.startsAt : undefined, () => void event.refetch());
   return <div className={styles.page}>
     <Link to={`/events/${eventId}`}>← К встрече</Link>
-    {!event.data || event.isError ? <ResourceState error={event.error} loadingTitle="Открываем состав встречи" notFoundTitle="Встреча не найдена" retry={() => void event.refetch()} />
-      : <><PageTitle title="Участники и заявки" /><h2>{event.data.title}</h2>
+    {!event.data || event.isError ? <StatePanel kind={event.isError ? "error" : "loading"} title={event.isError ? "Состав встречи недоступен" : "Открываем состав встречи"} action={event.isError ? <Button onClick={() => void event.refetch()}>Повторить чтение встречи</Button> : undefined}>Проверь доступ к встрече.</StatePanel>
+      : <><h2>{event.data.title}</h2>
         {!allowed ? <StatePanel kind="unavailable" title="Состав доступен автору встречи">Роль администратора сама по себе не даёт доступ к составу.</StatePanel>
           : <>
             <nav className={styles.tabs} aria-label="Состав встречи">{[['PENDING', 'Заявки'], ['CONFIRMED', 'Участники'], ['REJECTED', 'Отказы'], ['ALL', 'Все записи']].map(([key, label]) => <Link key={key} to={`?status=${key}`} aria-current={status === key ? 'page' : undefined}>{label}</Link>)}</nav>
