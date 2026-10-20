@@ -1,5 +1,5 @@
 import { Button, ButtonLink } from '../../../shared/ui/Button';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type MouseEventHandler } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { sessionEpoch } from '../../../shared/api/session-boundary';
 import { StatePanel } from '../../../shared/ui/StatePanel';
@@ -8,7 +8,7 @@ import { EventCard } from './EventCard';
 import { CatalogFailure, uniqueEvents, useEventFeed } from './queries';
 import styles from './catalog.module.css';
 
-export function EventFeed({ query, returnTo, preview = false, onRestart, emptyTitle, emptyDescription, allowCreate = true }: { query: EventQuery; returnTo?: string; preview?: boolean; onRestart?: () => void; emptyTitle?: string; emptyDescription?: string; allowCreate?: boolean }) {
+export function EventFeed({ query, returnTo, preview = false, onRestart, emptyTitle, emptyDescription, allowCreate = true, onOpen, onReady }: { query: EventQuery; returnTo?: string; preview?: boolean; onRestart?: () => void; emptyTitle?: string; emptyDescription?: string; allowCreate?: boolean; onOpen?: MouseEventHandler<HTMLAnchorElement>; onReady?: () => void }) {
   const client = useQueryClient();
   const feed = useEventFeed(query);
   const items = uniqueEvents(feed.data?.pages ?? []);
@@ -16,6 +16,7 @@ export function EventFeed({ query, returnTo, preview = false, onRestart, emptyTi
   const grid = useRef<HTMLDivElement>(null);
   const more = useRef<{ ids: Set<string>; scope: string; button: HTMLElement | null } | null>(null);
   const scope = JSON.stringify(query);
+  useEffect(() => { if (feed.isSuccess && !feed.isFetching) onReady?.(); }, [feed.isSuccess, feed.isFetching, feed.dataUpdatedAt, onReady]);
   useEffect(() => {
     const previous = more.current;
     if (!previous || feed.isFetchingNextPage) return;
@@ -40,7 +41,7 @@ export function EventFeed({ query, returnTo, preview = false, onRestart, emptyTi
     </StatePanel>}
     {!!items.length && <>
       {!preview && <p role="status" className={styles.muted}>Показано встреч: {items.length}{feed.isFetching && !feed.isFetchingNextPage ? ' · Обновляем…' : ''}</p>}
-      <div ref={grid} className={styles.eventGrid}>{items.map((event) => <EventCard key={event.id.toLowerCase()} event={event} returnTo={returnTo} />)}</div>
+      <div ref={grid} className={styles.eventGrid}>{items.map((event) => <EventCard key={event.id.toLowerCase()} event={event} returnTo={returnTo} onOpen={onOpen} />)}</div>
     </>}
     {!preview && feed.hasNextPage && !cursorError && !feed.isFetchNextPageError && <div className={styles.loadMore}>
       <Button variant="secondary" pending={feed.isFetchingNextPage} disabled={feed.isFetching} onClick={(event) => { more.current = { ids: new Set(items.map((item) => item.id.toLowerCase())), scope, button: event.currentTarget }; void feed.fetchNextPage(); }}>{feed.isFetchingNextPage ? 'Загружаем…' : 'Показать ещё'}</Button>

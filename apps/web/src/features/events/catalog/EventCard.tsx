@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import type { components } from '../../../shared/api/client';
 import { formatEventStart } from '../../../shared/lib/event-time';
@@ -7,7 +7,7 @@ import { ButtonLink } from '../../../shared/ui/Button';
 import markUrl from '../../../../../../brandbook/assets/mark.svg';
 import styles from './catalog.module.css';
 
-export function EventCard({ event, returnTo }: { event: components['schemas']['PublishedEventSummary']; returnTo?: string }) {
+export function EventCard({ event, returnTo, onOpen }: { event: components['schemas']['PublishedEventSummary']; returnTo?: string; onOpen?: MouseEventHandler<HTMLAnchorElement> }) {
   const [failedCover, setFailedCover] = useState<string | null>(null);
   const organizer = event.organizer;
   const owner = organizer.type === 'PERSONAL' ? organizer.account.displayName : organizer.organization.name;
@@ -21,7 +21,7 @@ export function EventCard({ event, returnTo }: { event: components['schemas']['P
       <span className={styles.activity}>{event.activityType.name}</span>
     </div>
     <div className={styles.eventBody}>
-      <h3><Link to={target} state={state}>{event.title}</Link></h3>
+      <h3><Link to={target} state={state} data-catalog-link="title" onClick={onOpen}>{event.title}</Link></h3>
       <time dateTime={event.startsAt} title={`Зона встречи: ${event.timezone}`} className={styles.time}>{formatEventStart(event)}</time>
       <p className={styles.muted}>{event.city} · {event.locationText}</p>
       <p className={styles.mode}>{event.joinMode === 'OPEN' ? 'Свободная запись' : 'По заявке'}</p>
@@ -30,7 +30,7 @@ export function EventCard({ event, returnTo }: { event: components['schemas']['P
         <span><small>{organizer.type === 'PERSONAL' ? 'Организатор' : 'Организация'}</small>{owner}</span>
       </Link>
       {blocked && <p className={styles.blocked}>Организатор временно недоступен</p>}
-      <ButtonLink to={target} state={state} variant="secondary">Открыть встречу</ButtonLink>
+      <ButtonLink to={target} state={state} variant="secondary" data-catalog-link="action" onClick={onOpen}>Открыть встречу</ButtonLink>
     </div>
   </article>;
 }
