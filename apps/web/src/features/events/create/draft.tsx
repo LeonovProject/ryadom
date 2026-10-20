@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useSession } from '../../auth/SessionProvider';
+import type { FirstMeetingAnswers } from './first-meeting';
 import type { EventValues } from './validation';
 
-export type EventDraft = { ownerId: string; values: EventValues; step: number; uncertain: boolean };
+export type EventDraft = { ownerId: string; values: EventValues; step: number; uncertain: boolean; firstMeeting?: FirstMeetingAnswers };
 // A single tab-memory draft, never persisted to storage or sent to another account.
 let draft: EventDraft | null = null;
 export function readDraft(ownerId: string) { return draft?.ownerId === ownerId ? structuredClone(draft) : null; }

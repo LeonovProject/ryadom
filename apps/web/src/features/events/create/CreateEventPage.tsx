@@ -11,6 +11,8 @@ import { useSession } from '../../auth/SessionProvider';
 import { CreateEventFailure, publishEvent } from './api';
 import { clearDraft, readDraft, saveDraft } from './draft';
 import { BasicsStep, ParticipationStep, ReviewStep } from './EventSteps';
+import { FirstMeetingHelper } from './FirstMeetingHelper';
+import { emptyFirstMeeting, prepareFirstMeeting, type FirstMeetingAnswers } from './first-meeting';
 import { LeavePrompt } from './LeavePrompt';
 import { emptyEvent, eventInput, firstStepFields, validateEvent, type EventErrors, type EventField } from './validation';
 import styles from './create.module.css';
@@ -36,6 +38,10 @@ export function CreateEventPage() {
 function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me']; organizationId: string }) {
   const [restored] = useState(() => readDraft(me.account.id));
   const [values, setValues] = useState(() => restored?.values ?? emptyEvent(organizationId));
+  const [firstMeeting, setFirstMeeting] = useState(() => restored?.firstMeeting ?? emptyFirstMeeting());
+  const [helperDecision, setHelperDecision] = useState(false);
+  const [helperAdded, setHelperAdded] = useState(false);
+  const helperApplied = useRef(false);
   const [step, setStep] = useState(restored?.step ?? 0);
   const [editingReview, setEditingReview] = useState(false);
   const editTarget = useRef<EventField | null>(null);
@@ -57,7 +63,7 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
   const localErrors = useMemo(() => validateEvent(values, me.organizations), [values, me.organizations]);
 
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; request.current?.abort(); }; }, []);
-  useEffect(() => { if (dirty && !committed.current) saveDraft({ ownerId: me.account.id, values, step, uncertain }); }, [dirty, me.account.id, values, step, uncertain]);
+  useEffect(() => { if (dirty && !committed.current) saveDraft({ ownerId: me.account.id, values, step, uncertain, firstMeeting }); }, [dirty, me.account.id, values, step, uncertain, firstMeeting]);
   useBeforeUnload(useCallback((event) => { if (!committed.current && (dirty || lock.current || uncertain)) { event.preventDefault(); event.returnValue = ''; } }, [dirty, uncertain]));
   const previousStep = useRef(step);
   useLayoutEffect(() => {
@@ -79,6 +85,26 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
     setValues((previous) => ({ ...previous, [field]: value }));
     setDirty(true); setErrors({}); setFailure(null);
   }
+  function changeHelper(field: keyof FirstMeetingAnswers, value: string) {
+    if (lock.current || uncertain) return;
+    helperApplied.current = false;
+    setFirstMeeting((previous) => ({ ...previous, [field]: value }));
+    setDirty(true); setHelperAdded(false); setHelperDecision(false);
+  }
+  function applyHelper() {
+    if (lock.current || uncertain || helperApplied.current) return;
+    const prepared = prepareFirstMeeting(values.conditions, firstMeeting);
+    if (!prepared.canApply) return;
+    helperApplied.current = true;
+    change('conditions', prepared.result);
+    setFirstMeeting(emptyFirstMeeting()); setHelperDecision(false); setHelperAdded(true);
+    document.getElementById('event-conditions')?.focus();
+  }
+  function discardHelperAndContinue() {
+    if (lock.current || uncertain) return;
+    setFirstMeeting(emptyFirstMeeting()); setHelperDecision(false); setHelperAdded(false); setDirty(true);
+    void continueForm(true);
+  }
   function editReview(field: EventField, targetStep: number) {
     if (lock.current || uncertain) return;
     editTarget.current = field;
@@ -91,14 +117,20 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
   }
   async function submit(event: FormEvent) {
     event.preventDefault();
+    await continueForm();
+  }
+  async function continueForm(discardHelper = false) {
     if (lock.current || uncertain) return;
+    if ((step > 0 || editingReview) && !discardHelper && prepareFirstMeeting(values.conditions, firstMeeting).block) {
+      setHelperDecision(true); setStep(1); return;
+    }
     const current = validateEvent(values, me.organizations);
     const relevant = editingReview ? current : step === 0 ? Object.fromEntries(Object.entries(current).filter(([field]) => firstStepFields.includes(field as EventField))) : step === 1 ? Object.fromEntries(Object.entries(current).filter(([field]) => !firstStepFields.includes(field as EventField))) : current;
     if (Object.keys(relevant).length) { showErrors(relevant); return; }
     if (step < 2) { setErrors({}); setStep(editingReview ? 2 : step + 1); setEditingReview(false); return; }
     lock.current = true; setPending(true); setFailure(null); setErrors({});
     // Persist uncertainty before dispatch: losing a session/unmounting cannot re-enable POST.
-    saveDraft({ ownerId: me.account.id, values, step, uncertain: true });
+    saveDraft({ ownerId: me.account.id, values, step, uncertain: true, firstMeeting });
     const controller = new AbortController(); request.current = controller;
     const epoch = sessionEpoch();
     try {
@@ -116,7 +148,7 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
       setFailure(error);
       const unknown = error.code === 'UNKNOWN_RESULT';
       setUncertain(unknown);
-      saveDraft({ ownerId: me.account.id, values, step, uncertain: unknown });
+      saveDraft({ ownerId: me.account.id, values, step, uncertain: unknown, firstMeeting });
       if (Object.keys(error.fields).length) showErrors(error.fields);
       if (error.code === 'ORG_NOT_APPROVED' || error.code === 'NOT_FOUND') { setStep(0); void session.refresh(); }
     } finally {
@@ -139,7 +171,9 @@ function CreateEventForm({ me, organizationId }: { me: components['schemas']['Me
       </div>}
       {uncertain && <div className={styles.notice} role="status"><p>Повторная отправка заблокирована, чтобы не создать дубль. Сначала проверь свои встречи. Совпадение названия не подтверждает результат этого запроса.</p><Link to="/me/events?tab=created">Перейти к моим встречам</Link><p>Перезагрузка удалит форму из памяти и не отменит возможную публикацию.</p></div>}
       <fieldset className={styles.fields} disabled={pending || uncertain}>
-        {step === 0 ? <BasicsStep values={values} errors={errors} change={change} me={me} /> : step === 1 ? <ParticipationStep values={values} errors={errors} change={change} /> : <ReviewStep values={values} me={me} edit={editReview} />}
+        {step === 0 ? <BasicsStep values={values} errors={errors} change={change} me={me} /> : step === 1 ? <><ParticipationStep values={values} errors={errors} change={change} />
+          <FirstMeetingHelper answers={firstMeeting} conditions={values.conditions} needsDecision={helperDecision} added={helperAdded}
+            change={changeHelper} apply={applyHelper} discardAndContinue={discardHelperAndContinue} /></> : <ReviewStep values={values} me={me} edit={editReview} />}
       </fieldset>
       {step === 2 && Object.keys(localErrors).length > 0 && <p className={styles.notice}>Сведения изменились или время уже прошло. При публикации нужно будет проверить форму.</p>}
       <div className={styles.actions}>

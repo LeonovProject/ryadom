@@ -59,16 +59,16 @@ test('login sends one unchanged password, waits for success, clears old cache an
   expect(await page.evaluate(() => `${JSON.stringify(localStorage)} ${JSON.stringify(sessionStorage)}`)).not.toContain(original);
 });
 
-test('registration requires explicit avatar, sends one atomic DTO and defaults to home', async ({ page }) => {
+test('registration preselects an avatar, sends one atomic DTO and defaults to home', async ({ page }) => {
   let body: unknown;
   let count = 0;
   await page.route('**/api/v1/auth/register', async (route) => { count++; body = route.request().postDataJSON(); await fulfillCase(route, 'registerSuccess'); });
   await page.goto('/register?returnTo=https%3A%2F%2Foutside.test');
   await fillRegistration(page);
   const avatar = page.getByRole('radio', { name: 'Спутник', exact: true });
-  await expect(avatar).not.toBeChecked();
-  await expect(page.getByRole('button', { name: 'Создать профиль', exact: true })).toBeDisabled();
-  await avatar.check();
+  await expect(avatar).toBeChecked();
+  await expect(page.getByRole('group', { name: 'Выберите аватар', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Создать профиль', exact: true })).toBeEnabled();
   await page.getByRole('button', { name: 'Создать профиль', exact: true }).click();
   await expect(page).toHaveURL('/');
   expect(count).toBe(1);
@@ -132,7 +132,7 @@ test('empty and failed preset catalogs block only registration and preserve fiel
   await expect(page.getByRole('button', { name: 'Создать профиль', exact: true })).toBeDisabled();
   await expect(page.getByRole('link', { name: 'Войти', exact: true }).last()).toBeVisible();
   await page.getByRole('button', { name: 'Обновить каталог', exact: true }).click();
-  await expect(page.getByRole('radio', { name: 'Спутник', exact: true })).not.toBeChecked();
+  await expect(page.getByRole('radio', { name: 'Спутник', exact: true })).toBeChecked();
   await expect(page.locator('input[name=displayName]')).toHaveValue('Алексей');
   await expect(page.locator('input[name=email]')).toHaveValue('new@example.test');
 });

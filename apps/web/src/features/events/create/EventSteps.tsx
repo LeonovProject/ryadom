@@ -56,7 +56,7 @@ export function BasicsStep({ values, errors, change, me }: StepProps) {
       <datalist id="event-timezones"><option value="Asia/Krasnoyarsk" /><option value="Europe/Moscow" /><option value="Asia/Novosibirsk" /><option value="Asia/Yekaterinburg" /><option value="Europe/Berlin" /><option value="UTC" /></datalist>
     </div>
     <TextField {...input('city')} label="Город" required autoComplete="address-level2" hint="До 120 символов." />
-    <TextAreaField {...input('locationText')} label="Место встречи" required hint="Адрес и понятный ориентир. До 1000 символов." />
+    <TextAreaField {...input('locationText')} label="Место встречи" required hint="Укажи адрес, точку сбора и ориентир. До 1000 символов." />
   </>;
 }
 
