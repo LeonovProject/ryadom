@@ -5,7 +5,7 @@
   "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "BE-P2 8680600 and FE-P2 e423568 integrated; real joint HTTPS/browser S3/S4/S5, API moderation and persistence accepted. Continue BE-P3/FE-P3 from the containing integration commit; preserve branch history.",
+  "assignmentMode": "BE-P3/BE-13 42c73b5 and FE-P3/FE-14/15 f0f0f98 integrated. Combined moderation/accounts/reset UI checked in disposable HTTPS/Compose. Next QA-01; MEDIA-01A/B retain QA-01 dependency. Independent QR-01 and FE-16 prepared, not dispatched.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -25,7 +25,8 @@
     "docs/": "COORDINATOR",
     "design/": "COORDINATOR",
     "scripts/": "COORDINATOR",
-    "tools/": "COORDINATOR"
+    "tools/": "COORDINATOR",
+    "tests/e2e/": "QA"
   },
   "tasks": {
     "QR-01": {
@@ -144,15 +145,21 @@
     },
     "BE-10": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "BE-11": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "BE-12": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "FE-02": {
       "ownerRole": "FRONTEND",
@@ -210,27 +217,39 @@
     },
     "FE-11": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "FE-12": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "FE-13": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "FE-14": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "BE-13": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "FE-15": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/p3/README.md",
+      "scope": "Author checks accepted against source hashes; combined production API/web passed real moderation/report/restoration/account/reset forms and same-volume persistence. One coordinator report-copy correction rechecked; full QA/DELIVERY still pending. No shared database reset."
     },
     "QA-01": {
       "ownerRole": "QA",
@@ -278,8 +297,9 @@
     }
   },
   "nextAssignments": [
-    "BE-10",
-    "FE-11"
+    "QA-01",
+    "QR-01",
+    "FE-16"
   ],
   "firstIntegration": {
     "foundation": [
@@ -306,9 +326,9 @@
   },
   "integration": {
     "date": "2026-10-20",
-    "backendCommit": "8680600",
-    "frontendCommit": "e423568",
-    "report": "docs/development/integration/2026-10-20/p2/README.md",
+    "backendCommit": "42c73b5",
+    "frontendCommit": "f0f0f98",
+    "report": "docs/development/integration/2026-10-20/p3/README.md",
     "realBusinessOperations": [
       "login",
       "register",
@@ -339,9 +359,24 @@
       "adminHideMessage",
       "adminListEvents",
       "adminGetEvent",
-      "adminUnpublishEvent"
+      "adminUnpublishEvent",
+      "adminListActivityTypes",
+      "adminGetActivityType",
+      "adminDecideActivityType",
+      "adminRenameActivityType",
+      "reportEvent",
+      "reportMessage",
+      "adminGetMessage",
+      "adminRestoreMessage",
+      "adminDismissEventReports",
+      "adminDismissMessageReports",
+      "adminGetDemoState",
+      "adminResetDemoData",
+      "adminListAccounts",
+      "adminGetAccount",
+      "adminSetAccountStatus"
     ],
-    "frontendScope": "FE-01 through FE-10 accepted locally; administrative event/message screens FE-11 and later media/report/account/reset paths remain pending."
+    "frontendScope": "FE-01 through FE-15 accepted locally. QA-01 now ready; personal SVG/cover MEDIA and first-meeting/print features remain pending."
   },
   "continuation": {
     "report": "docs/development/handoff/continuation-2026-10-20.md",
@@ -362,7 +397,7 @@
     ],
     "contractChanged": false,
     "deploymentPerformed": false,
-    "latestReport": "docs/development/integration/2026-10-20/p2/README.md"
+    "latestReport": "docs/development/integration/2026-10-20/p3/README.md"
   },
   "workPackets": {
     "policy": "docs/development/handoff/work-packets.md",
@@ -531,7 +566,9 @@
           "Activity type decisions/rename/concurrency",
           "Event/message reports and message restoration with revisions",
           "Atomic demo reset only in disposable database; no reset of shared preview"
-        ]
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "docs/development/integration/2026-10-20/p3/README.md"
       },
       "FE-P3": {
         "ownerRoles": [
@@ -567,9 +604,105 @@
           "A2/A3/S6 administrative UI on accepted BE-08/09",
           "Activity type review after BE-10",
           "Reports/restoration after BE-11; fixtures alone do not complete FE-12/13"
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "docs/development/integration/2026-10-20/p3/README.md"
+      },
+      "BE-P4": {
+        "ownerRoles": [
+          "BACKEND",
+          "DATABASE"
+        ],
+        "tasks": [
+          "BE-13"
+        ],
+        "requiresPackets": [
+          "BE-P3"
+        ],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "apps/api/internal/modules/accounts/",
+          "apps/api/db/queries/",
+          "apps/api/internal/db/",
+          "apps/api/cmd/api/main.go"
+        ],
+        "acceptance": [
+          "Two revoked sessions, protected ADMIN, current revision and preserved content"
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "docs/development/integration/2026-10-20/p3/README.md"
+      },
+      "FE-P4": {
+        "ownerRoles": [
+          "FRONTEND"
+        ],
+        "tasks": [
+          "FE-14",
+          "FE-15"
+        ],
+        "requiresPackets": [
+          "FE-P3"
+        ],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "apps/web/src/features/admin/demoreset/",
+          "apps/web/src/features/admin/accounts/",
+          "apps/web/src/accounts/private/",
+          "apps/web/src/features/auth/",
+          "apps/web/src/app/App.tsx"
+        ],
+        "runtimeDependencies": [
+          "BE-12",
+          "BE-13"
+        ],
+        "acceptance": [
+          "One explicitly confirmed reset in disposable DB and recovered receipt",
+          "Status PATCH with revision; revoked sessions; new login after unblock"
+        ],
+        "integrationStatus": "ACCEPTED_LOCALLY",
+        "verificationReport": "docs/development/integration/2026-10-20/p3/README.md"
+      },
+      "QA-P1": {
+        "ownerRoles": [
+          "QA"
+        ],
+        "tasks": [
+          "QA-01"
+        ],
+        "requiresPackets": [
+          "BE-P3",
+          "BE-P4",
+          "FE-P3",
+          "FE-P4"
+        ],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "tests/e2e/"
+        ],
+        "acceptance": [
+          "Independent complete QA-01 per tasks/verification.md",
+          "Real Compose S1-S6 and administrative scenarios, fresh DB, reset recovery and ordinary recreation"
+        ]
+      },
+      "FE-P5": {
+        "ownerRoles": [
+          "FRONTEND"
+        ],
+        "tasks": [
+          "FE-16"
+        ],
+        "requiresPackets": [
+          "FE-P1"
+        ],
+        "readiness": "READY_TO_ASSIGN",
+        "scope": [
+          "apps/web/src/features/events/create/"
+        ],
+        "acceptance": [
+          "Optional first-meeting helper appends reviewed plain text to conditions; real create/read; no new API/DB"
         ]
       }
     },
-    "latestIntegrationReport": "docs/development/integration/2026-10-20/p2/README.md"
+    "latestIntegrationReport": "docs/development/integration/2026-10-20/p3/README.md"
   }
 }

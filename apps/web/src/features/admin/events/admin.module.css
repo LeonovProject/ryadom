@@ -1,0 +1,12 @@
+.page, .stack, .card, .form { display: grid; gap: var(--space-4); min-width: 0; }
+.page { gap: var(--space-6); }
+.card { border: 1px solid var(--color-border-subtle); border-radius: var(--radius-card); padding: var(--space-6); overflow-wrap: anywhere; }
+.card h2, .card h3 { font-size: var(--type-shared-cardTitle-fontSize); }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.filters { display: grid; grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)) auto; gap: var(--space-4); align-items: end; }
+.select { display: grid; gap: var(--space-2); min-width: 0; }
+.select select { width: 100%; min-width: 0; min-height: var(--size-control); padding: var(--space-3); border: 1px solid var(--color-border-control); border-radius: var(--radius-control); background: var(--color-surface-base); color: var(--color-text-primary); }
+.text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.notice { padding: var(--space-4); background: var(--color-surface-subtle); border-radius: var(--radius-control); overflow-wrap: anywhere; }
+.muted { color: var(--color-text-secondary); }
+@media (max-width: 768px) { .filters { grid-template-columns: minmax(0, 1fr); } .card { padding: var(--space-4); } }

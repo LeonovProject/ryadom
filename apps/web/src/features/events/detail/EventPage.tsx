@@ -1,3 +1,4 @@
+import { ReportButton } from '../../reports/ReportButton';
 import { readEvent } from './api';
 import { Discussion } from '../../discussion/Discussion';
 import { JoinControl } from '../../participation/user/JoinControl';
@@ -92,7 +93,7 @@ function PublishedEvent({ event, backTo, isAdmin, loggedIn, refreshing, refresh 
           {started && <p className={styles.notice}>Встреча уже началась. Запись и решения по заявкам закрыты.</p>}
           {event.capabilities.canManageParticipants && loggedIn && <ButtonLink to={`/events/${event.id}/manage`} variant="secondary">Участники и заявки</ButtonLink>}
           {isAdmin && <ButtonLink to={`/admin/events/${event.id}`} variant="secondary">Открыть модерацию</ButtonLink>}
-          <JoinControl event={event} refreshing={refreshing} />
+          <JoinControl event={event} refreshing={refreshing} /><ReportButton type="EVENT" id={event.id} own={event.capabilities.canManageParticipants} />
           <Button variant="quiet" pending={refreshing} onClick={refresh}>{refreshing ? 'Обновляем…' : 'Обновить сведения'}</Button>
         </section>
       </aside>

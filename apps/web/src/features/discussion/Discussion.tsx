@@ -1,3 +1,4 @@
+import { ReportButton } from '../reports/ReportButton';
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Link, useBeforeUnload, useBlocker, useLocation } from 'react-router-dom';
@@ -19,6 +20,7 @@ import styles from './discussion.module.css';
 type Event = components['schemas']['PublishedEventDetail'];
 export function Discussion({ event, refreshingEvent }: { event: Event; refreshingEvent: boolean }) {
   const { token, refresh } = useRefreshToken();
+  const session = useSession();
   const list = useRef<HTMLOListElement>(null);
   const anchor = useRef<{ element: HTMLElement; top: number; focus: Element | null } | null>(null);
   const feed = useInfiniteQuery({
@@ -54,7 +56,7 @@ export function Discussion({ event, refreshingEvent }: { event: Event; refreshin
       <ol ref={list} className={styles.list}>{messages.map((message) => <li key={message.id} data-message-id={message.id.toLowerCase()} tabIndex={-1} className={styles.message}>
         <div className={styles.row}><Avatar name={message.author.displayName} url={message.author.avatarUrl} /><Link to={`/people/${message.author.id}`}>{message.author.displayName}</Link>{message.authorIsOrganizer && <strong className={styles.organizer}>Организатор</strong>}</div>
         <time dateTime={message.createdAt}>{new Intl.DateTimeFormat('ru-RU', { timeZone: event.timezone, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(message.createdAt))} · {event.timezone}</time>
-        {message.status === 'VISIBLE' ? <p className={styles.body}>{message.body}</p> : <p className={styles.muted}>Сообщение скрыто модератором.</p>}
+        {message.status === 'VISIBLE' ? <><p className={styles.body}>{message.body}</p><ReportButton type="MESSAGE" id={message.id} own={session.me?.account.id.toLowerCase() === message.author.id.toLowerCase()} /></> : <p className={styles.muted}>Сообщение скрыто модератором.</p>}
       </li>)}</ol>
     </>}
     <MessageForm key={`${sessionEpoch()}:${event.id}`} event={event} refresh={refresh} disabled={refreshingEvent || feed.isPending || feed.isError} />

@@ -1,0 +1,40 @@
+{
+  "backend": "42c73b5ac0d930fc1191ad9f9b1cee78987cfb67",
+  "frontend": "f0f0f98a7d56e8978ad9e1b7091a4f92d8c4886d",
+  "frontendProduct": "e2cef0f6e35a889fda2a896b521275d18293afc6",
+  "backendFiles": {
+    "apps/api/cmd/api/main.go": "b2c1d67927c9887acc153d1d6547ca47d7be866a50a8f11d41e9a924d1a3c14c",
+    "apps/api/db/queries/activity_review.sql": "f942ed72c13b113b8acc1017178ac83a4db9c1a552fe30e7629278619bf65072",
+    "apps/api/db/queries/demo_reset.sql": "5f9d88bed4954374bf17976048f78df192d32862947dbabd37331c9bd542175c",
+    "apps/api/db/queries/reports.sql": "e8966f1437af2eebb9f29b6c12492d1998272e71db29ae495046ea0e0baa1454",
+    "apps/api/internal/db/activity_review.sql.go": "ff5cda19446d232e60e38823cdeede904e3946fb170a8e68c30eb7b6410ff3af",
+    "apps/api/internal/db/demo_reset.sql.go": "9e56848f1f271044a517acf863b10d3efdb13d17fa61844776a440897952b269",
+    "apps/api/internal/db/reports.sql.go": "5c12847654f377e44bdeec139aa0e7fd6181a8c13c03b9db9c573e0b6ffa95d4",
+    "apps/api/internal/modules/activitytypes/name.go": "d736c2f7cbccbb243cebe7cfa43e3da8262ee1e135afb9641ffbe3235a32447c",
+    "apps/api/internal/modules/activitytypes/resolve.go": "ec588f55a909e71b0f5e7a074603ad433db6bb6553824c0d8ba34ca9492435f2",
+    "apps/api/internal/modules/activitytypes/review/cursor.go": "947377bb03932754faef348f9e16fe329863e417a85a280401b97c0d3e16cf60",
+    "apps/api/internal/modules/activitytypes/review/review.go": "9d5729d61a4f28676fa953e1c5441b5b9aa96ccf4147d37168ed0da40dbe1799",
+    "apps/api/internal/modules/admin/demoreset/demoreset.go": "2268601b5f21d17decbddf159687465d37d54d01c5396b704c18bc2a03a9c7f4",
+    "apps/api/internal/modules/admin/demoreset/testdata/http_accept.py": "303dd21cfc4ad302921ea1316968a0e9780226b96c944bc09aad62bd0726f82a",
+    "apps/api/internal/modules/discussion/restore.go": "7165dd338c55261df583a31af12dc18418fae58b2ec537b700abd956ec2d1f9c",
+    "apps/api/internal/modules/events/p3_test.go": "bfb9dd953f0caae857206aa07696c4dc73a64d5a6ef58309fc86233200364cf1",
+    "apps/api/internal/modules/moderation/messages/messages.go": "21e628de2ae743665e7a72215b317a584681847e1decd1f78a2fb8acfb3a3e7d",
+    "apps/api/internal/modules/reports/reports.go": "a20da49fbc6b021a24fc7d434e3a0b01166f6e0ceb9b253a411d871d2e6bae75",
+    "apps/api/internal/platform/config/config.go": "8e46ce95d0545f05bdde2d023b6f7453a5a288b6410cdb2eb657cc3f0496233a",
+    "apps/api/internal/platform/config/config_test.go": "3a55263d7e80c78e96a663622c9dec2b925c4492c77b1cb6748827df32e03224",
+    "apps/api/internal/transport/httpapi/disabled.go": "da33586226ee951526dbab2cde0a06e02e46be3ba3852af18fee38b503cb2997",
+    "compose.yaml": "8a66108908c696c60985498c563bd9ef98a6b208e4c310e3b024a82a7a6b9569",
+    "apps/api/db/queries/accounts_moderation.sql": "15d37863c09c53637e5a041f043c0db73607feed092d8db55648f7666b77075e",
+    "apps/api/db/queries/sessions.sql": "eb3100dd54c6ed655813b3553ce57ea27eb6cba7e3e6fba7626b0e77a6c7adad",
+    "apps/api/internal/db/accounts_moderation.sql.go": "008172d989202a72a8edbbc118aa090763e4a0b9e0e241b922e59a3df7f4bdba",
+    "apps/api/internal/db/sessions.sql.go": "dad06416587f4c0f3e5db19ed5d1558991351c7be0bdb9e3a79ec736f1fefed2",
+    "apps/api/internal/modules/accounts/accounts.go": "727e6e6c38926f5e0c003a7a3b02de965db48d17d3cf9f8ef47b3834b38a1a2d",
+    "apps/api/internal/modules/accounts/moderation/cursor.go": "ad07be3e6c1d93ebf54b17092adc18dec3a1207eb6abdda2a8726d771d8ae1ee",
+    "apps/api/internal/modules/accounts/moderation/moderation.go": "3a3a742fd678e22607f47651649c6e05379f8dd8c42adb2e7159bfb88ed97246",
+    "apps/api/internal/modules/accounts/moderation/testdata/http_accept.py": "3bfbe4ff9d8ce39038429977c7bc6c31004c44309433ef33cd804ac017193c0e",
+    "apps/api/internal/modules/events/account_moderation_test.go": "ed8861f6f0fbf76af1f0fb27ab0ebacb2207cd74f69ca1a447854c5713d4a6d8"
+  },
+  "coordinatorChanges": {
+    "apps/web/src/features/reports/ReportButton.tsx": "2a6f556f38ee2f3b18b309031dbbdcd11705e607a5939331db25f520de910066"
+  }
+}
