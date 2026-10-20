@@ -11,7 +11,7 @@ export function validateAuth(mode: 'login' | 'register', values: AuthValues): Pa
     const nameLength = Array.from(values.displayName.trim()).length;
     if (nameLength < 1 || nameLength > 120) errors.displayName = 'Укажи имя длиной от 1 до 120 символов.';
     if (values.confirmation !== values.password) errors.confirmation = 'Пароли не совпадают.';
-    if (!values.presetId) errors.presetId = 'Выбери готовый аватар.';
+    if (!values.presetId) errors.presetId = 'Выберите аватар.';
   }
   return errors;
 }

@@ -64,12 +64,20 @@ function AuthForm({ mode, returnTo }: { mode: 'login' | 'register'; returnTo: st
   const lock = useRef(false);
   const summary = useRef<HTMLDivElement>(null);
   const presets = usePresets(register);
+  const initialPresetChosen = useRef(false);
   const errors = validateAuth(mode, values);
   const selected = presets.items.find((item) => item.id === values.presetId);
   const unavailablePreset = register && !!values.presetId && (!selected || stalePreset || brokenImages.has(values.presetId));
   const unknown = failure?.code === 'UNKNOWN_RESULT';
   const wait = Math.max(0, Math.ceil((retryUntil - now) / 1000));
   const fieldError = (field: AuthField) => failure?.fields[`/${field}`]?.[0] ?? (touched[field] ? errors[field] : undefined);
+
+  useEffect(() => {
+    if (!register || initialPresetChosen.current || presets.status !== 'ready' || !presets.items.length) return;
+    initialPresetChosen.current = true;
+    const preset = presets.items[Math.floor(Math.random() * presets.items.length)];
+    setValues((previous) => previous.presetId ? previous : { ...previous, presetId: preset.id });
+  }, [register, presets.status, presets.items]);
 
   useEffect(() => () => { request.current?.abort(); }, []);
   useEffect(() => {
@@ -160,8 +168,8 @@ function AuthForm({ mode, returnTo }: { mode: 'login' | 'register'; returnTo: st
     {register && <>
       <PasswordField {...inputProps('confirmation')} label="Повтори пароль" autoComplete="new-password" required />
       <fieldset className={styles.presets} disabled={pending}>
-        <legend>Выбери готовый аватар (обязательно)</legend>
-        <p id="preset-hint" className={styles.muted}>Свой SVG можно загрузить позже в профиле. Даже один готовый вариант нужно выбрать явно.</p>
+        <legend>Выберите аватар</legend>
+        <p id="preset-hint" className={styles.muted}>Можно оставить выбранный вариант или выбрать другой.</p>
         {presets.status === 'loading' && <p role="status">Загружаем готовые аватары…</p>}
         {presets.status === 'error' && <StatePanel kind="error" title="Не удалось загрузить аватары" action={<Button variant="secondary" onClick={() => void presets.reload()}>Повторить загрузку</Button>}>Создание профиля пока недоступно. Вход существующим аккаунтом доступен.</StatePanel>}
         {presets.status === 'ready' && !presets.items.length && <StatePanel kind="empty" title="Регистрация пока недоступна: нет готовых аватарок" action={<Button variant="secondary" onClick={() => void presets.reload()}>Обновить каталог</Button>}>Можно войти в уже созданный аккаунт.</StatePanel>}

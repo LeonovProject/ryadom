@@ -4,6 +4,36 @@
       "id": "ryadom-companion",
       "label": "Спутник",
       "imageUrl": "/assets/avatars/presets/ryadom-companion.svg"
+    },
+    {
+      "id": "captain",
+      "label": "Капитан",
+      "imageUrl": "/assets/avatars/presets/captain.svg"
+    },
+    {
+      "id": "cosmonaut",
+      "label": "Космонавтка",
+      "imageUrl": "/assets/avatars/presets/cosmonaut.svg"
+    },
+    {
+      "id": "dj",
+      "label": "Диджей",
+      "imageUrl": "/assets/avatars/presets/dj.svg"
+    },
+    {
+      "id": "firefighter",
+      "label": "Пожарная",
+      "imageUrl": "/assets/avatars/presets/firefighter.svg"
+    },
+    {
+      "id": "goalkeeper",
+      "label": "Вратарь",
+      "imageUrl": "/assets/avatars/presets/goalkeeper.svg"
+    },
+    {
+      "id": "wizard",
+      "label": "Волшебник",
+      "imageUrl": "/assets/avatars/presets/wizard.svg"
     }
   ]
 }
