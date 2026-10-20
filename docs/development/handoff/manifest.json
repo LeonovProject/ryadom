@@ -2,10 +2,10 @@
   "preparedAt": "2026-10-20",
   "baselineRequirementsCommit": "b08d3ae43f09436854fa071b6a3cff48ac75902e",
   "contractVersion": "0.13.0",
-  "openapiSha256": "77df5d7003dccc914c05073e417b2fd65553a559ce297e0f9d8b077bfe1562a4",
+  "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "Role ownership is fixed; no worker agents have been started.",
+  "assignmentMode": "Backend f4ef6a5 and frontend 6d1dab9 merged into main for local intermediate integration on 2026-10-20. Continue from the merge commit, not either original branch head.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -33,35 +33,51 @@
     },
     "DB-01": {
       "ownerRole": "DATABASE",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/db/migrations/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "DB-02": {
       "ownerRole": "DATABASE",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/db/seed/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "BE-01": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/cmd/api/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "FE-01": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "scope": "Verified against the merged source locally; see integration report for boundaries.",
+      "verificationReport": "apps/web/src/app/README.md"
     },
     "OPS-01": {
       "ownerRole": "COORDINATOR",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "infra/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "DOCS-01": {
       "ownerRole": "COORDINATOR",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "scope": "Verified against the merged source locally; see integration report for boundaries.",
+      "verificationReport": "infra/README.md"
     },
     "AUTH-01": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/internal/platform/authn/README.md",
+      "scope": "Local implementation and documented tests; not a deployment"
     },
     "BE-02": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/internal/modules/auth/README.md",
+      "scope": "Merged frontend FE-01–07: real registration/preset/profile/reload/logout/login passed, HTTPS sessions and ordinary restart verified."
     },
     "BE-03": {
       "ownerRole": "BACKEND",
@@ -105,27 +121,34 @@
     },
     "FE-02": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "scope": "Verified against the merged source locally; see integration report for boundaries.",
+      "verificationReport": "apps/web/src/features/auth/README.md"
     },
     "FE-03": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
     },
     "FE-04": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
     },
     "FE-05": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
     },
     "FE-06": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
     },
     "FE-07": {
       "ownerRole": "FRONTEND",
-      "status": "PLANNED"
+      "status": "IN_PROGRESS",
+      "scope": "Frontend implemented and fixture/browser tested in merged source. Real matching backend API and scenario acceptance remain pending."
     },
     "FE-08": {
       "ownerRole": "FRONTEND",
@@ -169,7 +192,9 @@
     },
     "MEDIA-00": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "apps/api/internal/platform/svg/README.md",
+      "scope": "Verified against the merged source locally; see integration report for boundaries."
     },
     "MEDIA-01A": {
       "ownerRole": "BACKEND",
@@ -193,7 +218,9 @@
     },
     "MEDIA-01F": {
       "ownerRole": "COORDINATOR",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "scope": "Verified against the merged source locally; see integration report for boundaries.",
+      "verificationReport": "docs/development/integration/2026-10-20/README.md"
     },
     "DELIVERY-01A": {
       "ownerRole": "COORDINATOR",
@@ -205,9 +232,10 @@
     }
   },
   "nextAssignments": [
-    "BE-01",
-    "DB-01",
-    "FE-01"
+    "BE-03",
+    "BE-05",
+    "BE-13",
+    "FE-03"
   ],
   "firstIntegration": {
     "foundation": [
@@ -231,5 +259,20 @@
       "MEDIA-00",
       "MEDIA-01F"
     ]
+  },
+  "integration": {
+    "date": "2026-10-20",
+    "backendCommit": "f4ef6a5",
+    "frontendCommit": "6d1dab9",
+    "report": "docs/development/integration/2026-10-20/README.md",
+    "realBusinessOperations": [
+      "login",
+      "register",
+      "logout",
+      "getMe",
+      "getAccount",
+      "listAvatarPresets"
+    ],
+    "frontendScope": "FE-01 through FE-07 implemented; FE-03 through FE-07 still require their real backend modules."
   }
 }

@@ -1,0 +1,50 @@
+// Exercise the shipped FE-02 with actual API/DB; no mocked HTTP or auth responses.
+const fs = require('node:fs');
+const path = require('node:path');
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE || '@playwright/test');
+(async () => {
+  const base = process.env.OPS_BASE_URL || 'http://127.0.0.1:8080';
+  const output = process.env.OPS_BROWSER_OUTPUT || path.resolve('.artifacts/be-02');
+  fs.mkdirSync(output, { recursive: true });
+  const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH, headless: true });
+  try {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'ru-RU' });
+    const page = await context.newPage();
+    const errors = [], posts = [];
+    page.on('pageerror', e => errors.push(e.message));
+    page.on('request', r => { if (r.method() === 'POST') posts.push(new URL(r.url()).pathname); });
+    const email = `browser-${Date.now()}@example.test`, password = ' Browser пароль 2026! ';
+    await page.goto(base + '/register?returnTo=%2Fme');
+    await page.getByLabel(/^Имя/).fill('Участник проверки');
+    await page.getByLabel(/^Email/).fill(email);
+    await page.getByLabel(/^Пароль/).fill(password);
+    await page.getByLabel(/^Повтори пароль/).fill(password);
+    await page.getByRole('radio', { name: 'Спутник' }).check();
+    await page.getByRole('button', { name: 'Создать профиль', exact: true }).click();
+    await page.waitForURL(base + '/me');
+    await page.getByText(email, { exact: true }).waitFor();
+    await page.screenshot({ path: path.join(output, 'registered-mobile.png'), fullPage: true });
+    const cookies = await context.cookies();
+    const session = cookies.find(c => c.name === 'ryadom_session');
+    if (!session || !session.httpOnly || session.path !== '/api/v1' || session.sameSite !== 'Lax') throw new Error('Cookie attributes');
+    if ((await page.evaluate(() => document.cookie)).includes('ryadom_session')) throw new Error('JWT exposed to JavaScript');
+    await page.reload();
+    await page.getByText(email, { exact: true }).waitFor();
+    const logout = page.getByRole('button', { name: 'Выйти', exact: true });
+    await logout.click();
+    await page.getByRole('link', { name: 'Войти', exact: true }).first().waitFor();
+    await page.goto(base + '/login?returnTo=%2Fme');
+    await page.getByLabel(/^Email/).fill(email);
+    await page.getByLabel(/^Пароль/).fill(password);
+    await page.getByRole('button', { name: 'Войти', exact: true }).click();
+    await page.waitForURL(base + '/me');
+    await page.getByText(email, { exact: true }).waitFor();
+    if (posts.join(',') !== '/api/v1/auth/register,/api/v1/auth/logout,/api/v1/auth/login') throw new Error('Unexpected retries/mutations: ' + posts.join(','));
+    if (errors.length) throw new Error(errors.join('\n'));
+    if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Horizontal overflow');
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.screenshot({ path: path.join(output, 'logged-in-desktop.png'), fullPage: true });
+    await context.close();
+    console.log('PASS: real registration with explicit preset, private profile, HttpOnly cookie, reload, logout and repeat login; exactly three POST requests');
+  } finally { await browser.close(); }
+})().catch(e => { console.error(e.message); process.exitCode = 1; });

@@ -7,3 +7,8 @@
 .venv
 .artifacts
 .worktrees
+
+**/*.pem
+**/*.key
+**/*.p12
+**/*.log

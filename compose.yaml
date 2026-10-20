@@ -1,0 +1,117 @@
+name: ryadom
+services:
+  db:
+    image: postgres:17.11-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ryadom}
+      POSTGRES_USER: ${POSTGRES_USER:-ryadom}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the environment}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks: [backend]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+    restart: unless-stopped
+  migrate:
+    image: ryadom-migrate:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrate
+    environment:
+      GOOSE_DRIVER: postgres
+      GOOSE_DBSTRING: ${DATABASE_URL:?Set DATABASE_URL in the environment}
+    networks: [backend]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  api:
+    image: ryadom-api:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    environment:
+      API_ADDR: :8080
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in the environment}
+      DATABASE_SCHEMA_VERSION: "2026102001"
+      WEB_ORIGIN: ${WEB_ORIGIN:?Set one exact WEB_ORIGIN}
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      AUTH_JWT_SECRET: ${AUTH_JWT_SECRET:?Set a persistent base64 JWT key}
+      TRUSTED_PROXY_CIDRS: ${PROXY_BACKEND_IP:-172.30.18.10}/32
+    networks: [backend]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "/healthcheck"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 5s
+    restart: unless-stopped
+    stop_grace_period: 15s
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  web:
+    image: ryadom-web:local
+    build:
+      context: .
+      dockerfile: infra/web/Dockerfile
+    ports:
+      - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-8080}:8080"
+    networks:
+      frontend:
+      backend:
+        ipv4_address: ${PROXY_BACKEND_IP:-172.30.18.10}
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-T", "3", "-O", "/dev/null", "http://127.0.0.1:8080/_health"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m,uid=101,gid=101
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  seed:
+    image: ryadom-seed:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: seed
+    profiles: [tools]
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in the environment}
+    networks: [backend]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: "no"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+networks:
+  frontend:
+  backend:
+    internal: true
+    ipam:
+      config:
+        - subnet: ${BACKEND_SUBNET:-172.30.18.0/24}
+volumes:
+  postgres-data:

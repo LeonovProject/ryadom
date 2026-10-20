@@ -1,0 +1,5 @@
+# Extend DB-02's isolated environment, including shared SVG conformance assets.
+services:
+  go-check:
+    build:
+      dockerfile: apps/api/internal/platform/svg/testdata/Dockerfile

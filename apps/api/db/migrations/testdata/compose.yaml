@@ -1,0 +1,9 @@
+# Overlay on compose.foundation.yaml; no persistent volume or published port.
+services:
+  go-check:
+    build:
+      dockerfile: apps/api/db/migrations/testdata/Dockerfile
+    environment:
+      RYADOM_API_TEST_DATABASE_URL: postgres://foundation:foundation-local-check-only@db:5432/ryadom_foundation?sslmode=disable
+      RYADOM_MIGRATIONS_TEST_DATABASE_URL: postgres://foundation:foundation-local-check-only@db:5432/ryadom_foundation?sslmode=disable
+    command: ["go", "test", "-race", "-count=1", "-v", "./..."]
