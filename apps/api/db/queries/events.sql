@@ -63,3 +63,14 @@ WHERE e.id = sqlc.arg(event_id)::uuid
 
 -- name: ReadOwnedEventsOrganization :one
 SELECT id FROM organizations WHERE id = $1 AND owner_account_id = $2;
+
+-- name: LockPublishingOrganization :one
+SELECT id, owner_account_id FROM organizations WHERE id = $1 FOR SHARE;
+
+-- name: LockPublishingApproval :one
+SELECT status FROM organization_applications WHERE organization_id = $1 FOR SHARE;
+
+-- name: InsertEvent :one
+INSERT INTO events (created_by_account_id,organizer_account_id,organization_id,activity_type_id,
+ title,description,starts_at,timezone,city,location_text,conditions,join_mode)
+VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id;

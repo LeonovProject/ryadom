@@ -9,7 +9,35 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
+
+const findActivityForCreation = `-- name: FindActivityForCreation :one
+SELECT id FROM activity_types WHERE normalized_name = $1 FOR SHARE
+`
+
+func (q *Queries) FindActivityForCreation(ctx context.Context, normalizedName string) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, findActivityForCreation, normalizedName)
+	var id uuid.UUID
+	err := row.Scan(&id)
+	return id, err
+}
+
+const insertPendingActivity = `-- name: InsertPendingActivity :exec
+INSERT INTO activity_types (name, normalized_name, created_by_account_id)
+VALUES ($1,$2,$3) ON CONFLICT (normalized_name) DO NOTHING
+`
+
+type InsertPendingActivityParams struct {
+	Name               string
+	NormalizedName     string
+	CreatedByAccountID pgtype.UUID
+}
+
+func (q *Queries) InsertPendingActivity(ctx context.Context, arg InsertPendingActivityParams) error {
+	_, err := q.db.Exec(ctx, insertPendingActivity, arg.Name, arg.NormalizedName, arg.CreatedByAccountID)
+	return err
+}
 
 const listApprovedActivityTypes = `-- name: ListApprovedActivityTypes :many
 SELECT id, name FROM activity_types
@@ -39,4 +67,15 @@ func (q *Queries) ListApprovedActivityTypes(ctx context.Context) ([]ListApproved
 		return nil, err
 	}
 	return items, nil
+}
+
+const lockActivityForCreation = `-- name: LockActivityForCreation :one
+SELECT id FROM activity_types WHERE id = $1 FOR SHARE
+`
+
+func (q *Queries) LockActivityForCreation(ctx context.Context, id uuid.UUID) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, lockActivityForCreation, id)
+	var id_2 uuid.UUID
+	err := row.Scan(&id_2)
+	return id_2, err
 }
