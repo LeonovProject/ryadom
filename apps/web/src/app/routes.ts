@@ -1,0 +1,25 @@
+export const screenRoutes = [
+  { path: '/', title: 'Рядом', screen: 'SCR-01', task: 'FE-03' },
+  { path: '/events', title: 'Найти встречу', screen: 'SCR-02', task: 'FE-03' },
+  { path: '/events/new', title: 'Создать встречу', screen: 'SCR-10', task: 'FE-05' },
+  { path: '/events/:eventId', title: 'Встреча', screen: 'SCR-03', task: 'FE-04' },
+  { path: '/events/:eventId/manage', title: 'Участники и заявки', screen: 'SCR-11', task: 'FE-09' },
+  { path: '/people/:accountId', title: 'Профиль участника', screen: 'SCR-04', task: 'FE-04' },
+  { path: '/organizations/new', title: 'Создать организацию', screen: 'SCR-13', task: 'FE-06' },
+  { path: '/organizations/:organizationId', title: 'Организация', screen: 'SCR-05', task: 'FE-04' },
+  { path: '/login', title: 'Вход', screen: 'SCR-06', task: 'FE-02' },
+  { path: '/register', title: 'Регистрация', screen: 'SCR-07', task: 'FE-02' },
+  { path: '/me', title: 'Личный профиль', screen: 'SCR-08', task: 'FE-02' },
+  { path: '/me/events', title: 'Мои встречи', screen: 'SCR-09', task: 'FE-08' },
+  { path: '/me/organizations', title: 'Мои организации', screen: 'SCR-12', task: 'FE-06' },
+  { path: '/me/organizations/:organizationId', title: 'Кабинет организации', screen: 'SCR-14', task: 'FE-06' },
+  { path: '/admin/organizations', title: 'Организации — модерация', screen: 'SCR-15', task: 'FE-07' },
+  { path: '/admin/organizations/:organizationId', title: 'Рассмотрение организации', screen: 'SCR-16', task: 'FE-07' },
+  { path: '/admin/events', title: 'Встречи — модерация', screen: 'SCR-17', task: 'FE-11' },
+  { path: '/admin/events/:eventId', title: 'Модерация встречи', screen: 'SCR-18', task: 'FE-11' },
+  { path: '/admin/activity-types', title: 'Направления — модерация', screen: 'SCR-20', task: 'FE-12' },
+  { path: '/admin/avatars', title: 'Аватары — модерация', screen: 'SCR-21', task: 'MEDIA-01E' },
+  { path: '/admin/accounts', title: 'Аккаунты — модерация', screen: 'SCR-22', task: 'FE-15' },
+] as const;
+
+export type ScreenRoute = (typeof screenRoutes)[number];

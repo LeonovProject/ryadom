@@ -1,0 +1,25 @@
+.page { width: min(100%, 720px); margin-inline: auto; display: grid; gap: var(--space-8); }
+.intro, .card, .stack { display: grid; gap: var(--space-4); }
+.intro { gap: var(--space-3); }
+.eyebrow { color: var(--color-brand-onTint); font-weight: 700; font-size: var(--type-shared-caption-fontSize); }
+.muted { color: var(--color-text-secondary); }
+.card { gap: var(--space-6); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-card); padding: var(--space-8); }
+.card > h2 { font-size: var(--type-web-sectionTitle-fontSize); }
+.stack { gap: var(--space-2); }
+.stack > button { justify-self: start; }
+.identity, .preview { display: flex; align-items: center; gap: var(--space-4); overflow-wrap: anywhere; }
+.error { color: var(--color-status-error); font-size: var(--type-shared-caption-fontSize); }
+.notice, .errorBox { display: grid; gap: var(--space-3); padding: var(--space-4); border-radius: var(--radius-control); background: var(--color-statusBackground-warning); color: var(--color-status-warning); }
+.errorBox { background: var(--color-statusBackground-error); color: var(--color-status-error); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.actions > a { min-height: var(--size-control); display: inline-flex; align-items: center; }
+.presets { min-width: 0; margin: 0; padding: 0; border: 0; display: grid; gap: var(--space-4); }
+.presets legend { font-weight: 700; padding: 0; margin-bottom: var(--space-3); }
+.presetGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: var(--space-3); }
+.preset { position: relative; display: grid; justify-items: center; align-content: start; gap: var(--space-2); border: 2px solid var(--color-border-control); border-radius: var(--radius-control); padding: var(--space-4); cursor: pointer; overflow-wrap: anywhere; }
+.preset[data-selected=true] { border-color: var(--color-brand-primary); background: var(--color-brand-tint); }
+.preset:focus-within { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.preset input { width: 24px; height: 24px; accent-color: var(--color-brand-primary); justify-self: start; }
+.preset img { width: 80px; height: 80px; object-fit: contain; }
+.preview { padding: var(--space-4); border-radius: var(--radius-control); background: var(--color-surface-subtle); }
+@media (max-width: 600px) { .card { padding: var(--space-4); } .preview { align-items: start; flex-wrap: wrap; } }

@@ -1,0 +1,9 @@
+.page { display: grid; gap: var(--space-8); }
+.back { min-height: var(--size-control); display: inline-flex; align-items: center; width: fit-content; }
+.profile { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: center; padding: var(--space-8); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-card); }
+.intro { display: grid; gap: var(--space-3); flex: 1; min-width: 160px; overflow-wrap: anywhere; }
+.section { display: grid; gap: var(--space-6); }
+.eyebrow { color: var(--color-brand-onTint); font-weight: 700; font-size: var(--type-shared-caption-fontSize); }
+.muted { color: var(--color-text-secondary); }
+.warning { color: var(--color-status-warning); }
+@media (max-width: 600px) { .profile { padding: var(--space-4); align-items: start; flex-direction: column; } .intro { min-width: 0; } }

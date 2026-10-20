@@ -1,0 +1,50 @@
+.shell { min-height: 100dvh; display: flex; flex-direction: column; }
+.container { width: min(100%, calc(var(--size-contentMax) + 48px)); margin-inline: auto; padding-inline: var(--space-6); }
+.header { border-bottom: 1px solid var(--color-border-subtle); }
+.headerInner { display: flex; align-items: center; gap: var(--space-8); min-height: 96px; }
+.brand { display: inline-flex; align-items: center; gap: var(--space-2); flex-shrink: 0; min-height: var(--size-control); font-family: var(--font-heading), sans-serif; font-size: 32px; font-weight: 700; text-decoration: none; color: var(--color-text-primary); }
+.navigation { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); }
+.navLinks, .accountLinks { display: flex; align-items: center; gap: var(--space-4); }
+.account { display: flex; gap: var(--space-2); align-items: center; max-width: 220px; color: var(--color-text-primary); text-decoration: none; }
+.account > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.navLinks a { display: inline-flex; align-items: center; min-height: var(--size-control); color: var(--color-text-secondary); text-decoration: none; border-bottom: 3px solid transparent; }
+.navLinks a:hover, .navLinks a[aria-current=page] { color: var(--color-brand-onTint); }
+.navLinks a[aria-current=page] { border-color: var(--color-brand-primary); }
+.menuButton { display: none; min-height: var(--size-control); padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border-control); border-radius: var(--radius-control); background: var(--color-surface-base); color: var(--color-text-primary); cursor: pointer; }
+.skipLink { position: fixed; top: var(--space-3); left: var(--space-4); width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; background: var(--color-surface-base); border-radius: var(--radius-control); z-index: 30; }
+.skipLink:focus { width: auto; height: auto; padding: var(--space-3) var(--space-4); overflow: visible; clip-path: none; border: 1px solid var(--color-focus); }
+.buildNotice { padding: var(--space-3) var(--space-6); background: var(--color-surface-subtle); color: var(--color-text-secondary); text-align: center; font-size: var(--type-shared-caption-fontSize); }
+.main { flex: 1; padding-block: var(--space-12) var(--space-16); }
+.main:focus { outline: none; }
+.page { display: grid; gap: var(--space-8); }
+.intro { display: grid; gap: var(--space-4); max-width: 760px; }
+.eyebrow { color: var(--color-brand-onTint); font-size: var(--type-shared-caption-fontSize); font-weight: 700; }
+.lead { color: var(--color-text-secondary); }
+.backLink { display: inline-flex; align-items: center; min-height: var(--size-control); width: fit-content; }
+.developmentNote { color: var(--color-text-secondary); font-size: var(--type-shared-caption-fontSize); }
+.card { border: 1px solid var(--color-border-subtle); border-radius: var(--radius-card); padding: var(--space-6); display: grid; gap: var(--space-6); }
+.row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-3); }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: var(--space-6); }
+.footer { border-top: 1px solid var(--color-border-subtle); color: var(--color-text-secondary); }
+.footerInner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-6); font-size: var(--type-shared-caption-fontSize); }
+.footer a { display: inline-flex; align-items: center; min-height: var(--size-control); }
+@media (max-width: 1024px) {
+  .headerInner { flex-wrap: wrap; gap: var(--space-3); padding-block: var(--space-4); }
+  .navigation { flex-basis: 100%; }
+}
+@media (max-width: 600px) {
+  .container { padding-inline: var(--space-4); }
+  .headerInner { min-height: 80px; justify-content: space-between; }
+  .brand { font-size: 28px; }
+  .menuButton { display: inline-flex; align-items: center; }
+  .navigation { display: none; }
+  .navigation[data-open=true] { display: flex; align-items: stretch; flex-direction: column; gap: var(--space-4); }
+  .navLinks { align-items: stretch; flex-direction: column; gap: var(--space-1); }
+  .accountLinks { flex-wrap: wrap; }
+  .main { padding-block: var(--space-8) var(--space-12); }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .card { padding: var(--space-4); }
+  .row { align-items: stretch; }
+  .row > button { flex-grow: 1; }
+  .buildNotice { padding-inline: var(--space-4); }
+}

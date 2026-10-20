@@ -1,4 +1,0 @@
-body { margin: 0; color: var(--color-text-primary); background: var(--color-surface-base); font-family: system-ui, sans-serif; }
-main { max-width: 48rem; margin: 10vh auto; padding: var(--space-6); }
-h1 { color: var(--color-brand-primary); font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.2; }
-p { line-height: 1.6; }

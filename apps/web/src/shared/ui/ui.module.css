@@ -1,0 +1,37 @@
+.button { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--size-control); padding: var(--space-3) var(--space-6); border: 1px solid transparent; border-radius: var(--radius-control); font: inherit; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer; transition: background var(--motion-normal); }
+.primary, .danger { background: var(--color-brand-primary); color: var(--color-text-inverse); }
+.primary:hover, .danger:hover { background: var(--color-brand-hover); }
+.primary:active, .danger:active { background: var(--color-brand-pressed); }
+.danger { background: var(--color-status-error); }
+.secondary { background: var(--color-surface-base); border-color: var(--color-border-control); color: var(--color-text-primary); }
+.secondary:hover, .quiet:hover { background: var(--color-surface-subtle); }
+.quiet { background: transparent; color: var(--color-text-primary); }
+.button:disabled { background: var(--color-surface-subtle); border-color: var(--color-border-subtle); color: var(--color-text-secondary); cursor: default; }
+.field { display: grid; gap: var(--space-2); }
+.field label { font-weight: 700; }
+.field label span { font-weight: 400; }
+.field input, .field textarea { width: 100%; min-height: var(--size-control); padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border-control); border-radius: var(--radius-control); color: var(--color-text-primary); background: var(--color-surface-base); font: inherit; }
+.field textarea { resize: vertical; }
+.field input[aria-invalid=true], .field textarea[aria-invalid=true] { border-color: var(--color-status-error); }
+.fieldError { color: var(--color-status-error); font-size: var(--type-shared-caption-fontSize); }
+.hint { color: var(--color-text-secondary); }
+.overlay { position: fixed; inset: 0; background: rgb(23 25 29 / 48%); z-index: 20; }
+.dialog { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; display: grid; gap: var(--space-4); padding: var(--space-8); border-radius: var(--radius-dialog); background: var(--color-surface-base); z-index: 21; }
+.dialogTitle { margin: 0; font-size: var(--type-web-sectionTitle-fontSize); line-height: var(--type-web-sectionTitle-lineHeight); }
+.dialogFooter { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); }
+.state { display: grid; justify-items: start; align-content: start; gap: var(--space-3); padding: var(--space-6); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-card); background: var(--color-surface-base); }
+.state h2 { font-size: var(--type-shared-cardTitle-fontSize); line-height: var(--type-shared-cardTitle-lineHeight); }
+.stateError { border-color: var(--color-status-error); }
+.actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.spinner { width: var(--size-icon); height: var(--size-icon); flex-shrink: 0; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+.badge { display: inline-flex; align-items: center; gap: var(--space-2); width: fit-content; border-radius: var(--radius-pill); padding: var(--space-1) var(--space-3); font-size: var(--type-shared-caption-fontSize); line-height: var(--type-shared-caption-lineHeight); }
+.neutral { color: var(--color-text-secondary); background: var(--color-statusBackground-neutral); }
+.info { color: var(--color-info-foreground); background: var(--color-statusBackground-info); }
+.success { color: var(--color-status-success); background: var(--color-statusBackground-success); }
+.error { color: var(--color-status-error); background: var(--color-statusBackground-error); }
+.avatar { width: var(--size-control); height: var(--size-control); flex-shrink: 0; display: inline-grid; place-items: center; overflow: hidden; border-radius: var(--radius-pill); background: var(--color-brand-tint); color: var(--color-brand-onTint); font-weight: 700; }
+.avatar img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.avatarLarge { width: 96px; height: 96px; font-size: var(--type-web-pageTitle-fontSize); }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 600px) { .dialog { padding: var(--space-6); } }
+@media (prefers-reduced-motion: reduce) { .button { transition: none; } .spinner { animation: none; } }
