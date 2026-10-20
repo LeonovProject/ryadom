@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 400 150"
+   preserveAspectRatio="xMidYMid slice"
+   role="img"
+   aria-label="Ночной лагерь в горах"
+   version="1.1"
+   id="svg19"
+   sodipodi:docname="hike-alt.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs19" />
+  <sodipodi:namedview
+     id="namedview19"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.21625"
+     inkscape:cx="145.51607"
+     inkscape:cy="54.822335"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg19" />
+  <rect
+     width="400"
+     height="150"
+     fill="#EDF6F0"
+     id="rect1" />
+  <!-- Ночное небо: луна и звёзды -->
+  <path
+     d="M66 22a16 16 0 1 0 12 26 13 13 0 0 1-12-26z"
+     fill="#236341"
+     opacity=".3"
+     id="path1" />
+  <g
+     fill="#236341"
+     opacity=".5"
+     id="g6">
+    <circle
+       cx="150"
+       cy="18"
+       r="1.6"
+       id="circle1" />
+    <circle
+       cx="200"
+       cy="34"
+       r="1.2"
+       id="circle2" />
+    <circle
+       cx="252"
+       cy="16"
+       r="1.6"
+       id="circle3" />
+    <circle
+       cx="320"
+       cy="30"
+       r="1.3"
+       id="circle4" />
+    <circle
+       cx="110"
+       cy="44"
+       r="1.2"
+       id="circle5" />
+    <circle
+       cx="286"
+       cy="46"
+       r="1.1"
+       id="circle6" />
+  </g>
+  <!-- Горы силуэтом -->
+  <path
+     d="M-20 150 90 46l50 54 60-64 90 114z"
+     fill="#236341"
+     opacity=".16"
+     id="path6" />
+  <path
+     d="M150 150 260 60l44 48 34-28 82 70z"
+     fill="#236341"
+     opacity=".22"
+     id="path7" />
+  <!-- Палатка -->
+  <g
+     stroke="#236341"
+     stroke-width="1.6"
+     stroke-linejoin="round"
+     id="g10">
+    <path
+       d="M70 132 110 84l40 48z"
+       fill="#236341"
+       fill-opacity=".2"
+       id="path8" />
+    <path
+       d="m 110,83.661591 v 47.999999 m -14,0 14,-22 14,22"
+       fill="none"
+       id="path9" />
+    <path
+       d="M64 132h92"
+       stroke-width="1.2"
+       opacity=".6"
+       id="path10" />
+  </g>
+  <!-- Костёр -->
+  <g
+     transform="translate(196 118)"
+     fill="none"
+     stroke="#236341"
+     stroke-width="1.6"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g13">
+    <path
+       d="M-14 16 14 8M-14 8l28 8"
+       stroke-width="1.3"
+       id="path11" />
+    <path
+       d="M0 12c-8-4-8-14 0-22 8 8 8 18 0 22z"
+       fill="#236341"
+       fill-opacity=".3"
+       id="path12" />
+    <path
+       d="M0 8c-3.5-2-3.5-7 0-11 3.5 4 3.5 9 0 11z"
+       fill="#236341"
+       fill-opacity=".45"
+       stroke-width="1"
+       id="path13" />
+  </g>
+  <path
+     d="m 196.45121,101.86576 c -3,-7.999996 3,-9.999996 0,-17.999996 m 10,21.999996 c -2,-5.999996 2,-7.999996 0,-13.999996"
+     fill="none"
+     stroke="#236341"
+     stroke-width="1.1"
+     opacity="0.4"
+     stroke-linecap="round"
+     id="path14" />
+  <!-- Турист сидит у костра -->
+  <g
+     fill="none"
+     stroke="#236341"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g17">
+    <circle
+       cx="240"
+       cy="108"
+       r="4.5"
+       id="circle14" />
+    <path
+       d="M240 113v11"
+       id="path15" />
+    <path
+       d="m 239.18234,114.77197 -7.96536,3.39514"
+       id="path16"
+       style="stroke-width:1.60486" />
+    <path
+       d="m 240.05259,124.32006 -8.47647,6.25262 m 8.47647,-6.25262 6.9353,7.50314"
+       id="path17"
+       style="stroke-width:1.9633" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path16"
+       id="use20"
+       transform="matrix(-1,0,0,1,480.2132,-0.45121263)" />
+  </g>
+  <!-- Рюкзак -->
+  <!-- Созвездие-маршрут -->
+  <path
+     d="M150 18 200 34l52-18"
+     fill="none"
+     stroke="#236341"
+     stroke-width=".8"
+     stroke-dasharray="1 4"
+     opacity=".5"
+     id="path19" />
+</svg>

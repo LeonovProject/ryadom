@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 400 150"
+   preserveAspectRatio="xMidYMid slice"
+   role="img"
+   aria-label="Поход"
+   version="1.1"
+   id="svg15"
+   sodipodi:docname="hike.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs15" />
+  <sodipodi:namedview
+     id="namedview15"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.1342508"
+     inkscape:cx="203.71695"
+     inkscape:cy="94.59996"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg15" />
+  <rect
+     width="400"
+     height="150"
+     fill="#FFF1F2"
+     id="rect1" />
+  <!-- Солнце и облака -->
+  <circle
+     cx="70"
+     cy="34"
+     r="14"
+     fill="#D92D3A"
+     opacity=".18"
+     id="circle1" />
+  <circle
+     cx="70"
+     cy="34"
+     r="14"
+     fill="none"
+     stroke="#D92D3A"
+     stroke-width="1.2"
+     opacity=".5"
+     id="circle2" />
+  <g
+     fill="none"
+     stroke="#D92D3A"
+     stroke-width="1.3"
+     stroke-linecap="round"
+     opacity=".4"
+     id="g3">
+    <path
+       d="M150 30c3-7 14-7 17-1 6-3 13 1 12 7h-32c-1-3 0-5 3-6z"
+       id="path2" />
+    <path
+       d="M300 22c2-5 10-5 12-1 4-2 9 1 8 5h-23c-1-2 0-4 3-4z"
+       id="path3" />
+  </g>
+  <!-- Горы: дальний и ближний планы -->
+  <path
+     d="M-20 150 70 52l38 42 52-58 70 114z"
+     fill="#D92D3A"
+     opacity=".14"
+     id="path4" />
+  <path
+     d="M120 150 240 34l60 66 40-34 80 84z"
+     fill="#D92D3A"
+     opacity=".2"
+     id="path5" />
+  <path
+     d="M-20 150 70 52l38 42M160 36l70 114M240 34l60 66 40-34"
+     fill="none"
+     stroke="#D92D3A"
+     stroke-width="1.4"
+     opacity=".55"
+     stroke-linejoin="round"
+     id="path6" />
+  <!-- Снежные шапки -->
+  <path
+     d="M57 70 70 52l13 18-7-5-6 8-6-6zM228 48l12-14 12 16-7-6-5 7-6-7z"
+     fill="#fff"
+     opacity=".9"
+     id="path7" />
+  <!-- Тропа -->
+  <path
+     d="m -16.621601,163.26992 c 40.00382,-26.55318 69.049519,-12.15366 99.05238,-26.63721 30.002871,-14.48355 136.898111,0.20546 186.902891,5.03331"
+     fill="none"
+     stroke="#D92D3A"
+     stroke-width="2"
+     stroke-dasharray="1, 9"
+     stroke-linecap="round"
+     opacity="0.6"
+     id="path8"
+     sodipodi:nodetypes="csc" />
+  <!-- Ели -->
+  <g
+     stroke="#D92D3A"
+     stroke-width="1.4"
+     stroke-linejoin="round"
+     fill="#D92D3A"
+     fill-opacity=".25"
+     id="g10">
+    <path
+       d="M40 118l10-22 10 22h-6l8-14h-4l6-11h-3l5-9 5 9h-3l6 11h-4l8 14z"
+       id="path9" />
+    <path
+       d="M330 112l9-19 9 19h-5l7-12h-4l5-9h-2l4-8 4 8h-2l5 9h-4l7 12z"
+       id="path10" />
+  </g>
+  <path
+     d="M50 118v10M339 112v9"
+     stroke="#D92D3A"
+     stroke-width="2"
+     opacity=".6"
+     id="path11" />
+  <!-- Туристы: рюкзаки и треккинговые палки -->
+  <circle
+     cx="196"
+     cy="101"
+     r="4.5"
+     id="circle11"
+     style="fill:none;stroke:#D92D3A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+  <path
+     d="m 196,106 v 15 m 0,-11 8,4 m -8,-4 -8,4 m 8,7 -8,12 m 8,-12 8,11"
+     id="path12"
+     style="fill:none;stroke:#D92D3A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+  <path
+     d="m 188,114 -5,15"
+     stroke-width="1.5"
+     id="path13"
+     style="fill:none;stroke:#D92D3A;stroke-linecap:round;stroke-linejoin:round" />
+  <circle
+     cx="230"
+     cy="111"
+     r="3.5999999"
+     id="circle13"
+     style="fill:none;stroke:#D92D3A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+  <path
+     d="m 230,115 v 11 m 0,-8 6,3 m -6,-3 -6,3 m 6,5 -6,10 m 6,-10 7,9"
+     id="path14"
+     style="fill:none;stroke:#D92D3A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+  <!-- Компас (сдвинут вправо, чтобы не перекрывать ель) -->
+  <path
+     d="M50 118v10M339 112v9"
+     stroke="#D92D3A"
+     stroke-width="2"
+     opacity=".6"
+     id="path16" />
+  <path
+     d="M50 118v10M339 112v9"
+     stroke="#D92D3A"
+     stroke-width="2"
+     opacity=".6"
+     id="path17" />
+  <path
+     d="m 66.124273,117.32318 v 10 m 287.098837,-16 v 9"
+     stroke="#D92D3A"
+     stroke-width="1.99341"
+     opacity="0.6"
+     id="path18"
+     style="stroke:#143724;stroke-opacity:1" />
+</svg>

@@ -102,3 +102,27 @@ button.text-link{background:transparent;padding:0}
   .page-intro{flex-wrap:wrap}.page-intro>div{flex-basis:100%}
   .my-row>div:nth-child(2){flex:1 1 calc(100% - 60px)}
 }
+/* Event artwork from SVG files and organization discovery. */
+.event-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.art-picker{border:0;margin:28px 0 0;padding:0}
+.art-picker .field-label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+.art-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.art-option{margin:0;cursor:pointer}
+.art-option input{position:absolute;opacity:0;width:1px;height:1px}
+.art-option img{display:block;width:100%;aspect-ratio:8/3;object-fit:cover;border:1px solid var(--line);border-radius:12px}
+.art-option span{display:block;font-size:11px;color:var(--muted);margin-top:6px}
+.art-option:has(input:checked) img{border-color:var(--red);outline:2px solid var(--red);outline-offset:-2px}
+.art-option:has(input:focus-visible) img{outline:3px solid var(--color-focus);outline-offset:2px}
+.art-hint{display:block;font-size:11px;color:var(--muted);margin-top:10px}
+.org-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.org-card{border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;background:var(--color-surface-base)}
+.org-card-top{display:flex;align-items:center;gap:13px}
+.org-card-top>div{flex:1;min-width:0}
+.org-card-top h2{font-size:18px}
+.org-card-top .icon{width:14px;height:14px;vertical-align:-2px}
+.org-card-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.org-card-actions{margin-top:auto}
+@media(max-width:767px){
+  .org-grid{grid-template-columns:1fr}
+  .art-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+}

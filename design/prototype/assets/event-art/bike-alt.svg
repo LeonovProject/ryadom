@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Велогонка в горах">
+  <rect width="400" height="150" fill="#FFF1F2"/>
+  <path d="M252 122L308 34L336 76L352 58L400 122Z" fill="#D92D3A" opacity=".10"/>
+  <path d="M308 34L295 54L303 50L309 57L316 49L322 55" fill="#D92D3A" opacity=".12" stroke="#D92D3A" stroke-width="1.1" stroke-linejoin="round" stroke-opacity=".4"/>
+  <path d="M200 122L240 82L262 108L280 90L310 122Z" fill="#D92D3A" opacity=".06"/>
+  <rect y="132" width="400" height="18" fill="#D92D3A" opacity=".08"/>
+  <path d="M0 132H400" stroke="#D92D3A" stroke-width="1.3" opacity=".35"/>
+  <path d="M0 141H400" stroke="#D92D3A" stroke-width="1.2" stroke-dasharray="10 8" opacity=".35"/>
+  <g stroke="#D92D3A" stroke-width="1.6" stroke-linecap="round" opacity=".45"><path d="M42 76h40M52 90h30M44 104h36"/></g>
+  <ellipse cx="200" cy="133" rx="84" ry="2.6" fill="#D92D3A" opacity=".12"/>
+  <g transform="translate(-33 -26.4) scale(1.2) translate(18 0)" fill="none" stroke="#D92D3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="130" cy="108" r="24"/><circle cx="222" cy="108" r="24"/>
+    <circle cx="130" cy="108" r="18" stroke-width=".9" opacity=".5"/><circle cx="222" cy="108" r="18" stroke-width=".9" opacity=".5"/>
+    <path d="M130 108L168 112L155 76ZM155 76L204 72M204 72L168 112M204 72L208 82L222 108" />
+    <path d="M205 71L213 66C219 65 222 71 218 77"/>
+    <path d="M147 71H164M156 71V77" />
+    <circle cx="168" cy="112" r="5" fill="#FFF1F2"/>
+    <path d="M168 112L172 120M168 112L164 104" stroke-width="2"/>
+    <circle cx="130" cy="108" r="3" stroke-width="1.2"/>
+    <path d="M168 107L130 105M168 117L130 111" stroke-width=".8" opacity=".5"/>
+  </g>
+  <g transform="translate(-33 -26.4) scale(1.2) translate(18 0)" fill="none" stroke="#9F1C28" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M155 71L184 86L164 103L169 104" stroke-width="3" opacity=".5"/>
+    <path d="M155 71L186 52" stroke-width="3.6"/>
+    <path d="M186 52L200 58L214 66" stroke-width="2.6"/>
+    <path d="M155 71L178 92L172 118L178 119" stroke-width="3.2"/>
+    <circle cx="194" cy="44" r="6" fill="#9F1C28" stroke="none"/>
+    <path d="M188 43C189 38 198 36 200 42" stroke="#FFF1F2" stroke-width="1.1"/>
+  </g>
+  <g transform="translate(352 96)" stroke="#9F1C28" stroke-width="1.4" opacity=".7">
+    <path d="M0 2V36" fill="none" stroke-linecap="round"/>
+    <rect x="-13" y="-14" width="26" height="16" rx="2.5" fill="#FFF1F2"/>
+    <text y="-2" text-anchor="middle" fill="#9F1C28" stroke="none" font-family="Montserrat, sans-serif" font-size="9" font-weight="700">42</text>
+  </g>
+</svg>
