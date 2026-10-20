@@ -13,6 +13,7 @@ import (
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes"
 	activityreview "github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes/review"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/admin/demoreset"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/auth"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/discussion"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/events"
@@ -129,6 +130,17 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	if err = reportService.Register(handler); err != nil {
+		return err
+	}
+	preset := ""
+	if items := catalog.Items(); len(items) > 0 {
+		preset = items[0].Id
+	}
+	demoReset, err := demoreset.New(cfg.DemoMode, cfg.CookieSecure, preset, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = demoReset.Register(handler); err != nil {
 		return err
 	}
 	server := &http.Server{Addr: cfg.Address, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16384}

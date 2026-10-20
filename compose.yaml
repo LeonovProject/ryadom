@@ -45,6 +45,7 @@ services:
       DATABASE_SCHEMA_VERSION: "2026102001"
       WEB_ORIGIN: ${WEB_ORIGIN:?Set one exact WEB_ORIGIN}
       COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      DEMO_MODE: ${DEMO_MODE:-false}
       AUTH_JWT_SECRET: ${AUTH_JWT_SECRET:?Set a persistent base64 JWT key}
       TRUSTED_PROXY_CIDRS: ${PROXY_BACKEND_IP:-172.30.18.10}/32
     networks: [backend]

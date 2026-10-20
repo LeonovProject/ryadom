@@ -2,14 +2,18 @@ package events_test
 
 import (
 	"bytes"
+	"context"
 	"net/http/httptest"
 	"net/url"
+	"strings"
 	"testing"
 	"time"
 
 	activityreview "github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes/review"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/admin/demoreset"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/discussion"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/reports"
+	"github.com/google/uuid"
 )
 
 func reviewFixture(t *testing.T) *fixture {
@@ -182,4 +186,116 @@ func TestP3ReportsAndRestore(t *testing.T) {
 	object(t, f.call("POST", ap+"/hide", map[string]any{"expectedRevision": 2}, admin))
 	object(t, f.call("POST", ap+"/restore", map[string]any{"expectedRevision": 3}, admin))
 	code(t, f.call("GET", "/events/"+event+"/messages", nil, admin), 404, "NOT_FOUND")
+}
+
+func registerReset(t *testing.T, f *fixture, enabled bool) {
+	t.Helper()
+	s, err := demoreset.New(enabled, false, "ryadom-companion", func() time.Time { return time.Unix(f.now.Load(), 0).UTC() })
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = s.Register(f.server); err != nil {
+		t.Fatal(err)
+	}
+}
+func TestP3ResetDisabled(t *testing.T) {
+	f := newFixture(t, false)
+	registerReset(t, f, false)
+	code(t, f.call("GET", "/admin/demo-state", nil, ""), 404, "NOT_FOUND")
+	code(t, f.call("POST", "/admin/demo-reset", nil, ""), 404, "NOT_FOUND")
+}
+func TestP3DemoReset(t *testing.T) {
+	f := reportsFixture(t)
+	registerReset(t, f, true)
+	admin := f.login(t, "marina")
+	otherAdmin := f.login(t, "marina")
+	user := f.login(t, "alex")
+	oldAccount := f.account(t, "alex")
+	code(t, f.call("GET", "/admin/demo-state", nil, user), 403, "FORBIDDEN")
+	r := f.call("GET", "/admin/demo-state", nil, admin)
+	validResponse(t, r, "DemoState")
+	state := object(t, r)
+	if state["lastReset"] != nil {
+		t.Fatal("unexpected receipt")
+	}
+	input := map[string]any{"expectedGeneration": state["generation"], "expectedSeedVersion": state["seedVersion"], "resetId": uuid.NewString(), "confirmation": "СБРОСИТЬ"}
+	wrong := map[string]any{"expectedGeneration": state["generation"], "expectedSeedVersion": "wrong", "resetId": uuid.NewString(), "confirmation": "СБРОСИТЬ"}
+	code(t, f.call("POST", "/admin/demo-reset", wrong, admin), 409, "DEMO_STATE_CHANGED")
+	tables := []string{"accounts", "account_avatars", "sessions", "organizations", "organization_applications", "activity_types", "events", "participations", "messages", "reports", "demo_state"}
+	snapshot := func() string {
+		var data []string
+		for _, table := range tables {
+			data = append(data, scalar[string](t, f, "SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]')::text FROM "+table+" t"))
+		}
+		return strings.Join(data, "\n")
+	}
+	before := snapshot()
+	execute(t, f, `CREATE FUNCTION reject_reset_seed() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'fixture seed failure'; END $$`)
+	execute(t, f, `CREATE TRIGGER reject_reset_seed BEFORE INSERT ON messages FOR EACH ROW EXECUTE FUNCTION reject_reset_seed()`)
+	failed := f.call("POST", "/admin/demo-reset", input, admin)
+	code(t, failed, 500, "INTERNAL_ERROR")
+	if failed.Header().Get("Set-Cookie") != "" || snapshot() != before {
+		t.Fatal("reset rollback changed data/session/cookie")
+	}
+	execute(t, f, "DROP TRIGGER reject_reset_seed ON messages")
+	// Busy failure leaves every row and session intact.
+	tx, err := f.pool.Begin(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer tx.Rollback(context.Background())
+	if _, err = tx.Exec(context.Background(), "SELECT id FROM demo_state WHERE id=1 FOR SHARE"); err != nil {
+		t.Fatal(err)
+	}
+	code(t, f.call("POST", "/admin/demo-reset", input, admin), 409, "DEMO_RESET_BUSY")
+	if snapshot() != before {
+		t.Fatal("busy reset changed data")
+	}
+	if err = tx.Commit(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	// Queue reset behind an exclusive fixture barrier, then the business operation.
+	tx, err = f.pool.Begin(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer tx.Rollback(context.Background())
+	if _, err = tx.Exec(context.Background(), "SELECT id FROM demo_state WHERE id=1 FOR UPDATE"); err != nil {
+		t.Fatal(err)
+	}
+	done := make(chan *httptest.ResponseRecorder, 1)
+	business := make(chan *httptest.ResponseRecorder, 1)
+	go func() { done <- f.call("POST", "/admin/demo-reset", input, admin) }()
+	waitLock(t, f, "%demo_state%FOR UPDATE%")
+	go func() { business <- f.call("POST", "/events", creation(), user) }()
+	waitLock(t, f, "%demo_state%FOR SHARE%")
+	if err = tx.Commit(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	receiptR := <-done
+	validResponse(t, receiptR, "DemoResetReceipt")
+	receipt := object(t, receiptR)
+	cookies := receiptR.Result().Cookies()
+	if len(cookies) != 1 || cookies[0].MaxAge != -1 {
+		t.Fatal("reset did not clear cookie")
+	}
+	code(t, <-business, 401, "SESSION_EXPIRED")
+	code(t, f.call("GET", "/me", nil, otherAdmin), 401, "SESSION_EXPIRED")
+	code(t, f.call("GET", "/me", nil, user), 401, "SESSION_EXPIRED")
+	if scalar[int](t, f, "SELECT count(*) FROM sessions") != 0 || f.account(t, "alex") == oldAccount || receipt["generation"] == state["generation"] || receipt["resetId"] != input["resetId"] {
+		t.Fatal("reset did not replace dataset/session/generation")
+	}
+	admin = f.login(t, "marina")
+	current := object(t, f.call("GET", "/admin/demo-state", nil, admin))
+	last := current["lastReset"].(map[string]any)
+	if last["resetId"] != input["resetId"] || last["generation"] != receipt["generation"] {
+		t.Fatal("lost-response receipt missing")
+	}
+	after := snapshot()
+	code(t, f.call("POST", "/admin/demo-reset", input, admin), 409, "DEMO_STATE_CHANGED")
+	if snapshot() != after {
+		t.Fatal("old request reset fresh data")
+	}
+	input["expectedGeneration"] = receipt["generation"]
+	code(t, f.call("POST", "/admin/demo-reset", input, admin), 409, "DEMO_STATE_CHANGED")
 }
