@@ -26,6 +26,7 @@ const router = createBrowserRouter([{
   errorElement: <RouteErrorPage />,
   children: [
     ...screenRoutes.map((route) => {
+      if (route.path === '/events/:eventId/manage') return { path: route.path, lazy: async () => ({ Component: (await import('../features/participation/manage/ManagePage')).ManagePage }) };
       if (route.path === '/me/events') return { path: route.path, lazy: async () => ({ Component: (await import('../features/events/mine/MyEventsPage')).MyEventsPage }) };
       if (route.path === '/admin/organizations') return { path: route.path, lazy: async () => ({ Component: (await import('../features/admin/organizations/OrganizationListPage')).OrganizationListPage }) };
       if (route.path === '/admin/organizations/:organizationId') return { path: route.path, lazy: async () => ({ Component: (await import('../features/admin/organizations/OrganizationReviewPage')).OrganizationReviewPage }) };
