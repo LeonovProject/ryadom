@@ -11,7 +11,9 @@ import (
 	"time"
 
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/auth"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/events"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/authn"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/avatarpresets"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/config"
@@ -65,6 +67,16 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	if err := authService.Register(handler); err != nil {
+		return err
+	}
+	eventService, err := events.New(accountService, cfg.JWTSecret, time.Now)
+	if err != nil {
+		return err
+	}
+	if err := eventService.Register(handler); err != nil {
+		return err
+	}
+	if err := activitytypes.Register(handler); err != nil {
 		return err
 	}
 	server := &http.Server{Addr: cfg.Address, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16384}

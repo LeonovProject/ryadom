@@ -1,0 +1,6 @@
+# Extend the foundation/DB/auth/SVG isolated environment. No shared database.
+services:
+  go-check:
+    image: ryadom-be03-go-check
+    environment:
+      RYADOM_EVENTS_TEST_DATABASE_URL: postgres://foundation:foundation-local-check-only@db:5432/ryadom_foundation?sslmode=disable

@@ -45,6 +45,16 @@ func (s *Server) validate(w http.ResponseWriter, r *http.Request, op operation, 
 			return invalidRequest()
 		}
 	}
+	if values, present := query["cursor"]; present && len(values) == 1 && (values[0] == "" || len(values[0]) > 2048) {
+		return fault.New(400, openapi.ErrorCodeINVALIDCURSOR, "Некорректный курсор. Начните с первой страницы.")
+	}
+	// The contract explicitly defines empty search/city as an absent filter.
+	// Normalize only the validator's query; the handler keeps the original request.
+	for _, name := range []string{"q", "city"} {
+		if values := query[name]; len(values) == 1 && values[0] == "" {
+			query.Del(name)
+		}
+	}
 	input := &openapi3filter.RequestValidationInput{Request: r, PathParams: params, QueryParams: query, Route: &routers.Route{Spec: s.spec, Path: op.path, PathItem: op.item, Method: op.method, Operation: op.spec}, Options: &openapi3filter.Options{ExcludeRequestBody: true, SkipSettingDefaults: true, AuthenticationFunc: openapi3filter.NoopAuthenticationFunc}}
 	if err := openapi3filter.ValidateRequest(r.Context(), input); err != nil {
 		return invalidRequest()

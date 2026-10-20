@@ -5,7 +5,7 @@
   "openapiSha256": "1ea1d80c3b143852404cc57f37259e883a99e0d5dd9f43be159e1e043669525b",
   "svgPolicyVersion": "1.0.0",
   "svgPolicySha256": "e9860fd173d8e03d6698e4e130543000eb5132669ed099034c6df8adb1de43d7",
-  "assignmentMode": "Shared continuation checkpoint of 2026-10-20 includes integration, DEC-24/25/26 and the Me approval-state fix. Both implementers use the exact commit containing continuation-2026-10-20.md; previous branch heads are historical. Prepared assignments do not start agents.",
+  "assignmentMode": "BE-03 574e593 integrated into main after ee620a7, with real endpoint registration and shared Compose smoke. Continue BE-04 from the exact integration commit supplied by the coordinator. FE-03 branch remains separate; no rewrite/reset.",
   "ownershipRule": "Longest matching path prefix wins; all other paths belong to COORDINATOR.",
   "pathOwners": {
     "apps/api/": "BACKEND",
@@ -102,7 +102,9 @@
     },
     "BE-03": {
       "ownerRole": "BACKEND",
-      "status": "PLANNED"
+      "status": "COMPLETED",
+      "verificationReport": "docs/development/integration/2026-10-20/be-03/README.md",
+      "scope": "Integrated 574e593 plus coordinator module registration/transport validation. Author full acceptance accepted; current API image and four-operation shared Compose smoke passed. No createEvent yet."
     },
     "BE-04": {
       "ownerRole": "BACKEND",
@@ -253,7 +255,7 @@
     }
   },
   "nextAssignments": [
-    "BE-03",
+    "BE-04",
     "FE-03"
   ],
   "firstIntegration": {
@@ -290,7 +292,11 @@
       "logout",
       "getMe",
       "getAccount",
-      "listAvatarPresets"
+      "listAvatarPresets",
+      "listActivityTypes",
+      "listEvents",
+      "getEvent",
+      "listMyEvents"
     ],
     "frontendScope": "FE-01 through FE-07 implemented; FE-03 through FE-07 still require their real backend modules."
   },
@@ -300,13 +306,13 @@
     "commitReference": "Exact containing-commit SHA is supplied by the coordinator after commit/push; no self-referential SHA is embedded.",
     "preparedAssignments": [
       {
-        "task": "BE-03",
+        "task": "BE-04",
         "executorRoles": [
           "BACKEND",
           "DATABASE"
         ],
         "status": "PREPARED_NOT_STARTED",
-        "branchSuggestion": "codex/be-03-catalog",
+        "branchSuggestion": "codex/be-04-create-event",
         "scope": [
           "apps/api/internal/modules/events/",
           "apps/api/internal/modules/activitytypes/",
@@ -343,6 +349,7 @@
       "QA-02"
     ],
     "contractChanged": false,
-    "deploymentPerformed": false
+    "deploymentPerformed": false,
+    "latestReport": "docs/development/integration/2026-10-20/be-03/README.md"
   }
 }
