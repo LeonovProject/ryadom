@@ -9,3 +9,6 @@ AND expires_at = sqlc.arg(expires_at) AND expires_at > sqlc.arg(checked_at));
 
 -- name: DeletePresentedSession :exec
 DELETE FROM sessions WHERE id = $1 AND account_id = $2 AND token_hash = $3;
+
+-- name: RevokeAccountSessions :exec
+DELETE FROM sessions WHERE account_id=$1;
