@@ -329,3 +329,57 @@ for (const width of [320, 390, 768, 1280]) {
     expect(errors).toEqual([]);
   });
 }
+
+for (const width of [390, 1280]) test(`review edits preserve the form and require another explicit publish at ${width}px`, async ({ page }) => {
+  await signedIn(page);
+  await page.setViewportSize({ width, height: 900 });
+  const posts: components['schemas']['CreateEventInput'][] = [];
+  await page.route('**/api/v1/events', (route) => { posts.push(route.request().postDataJSON()); return fulfillCase(route, 'invalidCreateFields'); });
+  await page.goto('/events/new'); await basics(page); await review(page);
+  await page.getByRole('button', { name: 'Изменить дату и время', exact: true }).click();
+  await expect(page.getByLabel('Дата и время начала (обязательно)')).toBeFocused();
+  await page.getByLabel('Дата и время начала (обязательно)').fill('2031-11-07T01:00');
+  await page.getByRole('button', { name: 'Вернуться к проверке', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Проверка', exact: true })).toBeFocused();
+  await expect(page.getByRole('region', { name: 'Сводка встречи' })).toContainText('7 ноября 2031 г. в 01:00 GMT+7');
+  await page.getByRole('button', { name: 'Изменить описание и место', exact: true }).click();
+  await expect(page.getByLabel('Название встречи (обязательно)', { exact: true })).toBeFocused();
+  await page.getByLabel('Название встречи (обязательно)', { exact: true }).fill('Обновлённая встреча');
+  await page.getByLabel('Город (обязательно)').fill('');
+  await page.getByRole('button', { name: 'Вернуться к проверке', exact: true }).click();
+  await expect(page.getByLabel('Город (обязательно)')).toBeFocused();
+  await expect(page.getByLabel('Город (обязательно)')).toHaveAttribute('aria-invalid', 'true');
+  await page.getByLabel('Город (обязательно)').fill('Москва');
+  await page.getByRole('button', { name: 'Вернуться к проверке', exact: true }).click();
+  await page.getByRole('button', { name: 'Изменить участие', exact: true }).click();
+  await expect(page.locator('#event-joinMode')).toBeFocused();
+  await page.getByRole('radio', { name: 'По заявке', exact: false }).check();
+  await page.getByLabel('Условия участия', { exact: true }).fill('Возьми удобную обувь.');
+  await page.getByRole('button', { name: 'Вернуться к проверке', exact: true }).click();
+  const summary = page.getByRole('region', { name: 'Сводка встречи' });
+  await expect(summary).toContainText('Обновлённая встреча');
+  await expect(summary).toContainText('Москва');
+  await expect(summary).toContainText('По заявке');
+  await expect(summary).toContainText('Возьми удобную обувь.');
+  await expect(summary).toContainText('Покажем правила.');
+  expect(posts).toHaveLength(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: `.artifacts/fe-p1/create-review-${width}.png`, fullPage: true });
+  await page.getByRole('button', { name: 'Опубликовать встречу', exact: true }).click();
+  await expect.poll(() => posts.length).toBe(1);
+  expect(posts[0]).toMatchObject({ title: 'Обновлённая встреча', city: 'Москва', startsAt: '2031-11-06T18:00:00.000Z', timezone: 'Asia/Krasnoyarsk', joinMode: 'APPROVAL', conditions: 'Возьми удобную обувь.' });
+});
+
+test('a failed direction refresh offers only the retained choice, without stale new choices', async ({ page }) => {
+  await signedIn(page);
+  await page.goto('/events/new'); await basics(page, false);
+  const choices = page.getByLabel('Выбери направление', { exact: true });
+  await expect(choices.locator('option')).toHaveCount(3);
+  await page.route('**/api/v1/activity-types', (route) => fulfillCase(route, 'internalError'));
+  await page.getByRole('button', { name: 'Обновить направления', exact: true }).click();
+  await expect(page.getByText('Не удалось загрузить список. Можно указать своё направление.', { exact: true })).toBeVisible();
+  await expect(choices).toHaveValue(listedActivityId);
+  await expect(choices.locator('option')).toHaveCount(2);
+  await page.getByRole('button', { name: 'Далее: участие', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Участие', exact: true })).toBeVisible();
+});

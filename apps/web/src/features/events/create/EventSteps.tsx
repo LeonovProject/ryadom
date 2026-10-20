@@ -12,6 +12,7 @@ type StepProps = { values: EventValues; errors: EventErrors; change: (field: Eve
 
 export function BasicsStep({ values, errors, change, me }: StepProps) {
   const types = useActivityTypes();
+  const availableTypes = types.isError ? [] : types.data;
   const input = (field: EventField) => ({ id: `event-${field}`, name: field, value: values[field], error: errors[field], onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => change(field, event.target.value) });
   const organization = me.organizations.find((org) => org.id === values.organizerId);
   const unavailable = !!values.organizerId && (!organization?.canPublish || organization.approvalState !== 'APPROVED');
@@ -36,10 +37,10 @@ export function BasicsStep({ values, errors, change, me }: StepProps) {
       </div>
       {values.activityMode === 'list' ? <div className={styles.selectField}>
         <label htmlFor="event-activityId">Выбери направление</label>
-        <select id="event-activityId" value={values.activityId} onChange={(event) => { change('activityId', event.target.value); change('activityLabel', types.data?.find((item) => item.id === event.target.value)?.name ?? values.activityLabel); }} aria-invalid={!!errors.activityId} aria-describedby="activity-error">
+        <select id="event-activityId" value={values.activityId} onChange={(event) => { change('activityId', event.target.value); change('activityLabel', availableTypes?.find((item) => item.id === event.target.value)?.name ?? values.activityLabel); }} aria-invalid={!!errors.activityId} aria-describedby="activity-error">
           <option value="">Выбери из списка</option>
-          {values.activityId && !types.data?.some((item) => item.id === values.activityId) && <option value={values.activityId}>{values.activityLabel || 'Ранее выбранное направление'}</option>}
-          {types.data?.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
+          {values.activityId && !availableTypes?.some((item) => item.id === values.activityId) && <option value={values.activityId}>{values.activityLabel || 'Ранее выбранное направление'}</option>}
+          {availableTypes?.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
         </select>
         <p id="activity-error" className={styles.error}>{errors.activityId}</p>
         {types.isPending && <p role="status" className={styles.muted}>Загружаем направления…</p>}
@@ -72,7 +73,7 @@ export function ParticipationStep({ values, errors, change }: Pick<StepProps, 'v
   </>;
 }
 
-export function ReviewStep({ values, me }: Pick<StepProps, 'values' | 'me'>) {
+export function ReviewStep({ values, me, edit }: Pick<StepProps, 'values' | 'me'> & { edit: (field: EventField, step: number) => void }) {
   // Only entered after validation. Rendered text is escaped by React.
   let when = 'Проверь дату и зону встречи.';
   try { when = formatEventStart(eventInput(values)); } catch { /* Stale validation is checked again on publish. */ }
@@ -88,6 +89,11 @@ export function ReviewStep({ values, me }: Pick<StepProps, 'values' | 'me'>) {
       <div><dt>Режим записи</dt><dd>{values.joinMode === 'OPEN' ? 'Свободная запись' : values.joinMode === 'APPROVAL' ? 'По заявке' : 'Не выбран'}</dd></div>
       <div><dt>Условия участия</dt><dd>{values.conditions.trim() || 'Дополнительных требований не указано.'}</dd></div>
     </dl>
+    <div className={styles.reviewActions} role="group" aria-label="Изменить сведения перед публикацией">
+      <Button variant="secondary" onClick={() => edit('title', 0)}>Изменить описание и место</Button>
+      <Button variant="secondary" onClick={() => edit('localStart', 0)}>Изменить дату и время</Button>
+      <Button variant="secondary" onClick={() => edit('joinMode', 1)}>Изменить участие</Button>
+    </div>
     {values.activityMode === 'custom' && <p className={styles.notice}>Своё направление используется сразу. Проверка общего справочника не задерживает встречу.</p>}
     <p className={styles.muted}>После публикации встреча будет доступна другим пользователям. Фон можно будет добавить отдельно.</p>
   </section>;

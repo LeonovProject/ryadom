@@ -30,6 +30,8 @@
 .steps li[aria-current] { color: var(--color-brand-onTint); font-weight: 700; }
 .steps li[aria-current] span { background: var(--color-brand-tint); }
 .review { display: grid; gap: var(--space-6); }
+.reviewActions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.reviewActions > * { flex: 1 1 220px; }
 .review h3 { font-size: var(--type-web-sectionTitle-fontSize); }
 .review dl { display: grid; gap: var(--space-4); margin: 0; }
 .review dl > div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: var(--space-4); }
