@@ -2,6 +2,14 @@
 
 ## Перед изменениями
 
+- DEC-27 по уточнению пользователя: выделенный Ubuntu-сервер, пока IP, HTTPS
+  необязателен. Инструкция docs/deployment/ubuntu-24.04.md использует HTTP на 80.
+  Сетевой HTTP только при DEMO_MODE=true + ALLOW_INSECURE_HTTP=true +
+  COOKIE_SECURE=false, default флага false. JWT/Origin/права и HTTPS не ослаблены.
+  Проверены полный Go/race/vet и отдельный реальный HTTP Compose/Chrome, отчёт —
+  docs/deployment/verification.md. Это проверенная дельта после QA-01, не полный
+  повтор UI; общий preview/сервер пользователя не менялись. Пока без коммита.
+
 - QA-01 завершена: tests/e2e/qa01/README.md; база e5657b6 плюс два узких
   исправления координатора по уточнению пользователя. Реальные S1–S6 до/после
   сброса отдельной БД, полный Go/race/vet, 114 unit, 225 UI и 19 адресных после

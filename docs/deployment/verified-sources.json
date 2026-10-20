@@ -1,0 +1,24 @@
+{
+  "base": "a65d1c983e3665b74263e37e1c755e391c0b63e6",
+  "decision": "DEC-27",
+  "sha256": {
+    "apps/api/internal/platform/config/config.go": "3d8a5b09bffaec11c4d5399032ff59d0fb411c3af54e5a143b1e4e5a5c1fcf8b",
+    "apps/api/internal/platform/config/config_test.go": "faab8e36d96512561c78ba31f1dba17a060c4dae0bece72428fad827d0ee7327",
+    "compose.yaml": "b56f2786eefacf4b4e49504c498bfeaebf1863f0f58de8a30e51fb05b033f04f",
+    ".env.example": "88d7717b8a32f33df41e7bba1cc2e23ac0861259e19c86551291132f07a49800",
+    "infra/tests/http_demo/accept.py": "6c1f0cd54984854bb81ec077d3e9f43a7e00a8e966ad59dfe27ceb1aeed6ae3f",
+    "infra/tests/http_demo/browser.cjs": "fab94c96b5853745eed61a8837ab930cd9d1dcb984810c4bbe4aa05309f86ed0"
+  },
+  "checks": {
+    "goRaceAll": "PASS",
+    "goVetAll": "PASS",
+    "httpComposeChrome": "PASS",
+    "guideSyntaxAndEnvCompose": "PASS",
+    "repository": "PASS",
+    "handoff": "PASS",
+    "contracts": "PASS 60/100/280/64"
+  },
+  "sharedPreviewChanged": false,
+  "userServerAccessed": false,
+  "commitOrPushPerformed": false
+}

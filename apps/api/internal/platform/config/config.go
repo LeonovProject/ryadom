@@ -42,6 +42,22 @@ func Load(getenv func(string) string) (Config, error) {
 	if !ValidOrigin(c.WebOrigin) {
 		return Config{}, fmt.Errorf("WEB_ORIGIN must be one exact http(s) origin without path or trailing slash")
 	}
+	if raw := getenv("DEMO_MODE"); raw != "" {
+		c.DemoMode, err = strconv.ParseBool(raw)
+		if err != nil {
+			return Config{}, fmt.Errorf("DEMO_MODE must be a boolean")
+		}
+	}
+	allowInsecureHTTP := false
+	if raw := getenv("ALLOW_INSECURE_HTTP"); raw != "" {
+		allowInsecureHTTP, err = strconv.ParseBool(raw)
+		if err != nil {
+			return Config{}, fmt.Errorf("ALLOW_INSECURE_HTTP must be a boolean")
+		}
+	}
+	if allowInsecureHTTP && !c.DemoMode {
+		return Config{}, fmt.Errorf("ALLOW_INSECURE_HTTP requires DEMO_MODE=true")
+	}
 	if v := getenv("COOKIE_SECURE"); v != "" {
 		c.CookieSecure, err = strconv.ParseBool(v)
 		if err != nil {
@@ -49,12 +65,12 @@ func Load(getenv func(string) string) (Config, error) {
 		}
 	}
 	if strings.HasPrefix(c.WebOrigin, "http:") && c.CookieSecure {
-		return Config{}, fmt.Errorf("local HTTP requires explicit COOKIE_SECURE=false")
+		return Config{}, fmt.Errorf("HTTP requires explicit COOKIE_SECURE=false")
 	}
 	if origin, _ := url.Parse(c.WebOrigin); origin.Scheme == "http" && origin.Hostname() != "localhost" {
 		ip := net.ParseIP(origin.Hostname())
-		if ip == nil || !ip.IsLoopback() {
-			return Config{}, fmt.Errorf("HTTP is allowed only for a local loopback origin")
+		if (ip == nil || !ip.IsLoopback()) && !allowInsecureHTTP {
+			return Config{}, fmt.Errorf("network HTTP requires DEMO_MODE=true and ALLOW_INSECURE_HTTP=true")
 		}
 	}
 	if strings.HasPrefix(c.WebOrigin, "https:") && !c.CookieSecure {
@@ -67,12 +83,6 @@ func Load(getenv func(string) string) (Config, error) {
 	c.AvatarPresetsFile = getenv("AVATAR_PRESETS_FILE")
 	if c.AvatarPresetsFile == "" {
 		c.AvatarPresetsFile = "../../packages/contracts/avatar-presets.json"
-	}
-	if raw := getenv("DEMO_MODE"); raw != "" {
-		c.DemoMode, err = strconv.ParseBool(raw)
-		if err != nil {
-			return Config{}, fmt.Errorf("DEMO_MODE must be a boolean")
-		}
 	}
 	if raw := getenv("TRUSTED_PROXY_CIDRS"); raw != "" {
 		for _, item := range strings.Split(raw, ",") {

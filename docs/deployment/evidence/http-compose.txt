@@ -1,0 +1,2 @@
+PASS real HTTP browser: non-loopback origin, login, non-Secure HttpOnly cookie, reload, foreign Origin denied, logout, Swagger 60 and exact schema
+PASS disposable HTTP Compose: migrate, seed, real browser login/HTTP cookie/Origin/logout; no shared DB used
