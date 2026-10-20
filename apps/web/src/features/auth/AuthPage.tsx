@@ -21,6 +21,7 @@ export function AuthPage({ mode }: { mode: 'login' | 'register' }) {
   const returnTo = safeReturnTo(new URLSearchParams(location.search).get('returnTo'));
   const [proceed, setProceed] = useState(false);
   return <div className={styles.page}>
+    {location.state?.demoResetCompleted === true && <p role="status" className={styles.notice}>Демоданные восстановлены. Войди заново. После входа можно проверить квитанцию в личном профиле.</p>}
     <div className={styles.intro}>
       <p className={styles.eyebrow}>Компания для спорта</p>
       <h1 tabIndex={-1}>{mode === 'register' ? 'Создать профиль' : 'Войти в Рядом'}</h1>

@@ -28,6 +28,7 @@ export function meFixture(): components['schemas']['Me'] {
 
 export async function guestFixtures(page: Page) {
   await page.route('**/api/v1/me', (route) => fulfillCase(route, 'authenticationRequired'));
+  await page.route('**/api/v1/admin/demo-state', (route) => fulfillCase(route, 'demoStateDisabled'));
   await page.route('**/api/v1/avatar-presets', (route) => fulfillCase(route, 'avatarPresetsPopulated'));
   await page.route('**/api/v1/activity-types', (route) => fulfillCase(route, 'listActivityTypesSuccess'));
   await page.route('**/api/v1/events?*', (route) => {
