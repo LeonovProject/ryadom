@@ -13,7 +13,9 @@ import (
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/accounts"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/activitytypes"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/auth"
+	"github.com/LeonovProject/ryadom/apps/api/internal/modules/discussion"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/events"
+	messagemoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/messages"
 	orgmoderation "github.com/LeonovProject/ryadom/apps/api/internal/modules/moderation/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/organizations"
 	"github.com/LeonovProject/ryadom/apps/api/internal/modules/participation"
@@ -97,6 +99,16 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	if err = participationService.Register(handler); err != nil {
+		return err
+	}
+	discussionService, err := discussion.New(accountService, cfg.JWTSecret, time.Now)
+	if err != nil {
+		return err
+	}
+	if err = discussionService.Register(handler); err != nil {
+		return err
+	}
+	if err = messagemoderation.Register(handler, discussionService); err != nil {
 		return err
 	}
 	server := &http.Server{Addr: cfg.Address, Handler: handler, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 16384}
