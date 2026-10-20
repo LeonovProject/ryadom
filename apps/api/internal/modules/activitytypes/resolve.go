@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"strings"
-	"unicode/utf8"
 
 	"github.com/LeonovProject/ryadom/apps/api/internal/db"
 	"github.com/LeonovProject/ryadom/apps/api/internal/platform/fault"
@@ -13,7 +11,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	"golang.org/x/text/unicode/norm"
 )
 
 // Resolve uses the caller's transaction; a new direction is never committed alone.
@@ -42,11 +39,10 @@ func Resolve(ctx context.Context, tx pgx.Tx, input openapi.ActivityInput, actor 
 	if value.Name == nil {
 		return uuid.Nil, validation("/activityType/name")
 	}
-	name := strings.Join(strings.Fields(norm.NFC.String(*value.Name)), " ")
-	if utf8.RuneCountInString(*value.Name) > 100 || name == "" || utf8.RuneCountInString(name) > 100 || strings.ContainsRune(name, 0) {
+	name, normalized, valid := NormalizeName(*value.Name)
+	if !valid {
 		return uuid.Nil, validation("/activityType/name")
 	}
-	normalized := strings.ToLower(name)
 	for attempt := 0; attempt < 3; attempt++ {
 		if err = q.InsertPendingActivity(ctx, db.InsertPendingActivityParams{Name: name, NormalizedName: normalized, CreatedByAccountID: pgtype.UUID{Bytes: actor, Valid: true}}); err != nil {
 			return uuid.Nil, err
